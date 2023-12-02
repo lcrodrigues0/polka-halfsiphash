@@ -4,10 +4,6 @@
 
 #include "polka.p4h"
 
-/*************************************************************************
-*********************** P A R S E R  ***********************************
-*************************************************************************/
-
 parser MyParser(packet_in packet,
                 out headers hdr,
                 inout metadata meta,
@@ -34,19 +30,11 @@ parser MyParser(packet_in packet,
 
 }
 
-
-/*************************************************************************
-************   C H E C K S U M    V E R I F I C A T I O N   *************
-*************************************************************************/
-
 control MyVerifyChecksum(inout headers hdr, inout metadata meta) {
-    apply {  }
+    apply {
+        // No checksum to verify
+    }
 }
-
-
-/*************************************************************************
-**************  I N G R E S S   P R O C E S S I N G   *******************
-*************************************************************************/
 
 control MyIngress(inout headers hdr,
                   inout metadata meta,
@@ -64,7 +52,6 @@ control MyIngress(inout headers hdr,
         bit<16> nport;
 
         bit<160>routeid = meta.routeId;
-        //routeid = 57851202663303480771156315372;
 
         bit<160>ndata = routeid >> 16;
         bit<16> dif = (bit<16>) (routeid ^ (ndata << 16));
@@ -87,15 +74,8 @@ control MyIngress(inout headers hdr,
 		}else{
 			drop();
 		}
-
     }
 }
-
-
-
-/*************************************************************************
-****************  E G R E S S   P R O C E S S I N G   *******************
-*************************************************************************/
 
 control MyEgress(inout headers hdr,
                  inout metadata meta,
@@ -103,31 +83,23 @@ control MyEgress(inout headers hdr,
     apply {  }
 }
 
-/*************************************************************************
-*************   C H E C K S U M    C O M P U T A T I O N   **************
-*************************************************************************/
-
 control MyComputeChecksum(inout headers  hdr, inout metadata meta) {
-    apply {  }
+    apply {
+        // No checksum currently being calculated
+    }
 }
-
-/*************************************************************************
-***********************  D E P A R S E R  *******************************
-*************************************************************************/
 
 control MyDeparser(packet_out packet, in headers hdr) {
-    apply {  }
+    apply {
+        // No need to change packet: just settting port is enough
+    }
 }
 
-/*************************************************************************
-***********************  S W I T C H  *******************************
-*************************************************************************/
-
 V1Switch(
-MyParser(),
-MyVerifyChecksum(),
-MyIngress(),
-MyEgress(),
-MyComputeChecksum(),
-MyDeparser()
+    MyParser(),
+    MyVerifyChecksum(),
+    MyIngress(),
+    MyEgress(),
+    MyComputeChecksum(),
+    MyDeparser()
 ) main;
