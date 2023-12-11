@@ -7,7 +7,7 @@
 // A parser for general packets: it needs to be able to parse both incoming (ipv4) and outgoing (srcrouting) packets
 parser MyParser(
     packet_in packet,
-    out headers hdr,
+    out polka_t hdr,
     inout metadata meta,
     inout standard_metadata_t standard_metadata
 ) {
@@ -17,13 +17,14 @@ parser MyParser(
 
     state parse_ethernet {
         // Reads and pops the header. We will need to `.emit()` it back later
-        packet.extract(hdr.ethernet);
-        transition select(hdr.ethernet.etherType) {
+        packet.extract(metadata.etherType);
+        hdr.proto.etherType = metadata.etherType;
+        transition select(metadata.etherType) {
             // If the packet comes from outside (ethernet packet)
             TYPE_IPV4: parse_ipv4;
             
             // If the packet comes inside (polka packet)
-            TYPE_SRCROUTING: parse_polka;
+            TYPE_POLKA: parse_polka;
             
             // Any other packet
             default: accept;
@@ -31,7 +32,7 @@ parser MyParser(
     }
 
     state parse_polka {
-        packet.extract(hdr.srcRoute);
+        packet.extract(hdr.routeid);
         transition accept;
     }
 
@@ -44,7 +45,7 @@ parser MyParser(
 }
 
 control MyVerifyChecksum(
-    inout headers hdr,
+    inout polka_t hdr,
     inout metadata meta
 ) {
     apply {
@@ -53,7 +54,7 @@ control MyVerifyChecksum(
 }
 
 control TunnelEncap(
-    inout headers hdr,
+    inout polka_t hdr,
     inout metadata meta,
     inout standard_metadata_t standard_metadata
 ) {
@@ -72,10 +73,10 @@ control TunnelEncap(
         standard_metadata.egress_spec = port;
         meta.apply_sr = sr;
 
-        hdr.ethernet.dstAddr = dmac;
+        hdr.proto.dstAddr = dmac;
 
-        hdr.srcRoute.setValid();
-        hdr.srcRoute.routeId = routeIdPacket;
+        hdr.routeid.setValid();
+        hdr.routeid.routeId = routeIdPacket;
 
     }
 
@@ -95,9 +96,9 @@ control TunnelEncap(
     apply {
         tunnel_encap_process_sr.apply();
         if (meta.apply_sr!=1) {
-            hdr.srcRoute.setInvalid();
+            hdr.routeid.setInvalid();
         } else {
-            hdr.ethernet.etherType = TYPE_SRCROUTING;
+            hdr.proto.etherType = TYPE_POLKA;
         }
 
     }
@@ -105,17 +106,17 @@ control TunnelEncap(
 }
 
 control MyIngress(
-    inout headers hdr,
+    inout polka_t hdr,
     inout metadata meta,
     inout standard_metadata_t standard_metadata
 ) {
     // Removes extra headers from Polka packet, leaves it as if nothing had touched it.
     action tunnel_decap() {
         // Set ethertype to IPv4 since it is leaving Polka
-        hdr.ethernet.etherType = TYPE_IPV4;
+        hdr.proto.etherType = TYPE_IPV4;
 
-        // Does not serialize srcRoute
-        hdr.srcRoute.setInvalid();
+        // Does not serialize routeid
+        hdr.routeid.setInvalid();
 
         // Should be enough to "decap" packet
 
@@ -124,7 +125,7 @@ control MyIngress(
     }
     
     apply {
-        if (hdr.ethernet.etherType == TYPE_SRCROUTING) {
+        if (hdr.proto.etherType == TYPE_POLKA) {
             // Packet came from inside network
             tunnel_decap();
         } else if (hdr.ipv4.isValid()) {
@@ -135,7 +136,7 @@ control MyIngress(
 } 
 
 control MyEgress(
-    inout headers hdr,
+    inout polka_t hdr,
     inout metadata meta,
     inout standard_metadata_t standard_metadata
 ) {
@@ -145,7 +146,7 @@ control MyEgress(
 }
 
 control MyComputeChecksum(
-    inout headers hdr,
+    inout polka_t hdr,
     inout metadata meta
 ) {
     apply {
@@ -155,11 +156,11 @@ control MyComputeChecksum(
 
 control MyDeparser(
     packet_out packet,
-    in headers hdr
+    in polka_t hdr
 ) {
     apply {
-        packet.emit(hdr.ethernet);
-        packet.emit(hdr.srcRoute);
+        packet.emit(hdr.proto);
+        packet.emit(hdr.routeid);
         packet.emit(hdr.ipv4);
     }
 }

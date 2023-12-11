@@ -6,7 +6,7 @@
 
 parser MyParser(
     packet_in packet,
-    out headers hdr,
+    out polka_t hdr,
     inout metadata meta,
     inout standard_metadata_t standard_metadata
 ) {
@@ -18,7 +18,7 @@ parser MyParser(
     state verify_ethernet {
         meta.etherType = packet.lookahead<polka_t_top>().etherType;
         transition select(meta.etherType) {
-            TYPE_SRCROUTING: get_routeId;
+            TYPE_POLKA: get_routeId;
             default: accept;
         }
     }
@@ -32,7 +32,7 @@ parser MyParser(
 }
 
 control MyVerifyChecksum(
-    inout headers hdr,
+    inout polka_t hdr,
     inout metadata meta
 ) {
     apply {
@@ -41,7 +41,7 @@ control MyVerifyChecksum(
 }
 
 control MyIngress(
-    inout headers hdr,
+    inout polka_t hdr,
     inout metadata meta,
     inout standard_metadata_t standard_metadata
 ) {
@@ -83,7 +83,7 @@ control MyIngress(
 }
 
 control MyEgress(
-    inout headers hdr,
+    inout polka_t hdr,
     inout metadata meta,
     inout standard_metadata_t standard_metadata
 ) {
@@ -91,7 +91,7 @@ control MyEgress(
 }
 
 control MyComputeChecksum(
-    inout headers hdr,
+    inout polka_t hdr,
     inout metadata meta
 ) {
     apply {
@@ -101,7 +101,7 @@ control MyComputeChecksum(
 
 control MyDeparser(
     packet_out packet,
-    in headers hdr
+    in polka_t hdr
 ) {
     apply {
         // No need to change packet: just settting port is enough
