@@ -4,11 +4,12 @@
 
 #include "polka.p4h"
 
-parser MyParser(packet_in packet,
-                out headers hdr,
-                inout metadata meta,
-                inout standard_metadata_t standard_metadata) {
-
+parser MyParser(
+    packet_in packet,
+    out headers hdr,
+    inout metadata meta,
+    inout standard_metadata_t standard_metadata
+) {
     state start {
         meta.apply_sr = 0;
         transition verify_ethernet;
@@ -30,16 +31,20 @@ parser MyParser(packet_in packet,
 
 }
 
-control MyVerifyChecksum(inout headers hdr, inout metadata meta) {
+control MyVerifyChecksum(
+    inout headers hdr,
+    inout metadata meta
+) {
     apply {
         // No checksum to verify
     }
 }
 
-control MyIngress(inout headers hdr,
-                  inout metadata meta,
-                  inout standard_metadata_t standard_metadata) {
-
+control MyIngress(
+    inout headers hdr,
+    inout metadata meta,
+    inout standard_metadata_t standard_metadata
+) {
     action drop() {
         mark_to_drop(standard_metadata);
     }
@@ -77,19 +82,27 @@ control MyIngress(inout headers hdr,
     }
 }
 
-control MyEgress(inout headers hdr,
-                 inout metadata meta,
-                 inout standard_metadata_t standard_metadata) {
+control MyEgress(
+    inout headers hdr,
+    inout metadata meta,
+    inout standard_metadata_t standard_metadata
+) {
     apply {  }
 }
 
-control MyComputeChecksum(inout headers  hdr, inout metadata meta) {
+control MyComputeChecksum(
+    inout headers hdr,
+    inout metadata meta
+) {
     apply {
         // No checksum currently being calculated
     }
 }
 
-control MyDeparser(packet_out packet, in headers hdr) {
+control MyDeparser(
+    packet_out packet,
+    in headers hdr
+) {
     apply {
         // No need to change packet: just settting port is enough
     }

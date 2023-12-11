@@ -61,7 +61,7 @@ control TunnelEncap(
         mark_to_drop(standard_metadata);
     }
 
-    // Adds a Polka header to the packet
+    // Adds a Polka header to the packet 
     action add_sourcerouting_header (
         egressSpec_t port,
         bit<1> sr,
@@ -139,7 +139,9 @@ control MyEgress(
     inout metadata meta,
     inout standard_metadata_t standard_metadata
 ) {
-    apply {  }
+    apply { 
+        // Is actually also done on MyIngress
+     }
 }
 
 control MyComputeChecksum(
