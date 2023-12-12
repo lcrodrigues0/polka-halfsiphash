@@ -4,59 +4,27 @@
 
 #define HAVE_POLKA
 
-
 const bit<16> TYPE_IPV4 = 0x0800;
 const bit<16> TYPE_POLKA = 0x1234;
 
-// Ethernet frame payload padding and P4
-// <https://github.com/p4lang/p4-spec/issues/587>
-typedef bit<9>  egressSpec_t;
-typedef bit<48> macAddr_t;
-typedef bit<32> ip4Addr_t;
-
-struct polka_route_t {
-    bit<160>    routeId;
-}
-
-struct polka_probe_t {
-    bit<32>     timestamp;
-    bit<32>     l_hash;
-}
-
-struct ethertype_t {
-    macAddr_t dstAddr;
-    macAddr_t srcAddr;
-    bit<16>   etherType;
-}
-
+#include "hdr_ethernet.p4"
+#include "hdr_ipv4.p4"
 #include "hdr_polka.p4"
 
-header ipv4_t {
-    // bit<4>    version;
-    bit<4>    ihl;
-    bit<8>    diffserv;
-    bit<16>   totalLen;
-    bit<16>   identification;
-    bit<3>    flags;
-    bit<13>   fragOffset;
-    // bit<8>    ttl;
-    bit<8>    protocol;
-    bit<16>   hdrChecksum;
-    ip4Addr_t srcAddr;
-    ip4Addr_t dstAddr;
+struct metadata {
+    bit<1>   apply_sr;
+    bit<9>   port;
+    polka_route_t routeid;
 }
 
-struct metadata {
-    bit<160>   routeId;
-    // Will be used as seed for number generator
-    // bit<32>     timestamp;
-    bit<16>   etherType;
-    bit<1> apply_sr;
-    bit<9> port;
-}
+// header polka_probe_t {
+//     bit<32> timestamp;
+//     bit<32> l_hash;
+// }
 
 struct headers {
-    polka_t polka;
-    polka_probe_t  polka_probe;
-    ipv4_t      ipv4;
+    ethernet_t    ethernet;
+    polka_t       polka;
+    // polka_probe_t polka_probe;
+    ipv4_t        ipv4;
 }

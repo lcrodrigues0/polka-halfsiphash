@@ -1,6 +1,5 @@
 /*
- * Copyright 2021-present Universidade Federal do Espirito Santo (UFES) and
- *                        Instituto Federal do Espirito Santo (IFES)
+ * Copyright 2019-present GEANT RARE project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +14,18 @@
  * limitations under the License.
  */
 
-#ifndef _POLKA_P4_
-#define _POLKA_P4_
+#ifndef _ETHERNET_P4_
+#define _ETHERNET_P4_
 
 #include "def_types.p4"
 
-#ifdef HAVE_POLKA
-header polka_t {
-    bit<8>          version;
-    bit<8>          ttl;
-    ethertype_t     proto;
-    polka_route_t   routeid;
+/*
+ * Ethernet header: as a header type, order matters
+ */
+header ethernet_t {
+    mac_addr_t  dst_mac_addr;
+    mac_addr_t  src_mac_addr;
+    ethertype_t ethertype;
 }
-#endif
 
-#endif // _POLKA_P4_
+#endif	// _ETHERNET_P4_
