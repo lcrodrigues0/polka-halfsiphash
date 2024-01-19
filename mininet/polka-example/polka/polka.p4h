@@ -7,6 +7,9 @@
 const bit<16> TYPE_IPV4 = 0x0800;
 const bit<16> TYPE_POLKA = 0x1234;
 
+const bit<8> REGULAR_VERSION = 0x01;
+const bit<8> PROBE_VERSION = 0xF1;
+
 #include "hdr_ethernet.p4"
 #include "hdr_ipv4.p4"
 #include "hdr_polka.p4"
@@ -17,14 +20,14 @@ struct metadata {
     polka_route_t routeid;
 }
 
-// header polka_probe_t {
-//     bit<32> timestamp;
-//     bit<32> l_hash;
-// }
+header polka_probe_t {
+    bit<32> timestamp;
+    bit<32> l_hash;
+}
 
 struct headers {
     ethernet_t    ethernet;
     polka_t       polka;
-    // polka_probe_t polka_probe;
+    polka_probe_t polka_probe;
     ipv4_t        ipv4;
 }

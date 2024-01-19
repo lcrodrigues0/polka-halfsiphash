@@ -32,6 +32,16 @@ parser MyParser(
 
     state parse_polka {
         packet.extract(hdr.polka);
+
+        transition select(hdr.polka.version) {
+            PROBE_VERSION: parse_polka_probe;
+            // Any other packet
+            default: parse_ipv4;
+        }
+    }
+
+    state parse_polka_probe {
+        packet.extract(hdr.polka_probe);
         transition parse_ipv4;
     }
 
@@ -68,7 +78,7 @@ control TunnelEncap(
         // Has to be set to valid for changes to be commited
         hdr.polka.setValid();
 
-        hdr.polka.version = 0xFF;
+        hdr.polka.version = REGULAR_VERSION;
         hdr.polka.ttl = 0xFF;
         
         meta.apply_sr = sr;
@@ -109,6 +119,29 @@ control TunnelEncap(
     }
 }
 
+control MyProbe(
+    inout headers hdr,
+    inout metadata meta
+) {
+    action encap() {
+        hdr.polka.version = PROBE_VERSION;
+
+        hdr.polka_probe.setValid();
+        hdr.polka_probe.timestamp = 0xDEADBEEF;
+        hdr.polka_probe.l_hash = hdr.polka_probe.timestamp;
+    }
+
+    apply {
+        if (hdr.polka.version == PROBE_VERSION) {
+            // Decap
+            hdr.polka_probe.setInvalid();
+        } else {
+            encap();
+        }
+
+    }
+}
+
 control MyIngress(
     inout headers hdr,
     inout metadata meta,
@@ -129,7 +162,7 @@ control MyIngress(
         // In this example, port `1` is always the exit node
         standard_metadata.egress_spec = 1;
     }
-    
+
     apply {
         if (hdr.ethernet.ethertype == TYPE_POLKA) {
             // Packet came from inside network, we need to make it a normal pkt
@@ -137,7 +170,8 @@ control MyIngress(
         } else {
             // Packet came from ouside network, we need to make it a polka pkt
             TunnelEncap.apply(hdr, meta, standard_metadata);
-        } 
+        }
+        MyProbe.apply(hdr, meta);
     }
 } 
 
@@ -167,6 +201,7 @@ control MyDeparser(
     apply {
         packet.emit(hdr.ethernet);
         packet.emit(hdr.polka);
+        packet.emit(hdr.polka_probe);
         packet.emit(hdr.ipv4);
     }
 }
