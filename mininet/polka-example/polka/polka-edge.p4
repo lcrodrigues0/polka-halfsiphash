@@ -127,7 +127,8 @@ control MyProbe(
         hdr.polka.version = PROBE_VERSION;
 
         hdr.polka_probe.setValid();
-        hdr.polka_probe.timestamp = 0xDEADBEEF;
+        // Generates a random number between 0 and 2^32 - 1
+        random(hdr.polka_probe.timestamp, 0, 0xFFFFFFFF);
         hdr.polka_probe.l_hash = hdr.polka_probe.timestamp;
     }
 

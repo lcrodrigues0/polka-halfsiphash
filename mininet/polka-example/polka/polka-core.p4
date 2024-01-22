@@ -59,6 +59,10 @@ control MySignPacket(
     // TODO: include routeid - currently only hashing
     apply {
         hdr.polka_probe.setValid();
+
+        // At this point, `meta.port` should be written on already
+        hdr.polka_probe.l_hash = (bit<32>) meta.port ^ hdr.polka_probe.l_hash;
+
         bit<16> nbase = 0;
         bit<32> min_bound = 0;
         bit<32> max_bound = 0xFFFFFFFF;
