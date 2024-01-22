@@ -29,7 +29,16 @@ parser MyParser(
         meta.apply_sr = 1;
         packet.extract(hdr.polka);
         meta.routeid = hdr.polka.routeid;
-        // hdr.ipv4 = packet.lookahead<ipv4_t>();
+
+        transition select(hdr.polka.version) {
+            PROBE_VERSION: parse_polka_probe;
+            // Any other packet
+            default: accept;
+        }
+    }
+
+    state parse_polka_probe {
+        packet.extract(hdr.polka_probe);
         transition accept;
     }
 
@@ -39,8 +48,27 @@ control MyVerifyChecksum(
     inout headers hdr,
     inout metadata meta
 ) {
+    apply {  }
+}
+
+control MySignPacket(
+    inout headers hdr,
+    inout metadata meta
+) {
+    // Signs the packet
+    // TODO: include routeid - currently only hashing
     apply {
-        // No checksum to verify
+        hdr.polka_probe.setValid();
+        bit<16> nbase = 0;
+        bit<32> min_bound = 0;
+        bit<32> max_bound = 0xFFFFFFFF;
+        hash(
+            hdr.polka_probe.l_hash,
+            HashAlgorithm.crc32,
+            min_bound,
+            {hdr.polka_probe.l_hash},
+            max_bound
+        );
     }
 }
 
@@ -78,6 +106,11 @@ control MyIngress(
         } else {
             srcRoute_nhop();
             standard_metadata.egress_spec = meta.port;
+            if (hdr.polka.version == PROBE_VERSION) {
+                MySignPacket.apply(hdr, meta);
+            } else {
+                hdr.polka_probe.setInvalid();
+            }
         }
     }
 }
@@ -108,6 +141,7 @@ control MyDeparser(
     apply {
         packet.emit(hdr.ethernet);
         packet.emit(hdr.polka);
+        packet.emit(hdr.polka_probe);
         packet.emit(hdr.ipv4);
     }
 }
