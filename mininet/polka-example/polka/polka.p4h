@@ -17,7 +17,8 @@ const bit<8> PROBE_VERSION = 0xF1;
 struct metadata {
     bit<1>   apply_sr;
     bit<9>   port;
-    polka_route_t routeid;
+    bit<16>  switch_id;
+    polka_route_t route_id;
 }
 
 header polka_probe_t {

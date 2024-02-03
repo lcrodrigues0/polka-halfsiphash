@@ -124,10 +124,8 @@ control MyProbe(
     inout metadata meta
 ) {
     action encap() {
-        hdr.polka.version = PROBE_VERSION;
-
         hdr.polka_probe.setValid();
-        // Generates a random number between 0 and 2^32 - 1
+        hdr.polka.version = PROBE_VERSION;
         random(hdr.polka_probe.timestamp, 0, 0xFFFFFFFF);
         hdr.polka_probe.l_hash = hdr.polka_probe.timestamp;
     }
@@ -137,7 +135,16 @@ control MyProbe(
             // Decap
             hdr.polka_probe.setInvalid();
         } else {
-            encap();
+            // Generates a random number between 0 and 2^32 - 1
+            // Set only 10% of packets to probe version
+            bit<4> is_probe = 3;
+            random(is_probe, 0, 10);
+            if (is_probe == 0) {
+                encap();
+            } else {
+                hdr.polka.version = REGULAR_VERSION;
+                hdr.polka_probe.setInvalid();
+            }
         }
 
     }

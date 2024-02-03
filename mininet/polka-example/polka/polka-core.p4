@@ -28,7 +28,7 @@ parser MyParser(
     state get_polka_header {
         meta.apply_sr = 1;
         packet.extract(hdr.polka);
-        meta.routeid = hdr.polka.routeid;
+        meta.route_id = hdr.polka.routeid;
 
         transition select(hdr.polka.version) {
             PROBE_VERSION: parse_polka_probe;
@@ -51,6 +51,36 @@ control MyVerifyChecksum(
     apply {  }
 }
 
+control MySwitchId(
+    inout headers hdr,
+    inout metadata meta
+) {
+    action switchid (
+        bit<16> switch_id
+    ){
+       meta.switch_id = switch_id;
+    }
+
+    // Adds a Polka header to the packet 
+    // Table name can't be changed because it is the name defined by node configuration files
+    table config {
+        key = {
+            meta.apply_sr: exact;
+        }
+        actions = {
+            // Actions names also can't be changed because they are the names defined by node configuration files
+            switchid;
+        }
+        size = 128;
+    }
+
+    apply {
+        meta.apply_sr = 0;
+        config.apply();
+        hdr.polka.ttl = meta.switch_id[7:0];
+    }
+}
+
 control MySignPacket(
     inout headers hdr,
     inout metadata meta
@@ -58,10 +88,12 @@ control MySignPacket(
     // Signs the packet
     // TODO: include switchid - currently only hashing
     apply {
+        // Gets the routeId and installs it on meta.route_id
+        MySwitchId.apply(hdr, meta);
         hdr.polka_probe.setValid();
 
         // At this point, `meta.port` should be written on already
-        hdr.polka_probe.l_hash = (bit<32>) meta.port ^ hdr.polka_probe.l_hash;
+        hdr.polka_probe.l_hash = (bit<32>) meta.port ^ hdr.polka_probe.l_hash ^ (bit<32>) meta.switch_id;
 
         bit<16> nbase = 0;
         bit<32> min_bound = 0;
@@ -81,12 +113,12 @@ control MyIngress(
     inout metadata meta,
     inout standard_metadata_t standard_metadata
 ) {
-    // Calculates the next hop (port) based on the routeid
+    // Calculates the next hop (port) based on the routeid (inside the crc16 custom hash result)
     action srcRoute_nhop() {
         // routeId % switchId = portId
         
-        bit<160> ndata = meta.routeid >> 16;
-        bit<16> dif = (bit<16>) (meta.routeid ^ (ndata << 16));
+        bit<160> ndata = meta.route_id >> 16;
+        bit<16> dif = (bit<16>) (meta.route_id ^ (ndata << 16));
 
         bit<16> nresult;
         bit<64> ncount = 4294967296 * 2;
