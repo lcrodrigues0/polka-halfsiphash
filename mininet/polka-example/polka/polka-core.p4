@@ -56,7 +56,7 @@ control MySignPacket(
     inout metadata meta
 ) {
     // Signs the packet
-    // TODO: include routeid - currently only hashing
+    // TODO: include switchid - currently only hashing
     apply {
         hdr.polka_probe.setValid();
 
@@ -83,6 +83,8 @@ control MyIngress(
 ) {
     // Calculates the next hop (port) based on the routeid
     action srcRoute_nhop() {
+        // routeId % switchId = portId
+        
         bit<160> ndata = meta.routeid >> 16;
         bit<16> dif = (bit<16>) (meta.routeid ^ (ndata << 16));
 

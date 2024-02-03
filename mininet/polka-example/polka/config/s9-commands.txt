@@ -1,1 +1,2 @@
 set_crc16_parameters calc 0x00d7 0x0 0x0 false false
+table_add config switchid 0 => 0x00d7
