@@ -139,7 +139,7 @@ control MyProbe(
             // Set only 10% of packets to probe version
             bit<4> is_probe = 3;
             random(is_probe, 0, 10);
-            if (is_probe == 0) {
+            if (is_probe <= 10) { // Currently set for 100% for debug
                 encap();
             } else {
                 hdr.polka.version = REGULAR_VERSION;
