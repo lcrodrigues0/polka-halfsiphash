@@ -27,7 +27,7 @@ n_switches = 10
 BW = 10
 
 
-def topology(remote_controller):
+def topology():
     "Create a network."
     net = Mininet_wifi()
 
@@ -123,5 +123,4 @@ def topology(remote_controller):
 
 if __name__ == "__main__":
     setLogLevel("info")
-    remote_controller = False
-    topology(remote_controller)
+    topology()
