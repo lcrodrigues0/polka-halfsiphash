@@ -49,6 +49,8 @@ def topology(remote_controller):
     host = net.addHost("h%d" % 11, ip=ip, mac=mac)
     hosts.append(host)
 
+    print(f"hosts: {hosts!r}")
+
     info("*** Adding P4Switches (core)\n")
     for i in range(1, n_switches + 1):
         # read the network configuration
