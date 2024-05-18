@@ -86,7 +86,6 @@ control MySignPacket(
     inout metadata meta
 ) {
     // Signs the packet
-    // TODO: include switchid - currently only hashing
     apply {
         // Gets the routeId and installs it on meta.route_id
         MySwitchId.apply(hdr, meta);

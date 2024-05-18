@@ -215,8 +215,11 @@ def thrift_connect_standard(thrift_ip, thrift_port, out=sys.stdout):
         0
     ]
 
+def main():
+    switch1 = thrift_connect_standard("0.0.0.0", 50002)
+    set_crc_parameters_common(client=switch1, line="calc 0x003b 0x0 0x0 false false")
+    # print(switch1.bm_get_config())
+
 
 if __name__ == "__main__":
-    switch1 = thrift_connect_standard("0.0.0.0", 50001)
-    set_crc_parameters_common(client=switch1, line="calc 0x003b 0x0 0x0 false false")
-    print(switch1.bm_get_config())
+    main()
