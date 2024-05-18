@@ -14,12 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
-from threading import Thread
+from time import sleep
 
 from mininet.log import setLogLevel, info
 from mn_wifi.cli import CLI
 from mn_wifi.net import Mininet_wifi
 from mn_wifi.bmv2 import P4Switch
+
+
+from polka_controller.controller_polka import (
+    thrift_connect_standard,
+    set_crc_parameters_common,
+)
 
 # from mininet.term import makeTerm
 # from mininet.node import RemoteController
@@ -27,12 +33,9 @@ from mn_wifi.bmv2 import P4Switch
 N_SWITCHES = 10
 BW = 10
 
-net = None
 
-
-def linear_topology(callback: callable = lambda: None):
+def linear_topology():
     "Create a network."
-    global net
     net = Mininet_wifi()
 
     # linkopts = dict()
@@ -115,8 +118,10 @@ def linear_topology(callback: callable = lambda: None):
     for host in hosts:
         host.cmd(f"ethtool --offload {host.name}-eth0 rx off tx off")
 
-    info("*** Signaling that network setup is complete\n")
-    callback(hosts)
+    info("*** Auto-testing network\n")
+    run_network_tests(net)
+
+    info("*** All tests passed.\n")
 
     info("*** Running CLI\n")
     CLI(net)
@@ -127,39 +132,60 @@ def linear_topology(callback: callable = lambda: None):
     net.stop()
 
 
-def test_integrity(net, hosts):
+def test_integrity(net):
     """
     Test the integrity of the network, this is to be used in a suite of tests
     """
-    print("*** Testing network integrity")
-    packet_loss_pct = net.ping([hosts[0], hosts[-2]])
+    first_host = net.hosts[0]
+    last_host = net.hosts[-2]
+    print(
+        (
+            "*** Testing network integrity\n",
+            f"    a ping from {first_host.name} to {last_host.name},\n"
+            "    goes through all switches",
+        )
+    )
+    packet_loss_pct = net.ping([first_host, last_host], timeout=1)
     assert packet_loss_pct == 0.0, f"Packet loss: {packet_loss_pct}%"
 
 
-def run_network_tests(hosts):
+def run_network_tests(net):
     """
     Run the tests in the network
     """
-    global net
+
     # sleep for 5 seconds to let the network stabilize
-    from time import sleep
-
     sleep(5)
+
+    print("*** Running tests")
     # Test before running the tests
-    test_integrity(net, hosts)
+    test_integrity(net)
 
-    assert False, "Tests failed"
+    # Break the connection
+    print("*** Breaking the polka routing on s3")
+    print(f"{net.ipBase=}")
+    print(f"{net.host=}")
+    s3 = thrift_connect_standard(net.ipBase[:-2], 50003)
+    set_crc_parameters_common(s3, "calc 0x0000 0x0 0x0 false false")
 
+    try:
+        # Test after breaking the connection
+        test_integrity(net)
+    except AssertionError:
+        # Test should fail
+        print("*** Test failed as expected")
+    else:
+        # Test should fail
+        raise AssertionError("Test should have failed")
 
-def run_network_tests_callback(hosts):
-    """
-    Create a thread to run the tests and instantly return to not block the CLI
-    """
-    t = Thread(target=run_network_tests, args=(hosts,))
-    t.start()
-    return
+    # Restore the connection
+    print("*** Restoring the polka routing on s3")
+    set_crc_parameters_common(s3, "calc 0x0039 0x0 0x0 false false")
+
+    # Test after restoring the connection
+    test_integrity(net)
 
 
 if __name__ == "__main__":
     setLogLevel("info")
-    linear_topology(run_network_tests_callback)
+    linear_topology()

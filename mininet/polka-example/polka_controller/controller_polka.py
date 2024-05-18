@@ -9,8 +9,8 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 from thrift.protocol import TMultiplexedProtocol
 
-from bm_runtime.standard import Standard
-from bm_runtime.standard.ttypes import *
+from .bm_runtime.standard import Standard
+from .bm_runtime.standard.ttypes import *
 
 CUSTOM_CRC_CALCS = {}
 CUSTOM_CRC_CALCS["calc"] = 16
