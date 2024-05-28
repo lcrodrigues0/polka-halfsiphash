@@ -30,6 +30,7 @@ def main():
             pkt = pkt / SourceRoute(routeid=routeid, pot_k=3980420111)
             # pkt = pkt / SourceRoute(routeid=routeid)
         except ValueError:
+            print("Exception raised")
             pass
 
         pkt = (
