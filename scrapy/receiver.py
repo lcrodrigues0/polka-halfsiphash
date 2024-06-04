@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 import sys
 
-from scapy.all import sniff, bind_layers, Packet, Ether
+from scapy.all import AsyncSniffer, bind_layers, Packet, Ether
 from scapy.fields import BitField
+
+from time import sleep
 
 
 class Polka(Packet):
@@ -19,6 +21,7 @@ class PolkaProbe(Packet):
         BitField("timestamp", default=0, size=32),
         BitField("l_hash", default=0, size=32),
     ]
+
 
 class Ipv4(Packet):
     fields_desc = [
@@ -37,24 +40,27 @@ class Ipv4(Packet):
     ]
 
 
-
 bind_layers(Ether, Polka, type=0x1234)
-bind_layers(Polka, PolkaProbe, version=0xf1)
+bind_layers(Polka, PolkaProbe, version=0xF1)
 bind_layers(PolkaProbe, Ipv4)
 
 
-def handle_pkt(pkt: Packet):
-    print("Got a packet!")
-    pkt.show2()
-    sys.stdout.flush()
-
-
 def main():
-    iface = sys.argv[1]
+    iface = sys.argv[1].split(",")
 
     print(f"Sniffing on {iface}")
     sys.stdout.flush()
-    sniff(iface=iface, prn=handle_pkt)
+    sniff = AsyncSniffer(iface=iface, filter="ether proto 0x1234", store=True)
+    sniff.start()
+
+    print("Hey")
+
+    sleep(10)
+    print("sniffing done")
+    pkts = sniff.stop()
+
+    for packet in pkts:
+        print(packet.show())
 
 
 if __name__ == "__main__":
