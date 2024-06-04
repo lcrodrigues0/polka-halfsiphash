@@ -13,7 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
+from os import path as Path
+from typing import Iterable, Callable
 from time import sleep
 
 from mininet.log import setLogLevel, info, debug
@@ -27,6 +28,43 @@ from polka_controller.controller_polka import (
     set_crc_parameters_common,
 )
 
+from scapy.all import AsyncSniffer, bind_layers, Packet, Ether
+from scapy.fields import BitField
+
+
+class Polka(Packet):
+    fields_desc = [
+        BitField("version", default=0, size=8),
+        BitField("ttl", default=0, size=8),
+        BitField("proto", default=0, size=16),
+        BitField("route_id", default=0, size=160),
+    ]
+
+
+class PolkaProbe(Packet):
+    fields_desc = [
+        BitField("timestamp", default=0, size=32),
+        BitField("l_hash", default=0, size=32),
+    ]
+
+
+class Ipv4(Packet):
+    fields_desc = [
+        BitField("version", default=0, size=4),
+        BitField("ihl", default=0, size=4),
+        BitField("diffserv", default=0, size=8),
+        BitField("total_len", default=0, size=16),
+        BitField("identification", default=0, size=16),
+        BitField("flags", default=0, size=3),
+        BitField("frag_offset", default=0, size=13),
+        BitField("ttl", default=0, size=8),
+        BitField("protocol", default=0, size=8),
+        BitField("checksum", default=0, size=16),
+        BitField("src_addr", default=0, size=32),
+        BitField("dst_addr", default=0, size=32),
+    ]
+
+
 # from mininet.term import makeTerm
 # from mininet.node import RemoteController
 
@@ -36,16 +74,16 @@ BW = 10
 CORE_THRIFT_CORE_OFFSET = 50000
 EDGE_THRIFT_CORE_OFFSET = 50100
 
+POLKA_PROTO = 0x1234
+PROBE_VERSION = 0xF1
 
-def linear_topology():
-    "Create a network."
-    net = Mininet_wifi()
+bind_layers(Ether, Polka, type=POLKA_PROTO)
+bind_layers(Polka, PolkaProbe, version=PROBE_VERSION)
+bind_layers(PolkaProbe, Ipv4)
 
-    # linkopts = dict()
-    switches = []
-    edges = []
+
+def linear_topology_add_hosts(net):
     hosts = []
-
     info("*** Adding hosts\n")
     for i in range(1, N_SWITCHES + 1):
         ip = f"10.0.{i}.{i}"
@@ -54,64 +92,79 @@ def linear_topology():
         hosts.append(host)
 
     # host 11
-    i_1, i_2 = 1, 11
+    i_1, i_2 = 1, N_SWITCHES + 1
     ip = f"10.0.{i_1}.{i_2}"
     mac = f"00:00:00:00:{i_1:02x}:{i_2:02x}"
-    host = net.addHost("h11", ip=ip, mac=mac)
+    host = net.addHost(f"h{N_SWITCHES + 1}", ip=ip, mac=mac)
     hosts.append(host)
+
+    return (net, hosts)
+
+
+def linear_topology_add_switches(net):
+
+    edges = []
+    cores = []
 
     info("*** Adding P4Switches (core)\n")
     for i in range(1, N_SWITCHES + 1):
         # read the network configuration
-        path = os.path.dirname(os.path.abspath(__file__))
-        json_file = f"{path}/polka/polka-core.json"
-        config = f"{path}/polka/config/s{i}-commands.txt"
+        path = Path.dirname(Path.abspath(__file__))
         # Add P4 switches (core)
         switch = net.addSwitch(
             f"s{i}",
             netcfg=True,
-            json=json_file,
+            json=f"{path}/polka/polka-core.json",
             thriftport=CORE_THRIFT_CORE_OFFSET + int(i),
-            switch_config=config,
+            switch_config=f"{path}/polka/config/s{i}-commands.txt",
             loglevel="debug",
             cls=P4Switch,
         )
-        switches.append(switch)
+        cores.append(switch)
 
     info("*** Adding P4Switches (edge)\n")
     for i in range(1, N_SWITCHES + 1):
         # read the network configuration
-        path = os.path.dirname(os.path.abspath(__file__))
-        json_file = f"{path}/polka/polka-edge.json"
-        config = f"{path}/polka/config/e{i}-commands.txt"
-        # add P4 switches (core)
-        edge = net.addSwitch(
+        path = Path.dirname(Path.abspath(__file__))
+        # add P4 switches (edge)
+        switch = net.addSwitch(
             f"e{i}",
             netcfg=True,
-            json=json_file,
+            json=f"{path}/polka/polka-edge.json",
             thriftport=EDGE_THRIFT_CORE_OFFSET + int(i),
-            switch_config=config,
+            switch_config=f"{path}/polka/config/e{i}-commands.txt",
             loglevel="debug",
             cls=P4Switch,
         )
-        edges.append(edge)
+        edges.append(switch)
+
+    return (net, cores, edges)
+
+
+def linear_topology() -> Mininet_wifi:
+    "Create a network."
+    net = Mininet_wifi()
+
+    # linkopts = dict()
+    net, hosts = linear_topology_add_hosts(net)
+    net, cores, edges = linear_topology_add_switches(net)
 
     info("*** Creating links\n")
     for i in range(0, N_SWITCHES):
         net.addLink(hosts[i], edges[i], bw=BW)
-        net.addLink(edges[i], switches[i], bw=BW)
+        net.addLink(edges[i], cores[i], bw=BW)
 
     last_switch = None
 
     for i in range(0, N_SWITCHES):
-        switch = switches[i]
+        switch = cores[i]
 
         if last_switch:
             net.addLink(last_switch, switch, bw=BW)
         last_switch = switch
 
     # host 11
-    net.addLink(hosts[10], edges[0], bw=BW)
+    net.addLink(hosts[-1], edges[0], bw=BW)
 
     info("*** Starting network\n")
     net.start()
@@ -124,18 +177,34 @@ def linear_topology():
     return net
 
 
+def gen_show_function(sw: str) -> Callable[[Packet], None]:
+    """
+    Generate a function that will show the packet if it is destined to the switch
+    """
+
+    def show(packet: Packet):
+        """
+        Show the packet if it is destined to the switch
+        """
+        print(f"Packet received by {sw}")
+        packet.show()
+
+    return show
+
+
 def test_integrity(net):
     """
     Test the integrity of the network, this is to be used in a suite of tests
     """
     first_host = net.hosts[0]
     last_host = net.hosts[-2]
-    print(
+    info(
         "*** Testing network integrity\n"
         f"    a ping from {first_host.name} to {last_host.name},\n"
-        "    goes through all core switches"
+        "    goes through all core switches\n"
     )
     packet_loss_pct = net.ping(hosts=[first_host, last_host], timeout=1)
+    # Comparing floats (bad), but it's fine because an exact 0.0% packet loss is expected
     assert packet_loss_pct == 0.0, f"Packet loss occurred: {packet_loss_pct}%"
 
 
@@ -150,77 +219,212 @@ def test_self():
     and if the network is working as expected.
     It also tests if our tooling is working as expected.
     """
-
-    net = linear_topology()
-
-    # sleep for a bit to let the network stabilize
-    sleep(5)
-
-    info("*** Running tests\n")
-    test_integrity(net)
-
-    info("*** Breaking the polka routing on s3\n")
-
-    # print(f"{net.ipBase=}")
-    # print(f"{net.host=}")
-    s3 = connect_to_core_switch(3)
-    # Changes SwitchID from `0x0039` to `0x0000`
-    set_crc_parameters_common(s3, "calc 0x0000 0x0 0x0 false false")
-
     try:
+        net = linear_topology()
+
+        # sleep for a bit to let the network stabilize
+        sleep(3)
+
+        info("*** Running self tests\n")
         test_integrity(net)
-    except AssertionError:
-        info("*** Test failed as expected\n")
-    else:
-        raise AssertionError("Test should have failed")
 
-    info("*** Restoring the polka routing on s3\n")
-    set_crc_parameters_common(s3, "calc 0x0039 0x0 0x0 false false")
+        info("*** Breaking the polka routing on s3\n")
 
-    test_integrity(net)
-    info("*** Self-test passed. Stopping network \n")
-    net.stop()
+        # print(f"{net.ipBase=}")
+        # print(f"{net.host=}")
+        s3 = connect_to_core_switch(3)
+        # Changes SwitchID from `0x0039` to `0x0000`
+        set_crc_parameters_common(s3, "calc 0x0000 0x0 0x0 false false")
+
+        try:
+            test_integrity(net)
+        except AssertionError:
+            info("*** Test failed as expected\n")
+        else:
+            raise AssertionError("SelfTest error: Test should have failed")
+
+        info("*** Restoring the polka routing on s3\n")
+        set_crc_parameters_common(s3, "calc 0x0039 0x0 0x0 false false")
+
+        test_integrity(net)
+        info("*** Self-test passed. Stopping network \n")
+    finally:
+        net.stop()
 
 
 def test_addition():
     """
-    Test if the network is protected against an addition attack
+       Test if the network is protected against an addition attack
 
-    An addition attack is when a new switch is added to the network between two existing switches,
-    and the existing connections of surrounding switches = linear_topology()
- are not touched.
+       An addition attack is when a new switch is added to the network between two existing switches,
+       and the existing connections of surrounding switches = linear_topology()
+    are not touched.
     """
 
     net = linear_topology()
+    # net = linear_topology_with_attacker()
+    try:
 
-    info("*** Adding an attacker switch\n")
+        # sleep for a bit to let the network stabilize
+        sleep(3)
 
-    path = os.path.dirname(os.path.abspath(__file__))
-    json_file = f"{path}/polka/polka-core.json"
-    # config = f"{path}/polka/config/s{i}-commands.txt"
-    # Add P4 switches (core)
-    attacker = net.addSwitch(
-        "s555",
-        netcfg=True,
-        json=json_file,
-        thriftport=CORE_THRIFT_CORE_OFFSET + 555,
-        # switch_config=config,
-        loglevel="debug",
-        cls=P4Switch,
-    )
+        info("*** Testing the baseline signatures\n")
+        # ifaces = [
+        #     iface
+        #     for switch in net.switches
+        #     for iface in switch.intfNames()
+        #     if iface != "lo"
+        # ]
+        ifaces = [
+            "e1-eth1",
+            "s1-eth1",
+            "e2-eth1",
+            "s2-eth1",
+            "e3-eth1",
+            "s3-eth1",
+            "e4-eth1",
+            "s4-eth1",
+            "e5-eth1",
+            "s5-eth1",
+            "e6-eth1",
+            "s6-eth1",
+            "e7-eth1",
+            "s7-eth1",
+            "e8-eth1",
+            "s8-eth1",
+            "e9-eth1",
+            "s9-eth1",
+            "e10-eth1",
+            "s10-eth1",
+            "e1-eth2",
+            "e2-eth2",
+            "e3-eth2",
+            "e4-eth2",
+            "e5-eth2",
+            "e6-eth2",
+            "e7-eth2",
+            "e8-eth2",
+            "e9-eth2",
+            "e10-eth2",
+            "s2-eth2",
+            "s1-eth2",
+            "s3-eth2",
+            "s4-eth2",
+            "s5-eth2",
+            "s6-eth2",
+            "s7-eth2",
+            "s8-eth2",
+            "s9-eth2",
+            "s10-eth2",
+            "s2-eth3",
+            "s3-eth3",
+            "s4-eth3",
+            "s5-eth3",
+            "s6-eth3",
+            "s7-eth3",
+            "s8-eth3",
+            "s9-eth3",
+            "e1-eth3",
+        ]
 
-    s3 = net.switches[2]
-    s4 = net.switches[3]
+        info(f"*** Sniffing on {ifaces}\n")
 
-    net.addLink(attacker, s3, bw=BW)
-    net.addLink(attacker, s4, bw=BW)
+        sniff = AsyncSniffer(
+            # All ifaces
+            iface=ifaces,
+            # filter=f"ether proto {POLKA_PROTO:#x}",
+            filter="ether proto 0x1234",
+            store=True,
+        )
 
-    # sleep for a bit to let the network stabilize
-    sleep(5)
+        info("*** Adding an attacker switch\n")
 
-    info("*** Running tests\n")
-    test_integrity(net)
-    net.stop()
+        # path = Path.dirname(Path.abspath(__file__))
+        # config = f"{path}/polka/config/s{i}-commands.txt"
+        # Add P4 switches (core)
+        # attacker = net.addSwitch(
+        #     "s555",
+        #     netcfg=True,
+        #     json=f"{path}/polka/polka-attacker.json",
+        #     thriftport=CORE_THRIFT_CORE_OFFSET + 555,
+        #     # switch_config=config,
+        #     loglevel="debug",
+        #     cls=P4Switch,
+        # )
+
+        # s3 = net.switches[2]
+        # s4 = net.switches[3]
+
+        # net.addLink(attacker, s3, bw=BW)
+        # net.addLink(attacker, s4, bw=BW)
+
+        # sleep for a bit to let the network stabilize
+        # sleep(3)
+        sniff.start()
+        # Waits for the minimum amount for the sniffer to be setup and run
+        while not hasattr(sniff, "stop_cb"):
+            sleep(0.06)
+
+        test_integrity(net)
+
+        info("*** Stopping sniffing\n")
+        pkts = sniff.stop()
+        pkts.sort(key=lambda pkt: pkt.time)
+
+        info("*** Checking the packets\n")
+        BASE_DIGESTS = [
+            # On the way to h10
+            0x61E8D6E7,  # Seed, on ingress edge
+            0xAE91434C,
+            0x08C97F5F,
+            0xEFF1AAD2,
+            0x08040C89,
+            0xAA99AE2E,
+            0x7669685E,
+            0x03E1E388,
+            0x2138FFD3,
+            0x1EF2CBBE,
+            0x99C5FE05,
+            # Reply, on the way back
+            0x61E8D6E7,  # Seed, on ingress edge
+            0xCFFABC9F,
+            0x69409E70,
+            0xF3E992E0,
+            0x8DDE192B,
+            0x92B098FA,
+            0x1115A62C,
+            0x41E1B5E0,
+            0x227F0B72,
+            0x82FC6346,
+            0xD01E3E0F,
+        ]
+        half = len(BASE_DIGESTS) // 2
+        # It is repeated because the ping is then initialized by h10 -> h1
+        expected_digests = BASE_DIGESTS + BASE_DIGESTS[half:] + BASE_DIGESTS[:half]
+        # Every row is duplicated because the capture captures the packet twice, once getting on the input and once getting on the output
+        expected_digests = [digest for digest in expected_digests for _ in range(2)]
+
+        # Using Python3.8, so can't use `zip(*iterables, strict=True)`
+
+        count_error = False
+        if len(pkts) != len(expected_digests):
+            info(f"*** Expected {len(expected_digests)} packets, got {len(pkts)}")
+            count_error = True
+
+        for pkt, digest in zip(pkts, expected_digests):
+            probe = pkt.getlayer(PolkaProbe)
+            # info(f"{probe.fields=}\n")
+            l_hash = probe.l_hash
+            if l_hash == BASE_DIGESTS[0]:
+                info("*** Comparing new ping\n")
+            info(f"*** Comparing {l_hash:#0{10}X}, expects {digest:#0{10}X}\n")
+            assert l_hash == digest, "Digest does not match"
+
+        if count_error:
+            raise AssertionError("Count error")
+
+    finally:
+        net.stop()
 
 
 def test_detour():
@@ -231,37 +435,6 @@ def test_detour():
     concurring with an existing switch, with the same connections as the existing switch.
     """
 
-    net = linear_topology()
-
-    info("*** Adding an attacker switch\n")
-
-    path = os.path.dirname(os.path.abspath(__file__))
-    json_file = f"{path}/polka/polka-core.json"
-    # config = f"{path}/polka/config/s{i}-commands.txt"
-    # Add P4 switches (core)
-    attacker = net.addSwitch(
-        "s555",
-        netcfg=True,
-        json=json_file,
-        thriftport=CORE_THRIFT_CORE_OFFSET + 555,
-        # switch_config=config,
-        loglevel="debug",
-        cls=P4Switch,
-    )
-
-    s3 = net.switches[2]
-    s5 = net.switches[4]
-
-    net.addLink(attacker, s3, bw=BW)
-    net.addLink(attacker, s5, bw=BW)
-
-    # sleep for a bit to let the network stabilize
-    sleep(5)
-
-    info("*** Running tests\n")
-    test_integrity(net)
-    net.stop()
-
 
 def test_subtraction():
     """
@@ -270,9 +443,6 @@ def test_subtraction():
     A subtraction attack is when a switch is skipped in the route,
     and the packets are sent directly to the next switch in the route.
     """
-
-    net = linear_topology()
-
 
 
 def test_skipping():
@@ -290,7 +460,12 @@ def run_network_tests():
     """
 
     info("*** Auto-testing network\n")
-    test_self()
+    try:
+        # test_self()
+        test_addition()
+    except Exception as e:
+        info(f"*** Test failed: {e}\n")
+        raise e
     info("*** All tests passed.\n")
 
 
@@ -298,8 +473,8 @@ if __name__ == "__main__":
     setLogLevel("info")
     run_network_tests()
 
-    info("*** Running CLI\n")
-    net = linear_topology()
-    CLI(net)
-    info("*** Stopping network\n")
-    net.stop()
+    # info("*** Running CLI\n")
+    # net = linear_topology()
+    # CLI(net)
+    # info("*** Stopping network\n")
+    # net.stop()

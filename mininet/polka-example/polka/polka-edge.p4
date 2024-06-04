@@ -126,7 +126,9 @@ control MyProbe(
     action encap() {
         hdr.polka_probe.setValid();
         hdr.polka.version = PROBE_VERSION;
-        random(hdr.polka_probe.timestamp, 0, 0xFFFFFFFF);
+        // random(hdr.polka_probe.timestamp, 0, 0xFFFFFFFF);
+        // Hardcode a seed for checking results
+        hdr.polka_probe.timestamp = 0x61e8d6e7;
         hdr.polka_probe.l_hash = hdr.polka_probe.timestamp;
     }
 
