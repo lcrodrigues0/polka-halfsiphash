@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import sys
-import hashlib
+# import hashlib
 
-from thrift import Thrift
+# from thrift import Thrift
 from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
@@ -205,7 +205,7 @@ def thrift_connect(thrift_ip, thrift_port, services, out=sys.stdout):
         my_print("and that you have the right port\n")
         sys.exit(1)
     
-    print(clients)
+    # print(clients)
 
     return clients
 

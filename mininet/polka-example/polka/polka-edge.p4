@@ -60,6 +60,37 @@ control MyVerifyChecksum(
     }
 }
 
+control MySeed(
+    inout headers hdr,
+    inout metadata meta
+) {
+    // Sets a configured seed for the timestamp
+    action seed (
+        bit<32> setseed
+    ){
+        hdr.polka_probe.setValid(); 
+        hdr.polka_probe.timestamp = setseed;
+    }
+
+    // Adds a Polka header to the packet 
+    // Table name can't be changed because it is the name defined by node configuration files
+    table config {
+        key = {
+            meta.apply_sr: exact;
+        }
+        actions = {
+            // Actions names also can't be changed because they are the names defined by node configuration files
+            seed;
+        }
+        size = 128;
+    }
+
+    apply {
+        meta.apply_sr = 0;
+        config.apply();
+    }
+}
+
 control TunnelEncap(
     inout headers hdr,
     inout metadata meta,
@@ -127,8 +158,7 @@ control MyProbe(
         hdr.polka_probe.setValid();
         hdr.polka.version = PROBE_VERSION;
         // random(hdr.polka_probe.timestamp, 0, 0xFFFFFFFF);
-        // Hardcode a seed for checking results
-        hdr.polka_probe.timestamp = 0x61e8d6e7;
+        
         hdr.polka_probe.l_hash = hdr.polka_probe.timestamp;
     }
 
@@ -139,14 +169,16 @@ control MyProbe(
         } else {
             // Generates a random number between 0 and 2^32 - 1
             // Set only 10% of packets to probe version
-            bit<4> is_probe = 3;
-            random(is_probe, 0, 10);
-            if (is_probe <= 10) { // Currently set for 100% for debug
+            // Currently set for 100% for debug
+            // bit<4> is_probe = 3;
+            // random(is_probe, 0, 10);
+            // if (is_probe <= 10) { 
+                MySeed.apply(hdr, meta);
                 encap();
-            } else {
-                hdr.polka.version = REGULAR_VERSION;
-                hdr.polka_probe.setInvalid();
-            }
+            // } else {
+            //     hdr.polka.version = REGULAR_VERSION;
+            //     hdr.polka_probe.setInvalid();
+            // }
         }
 
     }
