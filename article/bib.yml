@@ -1,0 +1,15 @@
+polka:
+  type: Book
+  title: 'PolKA: Polynomial Key-based Architecture for Source Routing in Network Fabrics'
+  url: https://ieeexplore.ieee.org/document/9165501
+  author: 
+    - Dominicini, Cristina
+    - Mafioletti, Diego
+    - Locateli, Ana C.
+    - Villaca, Rodolfo
+    - Martinello, Magnos
+    - Ribeiro, Moisés
+    - Gorodnik, Alexander
+  date: 2020-08-12
+  booktitle: 2020 6th IEEE Conference on Network Softwarization (NetSoft)
+  pages: 326 - 334
