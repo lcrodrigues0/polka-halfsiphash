@@ -1,8 +1,11 @@
 polka:
   type: Book
-  title: 'PolKA: Polynomial Key-based Architecture for Source Routing in Network Fabrics'
+  title: "PolKA: Polynomial Key-based Architecture for Source Routing in Network Fabrics"
   url: https://ieeexplore.ieee.org/document/9165501
-  author: 
+  serial-number:
+    doi: 10.1109/NetSoft48620.2020.9165501
+    isbn: 978-1-7281-5684-2
+  author:
     - Dominicini, Cristina
     - Mafioletti, Diego
     - Locateli, Ana C.
@@ -13,3 +16,18 @@ polka:
   date: 2020-08-12
   booktitle: 2020 6th IEEE Conference on Network Softwarization (NetSoft)
   pages: 326 - 334
+
+pathsec:
+  title: "PathSec: Path-Aware Secure Routing with Native Path Verification and Auditability"
+  author:
+    - Magnos Martinello
+    - Roberta Lima Gomes
+    - Everson S. Borges
+    - Henrique Coutinho Layber
+    - Vitor B. Bonella
+    - Cristina K. Dominicini
+    - Rafael Guimarães
+    - Moisés Ribeiro
+    - Marinho Barcellos
+  date: 2024
+  type: Article
