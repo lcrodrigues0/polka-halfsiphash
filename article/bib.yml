@@ -1,10 +1,6 @@
 polka:
-  type: Book
+  type: article
   title: "PolKA: Polynomial Key-based Architecture for Source Routing in Network Fabrics"
-  url: https://ieeexplore.ieee.org/document/9165501
-  serial-number:
-    doi: 10.1109/NetSoft48620.2020.9165501
-    isbn: 978-1-7281-5684-2
   author:
     - Dominicini, Cristina
     - Mafioletti, Diego
@@ -13,21 +9,109 @@ polka:
     - Martinello, Magnos
     - Ribeiro, Moisés
     - Gorodnik, Alexander
-  date: 2020-08-12
-  booktitle: 2020 6th IEEE Conference on Network Softwarization (NetSoft)
-  pages: 326 - 334
+  date: 2020
+  page-range: 326–334
+  serial-number:
+    doi: 10.1109/NetSoft48620.2020.9165501
+  parent:
+    type: proceedings
+    title: 2020 6th IEEE Conference on Network Softwarization (NetSoft)
+    issue: ""
+    volume: 0
+
+polkap4:
+  type: article
+  title: "Deploying PolKA Source Routing in P4 Switches : (Invited Paper)"
+  author:
+    - Dominicini, Cristina
+    - Guimarães, Rafael
+    - Mafioletti, Diego
+    - Martinello, Magnos
+    - Ribeiro, Moises R. N.
+    - Villaça, Rodolfo
+    - Loui, Frédéric
+    - Ortiz, Jordi
+    - Slyne, Frank
+    - Ruffini, Marco
+    - Kenny, Eoin
+  date: 2021
+  page-range: 1-3
+  serial-number:
+    doi: 10.23919/ONDM51796.2021.9492363
+  parent:
+    type: proceedings
+    title: 2021 International Conference on Optical Network Design and Modeling (ONDM)
+    issue: ""
+    volume: 0
+
+potpolka:
+  type: article
+  title: "PoT-PolKA: Let the Edge Control the Proof-of-Transit in Path-Aware Networks"
+  author:
+    - Borges, Everson Scherrer
+    - Martinello, Magnos
+    - Bonella, Vitor B.
+    - name: Santos
+      given-name: Abraão J.
+      prefix: dos
+    - Gomes, Roberta L.
+    - Dominicini, Cristina K.
+    - Guimarães, Rafael Silva
+    - Menegueti, Gabriel T.
+    - Barcellos, Marinho
+    - Ruffini, Marco
+  date: 2024
+  page-range: 3681–3691
+  serial-number:
+    doi: 10.1109/TNSM.2024.3389457
+  parent:
+    type: periodical
+    title: IEEE Transactions on Network and Service Management
+    issue: 4
+    volume: 21
 
 pathsec:
   title: "PathSec: Path-Aware Secure Routing with Native Path Verification and Auditability"
   author:
-    - Magnos Martinello
-    - Roberta Lima Gomes
-    - Everson S. Borges
-    - Henrique Coutinho Layber
-    - Vitor B. Bonella
-    - Cristina K. Dominicini
-    - Rafael Guimarães
-    - Moisés Ribeiro
-    - Marinho Barcellos
+    - Martinello, Magnos
+    - Gomes, Roberta Lima
+    - Borges, Everson S.
+    - Layber, Henrique Coutinho
+    - Bonella, Vitor B.
+    - Dominicini, Cristina K.
+    - Guimarães, Rafael
+    - Ribeiro, Moisés
+    - Barcellos, Marinho
   date: 2024
   type: Article
+
+p4:
+  type: article
+  title: "P4: programming protocol-independent packet processors"
+  author:
+    - Bosshart, Pat
+    - Daly, Dan
+    - Gibb, Glen
+    - Izzard, Martin
+    - McKeown, Nick
+    - Rexford, Jennifer
+    - Schlesinger, Cole
+    - Talayco, Dan
+    - Vahdat, Amin
+    - Varghese, George
+    - Walker, David
+  date: 2014-07
+  page-range: 87-95
+  url: https://doi.org/10.1145/2656877.2656890
+  serial-number:
+    doi: 10.1145/2656877.2656890
+    issn: 0146-4833
+  abstract: >-
+    P4 is a high-level language for programming protocol-independent packet processors. P4 works in conjunction with SDN control protocols like OpenFlow. In its current form, OpenFlow explicitly specifies protocol headers on which it operates. This set has grown from 12 to 41 fields in a few years, increasing the complexity of the specification while still not providing the flexibility to add new headers. In this paper we propose P4 as a strawman proposal for how OpenFlow should evolve in the future. We have three goals: (1) Reconfigurability in the field: Programmers should be able to change the way switches process packets once they are deployed. (2) Protocol independence: Switches should not be tied to any specific network protocols. (3) Target independence: Programmers should be able to describe packet-processing functionality independently of the specifics of the underlying hardware. As an example, we describe how to use P4 to configure a switch to add a new hierarchical label.
+  parent:
+    type: periodical
+    title: SIGCOMM Comput. Commun. Rev.
+    publisher: Association for Computing Machinery
+    location: New York, NY, USA
+    issue: 3
+    volume: 44
