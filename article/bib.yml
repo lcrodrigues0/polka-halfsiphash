@@ -115,3 +115,41 @@ p4:
     location: New York, NY, USA
     issue: 3
     volume: 44
+    
+mininet-wifi:
+  type: article
+  title: 'Mininet-WiFi: Emulating Software-Defined Wireless Networks'
+  author:
+  - Fontes, Ramon
+  - Afzal, Samira
+  - Brito, Samuel
+  - Santos, Mateus
+  - Esteve Rothenberg, Christian
+  date: 2015-11
+  abstract: As the density of wireless networks continues to grow with more clients, more base stations, and more traffic, designing cost-effective wireless solutions with efficient resource usage and ease to manage is an increasing challenging task due to the overall system complexity. A number of vendors offer scalable and high-performance wireless networks but at a high cost and commonly as a single-vendor solution, limiting the ability to innovate after roll-out. Recent Software-Defined Networking (SDN) approaches propose new means for network virtualization and programmability advancing the way networks can be designed and operated, including user-defined features and customized behaviour even at runtime. However, means for rapid prototyping and experimental evaluation of SDN for wireless environments are not yet available. This paper introduces Mininet-WiFi as a tool to emulate wireless OpenFlow/SDN scenarios allowing high-fidelity experiments that replicate real networking environments. Mininet-WiFi augments the well-known Mininet emulator with virtual wireless stations and access points while keeping the original SDN capabilities and the lightweight virtualization software architecture. We elaborate on the potential applications of Mininet-Wifi and discuss the benefits and current limitations. Two use cases based on IEEE 802.11 demonstrate available functionality in our open source developments.
+  parent:
+    type: proceedings
+    title: 2nd International Workshop on Management of SDN and NFV Systems, 2015(ManSDN/NFV 2015)
+    location: Barcelona, Spain
+
+mininet:
+  type: article
+  title: 'A network in a laptop: rapid prototyping for software-defined networks'
+  author:
+  - Lantz, Bob
+  - Heller, Brandon
+  - McKeown, Nick
+  date: 2010
+  url: https://doi.org/10.1145/1868447.1868466
+  serial-number:
+    doi: 10.1145/1868447.1868466
+    isbn: '9781450304092'
+  abstract: Mininet is a system for rapidly prototyping large networks on the constrained resources of a single laptop. The lightweight approach of using OS-level virtualization features, including processes and network namespaces, allows it to scale to hundreds of nodes. Experiences with our initial implementation suggest that the ability to run, poke, and debug in real time represents a qualitative change in workflow. We share supporting case studies culled from over 100 users, at 18 institutions, who have developed Software-Defined Networks (SDN). Ultimately, we think the greatest value of Mininet will be supporting collaborative network research, by enabling self-contained SDN prototypes which anyone with a PC can download, run, evaluate, explore, tweak, and build upon.
+  parent:
+    type: proceedings
+    title: Proceedings of the 9th ACM SIGCOMM Workshop on Hot Topics in Networks
+    publisher: Association for Computing Machinery
+    location: Monterey, California
+    parent:
+      type: proceedings
+      title: Hotnets-IX

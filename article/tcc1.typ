@@ -3,7 +3,7 @@
 #set page(paper: "a4")
 #set text(font: "New Computer Modern", size: 11pt)
 #set par(justify: true)
-#set heading(numbering: "I.1.a")
+#set heading(numbering: "1.")
 #show link: it => text(blue, underline(it))
 
 #let midsection(it) = align(center, text(size: 1.1em, weight: "bold", it))
@@ -18,7 +18,12 @@
   let UFES(it) = box()[#it#UFESsym]
   let IFES(it) = box()[#it#IFESsym]
 
-  let authors_UFES = ("Henrique Coutinho Layber", "Roberta Lima Gomes", "Magnos Martinello", "Vitor B. Bonella")
+  let authors_UFES = (
+    "Henrique Coutinho Layber",
+    "Roberta Lima Gomes",
+    "Magnos Martinello",
+    "Vitor B. Bonella",
+  )
   let authors_IFES = ("Everson S. Borges",)
   let authors_both = ("Rafael Guimarães",)
   let authors_sep = ", "
@@ -48,7 +53,12 @@
 
 #{
   let keyword_sep = [; ]
-  let keywords = ("Verifiable Routing", "Path Verification", "Proof-of-transit", "In-networking Programming")
+  let keywords = (
+    "Verifiable Routing",
+    "Path Verification",
+    "Proof-of-transit",
+    "In-networking Programming",
+  )
   text(weight: "bold", keywords.join(keyword_sep))
 }
 
@@ -59,46 +69,83 @@
 
   In this paper, we propose a new P4@p4 implementation for a new protocol layer for PolKA@polka, able to do verify the actual route used for a packet. It is available on GitHub#footnote[https://github.com/Henriquelay/polka-halfsiphash/tree/remake/mininet/polka-example]. This is achieved by using a composition of hash functions on stateless core switches, each using a key to generate a digest that can be checked by the controller which knows the secrets. The controller can then verify that the packet traversed the network along the path selected by the source, ensuring that the network is functioning correctly.
 
-  = Related Works
-  // does this section make sense?
+  // = Related Works
+  // // does this section make sense?
 
-  This is an extension of PolKA, a protocol that uses stateless _Residue Number System_-based Source Routing scheme@polka.
+  // This is an extension of PolKA, a protocol that uses stateless _Residue Number System_-based Source Routing scheme@polka.
 
-  This work is just part of a complete system, PathSec@pathsec. PathSec also deals with accessibility, auditability, and other aspects of a fully-featured Proof of Transit (PoT) network. This works only relates to the verifiability aspect of PathSec.
+  // This work is just part of a complete system, PathSec@pathsec. PathSec also deals with accessibility, auditability, and other aspects of a fully-featured Proof of Transit (PoT) network. This works only relates to the verifiability aspect of PathSec.
 
   = Problem Definition
 
-  Using simpler terms, in PolKA, the route up to a protocol boundary (usually, the SDN border) is defined in $s$@potpolka. $s$ calculates and sets the packet header with enough information for each node to calculate the next hop. Calculating each hop is done using Chinese Remainder Theorem (CRT) and the Residue Number System (RNS)@polkap4, and is out of the scope of this paper. All paths are assumed to be both valid and correct.
+  // Let $G = (V, E)$ be a graph representing the network topology, where $V$ is the set of nodes (switches) and $E$ is the set of edges (links).
+  Let $i$ be the source node (#text(weight: "bold")[i]ngress node) and $e$ be the destination node (#text(weight: "bold")[e]gress node). Let path $P$ be a sequence of nodes:
 
-  Let $G = (V, E)$ be a graph representing the network topology, where $V$ is the set of nodes (switches) and $E$ is the set of edges (connections). Let $e$ be the source node (SDN ingress edge) and $d$ be the destination node (SDN egress edge). Let path $P$ be a sequence of nodes:
-
-  $ P = (e, s_1, s_2, .., s_n, d) $ <math:path-def>
+  $ limits(P)_(i->e) = (i, s_1, s_2, ..., s_(n - 1), s_n, e) $ <eq:path-def>
   where
-  / $P$: Path from $e$ to $d$.
-  / $s_i$: Core switch $i$ in the path.
+  / $P$: Path from $i$ to $e$.
+  / $s_n$: Core switch $n$ in the path.
   / $n$: Number of core switches in the path.
-  / $e$: Ingress edge (source).
-  / $d$: Egress edge (destination).
+  / $i$: Ingress edge (source).
+  / $e$: Egress edge (destination).
 
-  The main problem we are trying to solve is to have a way to ensure if the packets are following the path defined by the source. Notably, the solution need not to list the switches traversed, but only to verify if the packet has passed through the correct path.
+  In PolKA, the route up to the protocol boundary (usually, the SDN border) is defined in $i$@potpolka. $i$ sets the packet header with enough information for each core node to calculate the next hop. Calculating each hop is done using Chinese Remainder Theorem (CRT) and the Residue Number System (RNS)@polkap4, and is out of the scope of this paper. All paths are assumed to be both valid and all information correct unless stated otherwise.
+
+  The main problem we are trying to solve is path validation, that is, to have a way to ensure if the packets are actually following the path defined. Notably, it does not require verification, that is, listing the switches traversed is not required. // True/False problem
 
   A solution should be able to identify if:
-  1. The packet has passed through the correct switches.
+  1. The packet has passed through the switches in the path.
   2. The packet has passed through the correct order of switches.
-  3. The packet has not passed through any switch that is not in the path.
+  3. The packet has not passed through any switch that is not in the Path.
 
-  More formally, given a sequence of switches $P_e$ generated on the ingress $e$, and a sequence of switches actually traversed $P_j$, a solution should identify if $P_e = P_j$.
+  More formally, given a sequence of switches $limits(P)_(i->e)$, and a captured sequence of switches actually traversed $P_j$, a solution should identify if $limits(P)_(i->e) = P_j$.
 
 
-  @sr-diagram shows the most used topology used in the experiments.
+
+  = Solution Proposal
+
+  Each node's execution plan is stateless and can alter the header of the packet, which we will use to detect if the path taken is correct. So, a node $s_i$ can be viewed as a function $g_s_i (x)$.
+
+  In order to represent all nodes by the same function (for implementation purposes/* ?? */), we assign a distinct value $k$ for each $s$ node, and use a bivariate function $f(k_s_i, x) = f_s_i (x)$.
+  By using functions in two variables, we force one of the variables to have any uniquely per-node value, ensuring that the function is unique for each switch, that is, $f_s_y (x) != f_s_z (x) <=> y != z$.
+
+  Using function composition is a good way to propagate errors since it preserves the order-sensitive property of the path, since $f compose g != g compose f$ in a general case.
+  Each node will execute a single function of this composition, using the previous node's output as input.
+  In this way:
+
+  $ (f_s_1 compose f_s_2 compose f_s_3)(x) = f(k_s_3, f(k_s_2, f(k_s_1, x))) $
+  / $s_i$: $i$-th switch in the path.
+  / $f_s_i (x)$: Function representing switch $s_i$.
+  / $k_s_i$: Unique identifier for switch $s_i$.
+
+  == Assumption
+
+
+
+  == Implementation
+
+  === Setup
+
+  All implementation and experiments took place on a VM#footnote[Available on PolKA's repository https://github.com/nerds-ufes/polka] setup with Mininet-wifi@mininet-wifi, and were targeting Mininet's@mininet Behavioral Model version 2 (BMv2)
+
+  VM mininet-wifi BMv2 etc
+
+  === Code // TODO better name
+
+  By making the function $f$ is a checksum function, and the unique identifier $k_s_i$ as the `switch_id`, we apply an input data into a chain checksum functions and verify if they match. The controller will act as a validator, since it already has access to all `switch_id`. For additional verification, we also integrate the calculated exit port into the checksum, covering some other forms of
+
+  It was implemented as a version on PolKA, this means it uses the same protocol identifier `0x1234` and is interoperable with PolKA.
+
+
+  @topology shows the used topology used in the experiments.
 
   #figure(
-    caption: [Topology setup],
+    caption: [Topology setup.\ $s_n$ are core switches, $e_n$ are edge switches, $h_n$ are hosts.],
     diagram(
       node-stroke: 0.5pt,
       node-inset: 4pt,
       // debug: 1,
-      spacing: 1.5em,
+      spacing: 2em,
       {
         let switch = node.with(shape: shapes.octagon, fill: aqua)
         let edge_router = node.with(shape: shapes.pill, fill: lime)
@@ -116,85 +163,23 @@
           let e = "e" + str(i)
           edge_router((rel: (0, 1)), name: label(e))[$e_#i$]
           if i > first_1 {
-          let h = "h" + str(i)
-          edge("<->")
-          host((rel: (0, 1)), name: label(h))[$h_#i$]
+            let h = "h" + str(i)
+            edge("<->")
+            host((rel: (0, 1)), name: label(h))[$h_#i$]
           }
         }
 
 
-        host((0.6, 2), name: <h1>)[$h_1$]
+        host((rel: (-0.3, 1), to: <e1>), name: <h1>)[$h_1$]
         edge("<->", <e1>)
-        host((1.4, 2), name: <h11>)[$h_11$]
+        host((rel: (0.3, 1), to: <e1>), name: <h11>)[$h_11$]
         edge("<->", <e1>)
 
-        // Uncomment if h_n-2.. is needed
-
-        // let first = -2
-        // let offset = 1
-        // let lim = range(first, 1)
-        // for i in lim {
-        //   let istr = if i == 0 {
-        //       ""
-        //     } else {
-        //       str(i)
-        //     }
-
-        //   host(
-        //     (rel: (offset + i + lim.len(), 0), to: label("h" + str(last_1))),
-        //     name: label("hn" + str(-i)),
-        //   )[$h_(n#istr)$]
-
-        //   edge("<->")
-
-        //   edge_router(
-        //     (rel: (offset + i + lim.len(), 0), to: label("e" + str(last_1))),
-        //     name: label("en" + str(-i)),
-        //   )[$e_(n#istr)$]
-
-        //   edge("<->")
-
-        //   switch(
-        //     (rel: (offset + i + lim.len(), 0), to: label("s" + str(last_1))),
-        //     name: label("sn" + str(-i)),
-        //   )[$s_(n#istr)$]
-        //   if i > first {
-        //     edge(label("sn" + str(-i + 1)), label("sn" + str(-i)), "<->")
-        //   }
-        // }
-
-        // node((rel:(0, 0), to: (label("s" + str(last_1)), 50%, label("sn"+str(-first)))), stroke: none)[...]
-        // edge(label("sn"+str(-first)), "<->")
-        // edge(label("s" + str(last_1)), "<->")
-        // node((rel:(0, 0), to: (label("h" + str(last_1)), 50%, label("hn"+str(-first)))), stroke: none)[...]
-        // node((rel:(0, 0), to: (label("e" + str(last_1)), 50%, label("en"+str(-first)))), stroke: none)[...]
-
-        // node((rel: (0pt, 24pt), to: (<s1>, 50%, <sn0>)), "controller", name: <controller>, shape: shapes.rect, fill: silver)
       },
     ),
-  ) <sr-diagram>
+  ) <topology>
 
-  = Solution Proposal
-
-  Since the system is stateless, using function composition is a good way to propagate errors. Function composition preserves the order-sensitive property of the path, since $f compose g != g compose f$ in a general case.
-  Each node will execute a single function of this composition, using the previous node's output as input. 
-  By using injective functions in two variables, we can use one of the variables to have any uniquely per-node value, ensuring that the function is unique for each switch, ensuring $f_s_1(x) != f_s_2(x)$ for nodes $s_1$ and $s_2$.
-  In this way:
-
-  $ f_s_1 compose f_s_2 compose f_s_3 = f(id_s_3, f(id_s_2, f(id_s_1, x))) $
-  / $f_s_i$: Function for switch $s_i$.
-  / $id_s_i$: Unique identifier for switch $s_i$.
-
-  The function $f$ is a hash function, and the unique identifier $id_s_i$ is the switch's ID.
-  TODO exit port is also added
-
-  == Assumption
-
-  Controller that knows all IDs, and the hash function used.
-
-  == Implementation
-
-  It was implemented {{THIS WAY}}. It was validated with {{THIS}}.
+  It was validated with {{THIS}}.
 
   This detects {{X Y Z}}
 
@@ -206,7 +191,7 @@
   = Future Work
 
   - Rotating key for switches for detecting replay attacks (holy shit this is hard)
-  - Include (entrance or exit) port in hash
+  - Include entrance port in checksum
 
   #bibliography("bib.yml")
 
