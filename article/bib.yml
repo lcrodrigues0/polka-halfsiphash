@@ -126,7 +126,8 @@ mininet-wifi:
   - Santos, Mateus
   - Esteve Rothenberg, Christian
   date: 2015-11
-  abstract: As the density of wireless networks continues to grow with more clients, more base stations, and more traffic, designing cost-effective wireless solutions with efficient resource usage and ease to manage is an increasing challenging task due to the overall system complexity. A number of vendors offer scalable and high-performance wireless networks but at a high cost and commonly as a single-vendor solution, limiting the ability to innovate after roll-out. Recent Software-Defined Networking (SDN) approaches propose new means for network virtualization and programmability advancing the way networks can be designed and operated, including user-defined features and customized behaviour even at runtime. However, means for rapid prototyping and experimental evaluation of SDN for wireless environments are not yet available. This paper introduces Mininet-WiFi as a tool to emulate wireless OpenFlow/SDN scenarios allowing high-fidelity experiments that replicate real networking environments. Mininet-WiFi augments the well-known Mininet emulator with virtual wireless stations and access points while keeping the original SDN capabilities and the lightweight virtualization software architecture. We elaborate on the potential applications of Mininet-Wifi and discuss the benefits and current limitations. Two use cases based on IEEE 802.11 demonstrate available functionality in our open source developments.
+  abstract: >-
+    As the density of wireless networks continues to grow with more clients, more base stations, and more traffic, designing cost-effective wireless solutions with efficient resource usage and ease to manage is an increasing challenging task due to the overall system complexity. A number of vendors offer scalable and high-performance wireless networks but at a high cost and commonly as a single-vendor solution, limiting the ability to innovate after roll-out. Recent Software-Defined Networking (SDN) approaches propose new means for network virtualization and programmability advancing the way networks can be designed and operated, including user-defined features and customized behaviour even at runtime. However, means for rapid prototyping and experimental evaluation of SDN for wireless environments are not yet available. This paper introduces Mininet-WiFi as a tool to emulate wireless OpenFlow/SDN scenarios allowing high-fidelity experiments that replicate real networking environments. Mininet-WiFi augments the well-known Mininet emulator with virtual wireless stations and access points while keeping the original SDN capabilities and the lightweight virtualization software architecture. We elaborate on the potential applications of Mininet-Wifi and discuss the benefits and current limitations. Two use cases based on IEEE 802.11 demonstrate available functionality in our open source developments.
   parent:
     type: proceedings
     title: 2nd International Workshop on Management of SDN and NFV Systems, 2015(ManSDN/NFV 2015)
@@ -144,7 +145,8 @@ mininet:
   serial-number:
     doi: 10.1145/1868447.1868466
     isbn: '9781450304092'
-  abstract: Mininet is a system for rapidly prototyping large networks on the constrained resources of a single laptop. The lightweight approach of using OS-level virtualization features, including processes and network namespaces, allows it to scale to hundreds of nodes. Experiences with our initial implementation suggest that the ability to run, poke, and debug in real time represents a qualitative change in workflow. We share supporting case studies culled from over 100 users, at 18 institutions, who have developed Software-Defined Networks (SDN). Ultimately, we think the greatest value of Mininet will be supporting collaborative network research, by enabling self-contained SDN prototypes which anyone with a PC can download, run, evaluate, explore, tweak, and build upon.
+  abstract: >-
+    Mininet is a system for rapidly prototyping large networks on the constrained resources of a single laptop. The lightweight approach of using OS-level virtualization features, including processes and network namespaces, allows it to scale to hundreds of nodes. Experiences with our initial implementation suggest that the ability to run, poke, and debug in real time represents a qualitative change in workflow. We share supporting case studies culled from over 100 users, at 18 institutions, who have developed Software-Defined Networks (SDN). Ultimately, we think the greatest value of Mininet will be supporting collaborative network research, by enabling self-contained SDN prototypes which anyone with a PC can download, run, evaluate, explore, tweak, and build upon.
   parent:
     type: proceedings
     title: Proceedings of the 9th ACM SIGCOMM Workshop on Hot Topics in Networks
@@ -153,3 +155,29 @@ mininet:
     parent:
       type: proceedings
       title: Hotnets-IX
+
+bmv2:
+  type: web
+  title: Behavioral Model
+  url:
+    value: https://github.com/p4lang/behavioral-model
+    date: 2024-09-26
+
+scapy:
+  type: web
+  title: Scapy
+  author: secdev, Biondi Philippe
+  date: 2003
+  url:
+    value: https://scapy.net/
+    date: 2024-09-26
+
+wireshark:
+  type: web
+  title: Wireshark
+  author: Wireshark Foundation
+  date: 2006
+  url:
+    value: https://www.wireshark.org/
+    date: 2024-09-26
+  

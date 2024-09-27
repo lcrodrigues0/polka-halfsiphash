@@ -118,24 +118,19 @@
   / $f_s_i (x)$: Function representing switch $s_i$.
   / $k_s_i$: Unique identifier for switch $s_i$.
 
-  == Assumption
+  == Assumptions
 
+  PolKA and the proposed extension are open source, so it is assumed that any attacker can replicate a node perfectly. Protocol boundary is IPv4. This means that PolKA is only used inside this network. // Continue
 
+  == Setup
+
+  All implementation and experiments took place on a VM#footnote[Available on PolKA's repository https://github.com/nerds-ufes/polka] setup with Mininet-wifi@mininet-wifi, and were targeting Mininet's@mininet Behavioral Model version 2 (BMv2)@bmv2. Wireshark@wireshark was used to analyze packets, and Scapy@scapy was used to parse packets programatically.
 
   == Implementation
 
-  === Setup
+  By making the function $f$ is a checksum function, and the unique identifier $k_s_i$ as the `node_id`, we apply an input data into a chain checksum functions and verify if they match. The controller will act as a validator, since it already has access to all `node_id`. For additional verification, we also integrate the calculated exit port into the checksum, covering some other forms of
 
-  All implementation and experiments took place on a VM#footnote[Available on PolKA's repository https://github.com/nerds-ufes/polka] setup with Mininet-wifi@mininet-wifi, and were targeting Mininet's@mininet Behavioral Model version 2 (BMv2)
-
-  VM mininet-wifi BMv2 etc
-
-  === Code // TODO better name
-
-  By making the function $f$ is a checksum function, and the unique identifier $k_s_i$ as the `switch_id`, we apply an input data into a chain checksum functions and verify if they match. The controller will act as a validator, since it already has access to all `switch_id`. For additional verification, we also integrate the calculated exit port into the checksum, covering some other forms of
-
-  It was implemented as a version on PolKA, this means it uses the same protocol identifier `0x1234` and is interoperable with PolKA.
-
+  It was implemented as a version on PolKA, this means it uses the same protocol identifier `0x1234` and is interoperable with PolKA. Up-to-date PolKA headers were used (and upgraded from the forked version) to ensure compatibility. It uses the `version` header field to differentiate between regular PolKA version packets and what we call _probe_ packets. PolKA packets uses version `0x01`, and probe packets uses version `0xF1`.
 
   @topology shows the used topology used in the experiments.
 
@@ -179,7 +174,34 @@
     ),
   ) <topology>
 
-  It was validated with {{THIS}}.
+  === Parsing
+
+  Parsing is done in edge nodes as follows:
+  - If an IPv4 protocol EtherType is detected (`0x0800`), it must be a packet from outside the network, it must be wrapped and routed by the same edge node that parsed it. Let call this process be called _encapsulation_;
+  - If a PolKA protocol EtherType is detected (`0x1234`), it must be a packet from inside the network, since the protocol boundary is IPv4, the original IPv4 packet must be unwrapped. Let this process be caleld _decapsulation_.
+
+  === Encapsulation
+
+  Polka headers consists of the route polynomial (`routeid`), along with `version`, `ttl` and `proto` (stores the original EtherType). `route_id` calculation is out of the scope of this paper.
+
+  An additional header, added by this work, is added for probe packets, containing a 32 bit `key` and 32 bit `l_hash`.
+
+  During encapsulation of a probe packet, a random number is generated, and is used as `key`, for reproducibility. Edge nodes does not execute checksum functions and only repeats the key into the checksum field.
+
+  === Composition
+
+  Every core node does checksum trying to congregate the previous `l_hash`, the calculated next hop port and it's own `node_id` into the 32 bit field. Currently, it is implemented as such:
+  $
+    #raw("l_hash") <- "CRC"_32 ("exit port" xor #raw("l_hash") xor #raw("node_id"))
+  $
+
+  The $"CRC"_32$ checksum function used is the one available by BMv2 standard library, and through testing, it was found out to be ISO HDLC, by comparing results.
+
+  The algorithm was verified externally through another program written in Rust, with source also available#footnote[https://github.com/Henriquelay/polka_probe_checker/], making use of the `crc` library.
+
+  === Decapsulation
+
+  At the egress node, PolKA headers are dropped and the packet becomes an identical packet to what the ingress node received.
 
   This detects {{X Y Z}}
 
