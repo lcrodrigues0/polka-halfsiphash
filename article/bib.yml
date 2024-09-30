@@ -181,3 +181,22 @@ wireshark:
     value: https://www.wireshark.org/
     date: 2024-09-26
   
+siphash:
+  type: misc
+  title: 'SipHash: a fast short-input PRF'
+  author:
+  - Aumasson, Jean-Philippe
+  - Bernstein, Daniel J.
+  date: 2012
+  url: https://eprint.iacr.org/2012/351
+  note: Cryptology ePrint Archive, Paper 2012/351
+
+reversingCRC:
+  type: misc
+  title: Reversing crc–theory and practice
+  author:
+  - Stigge, Martin
+  - Plötz, Henryk
+  - Müller, Wolf
+  - Redlich, Jens-Peter
+  date: 2006
