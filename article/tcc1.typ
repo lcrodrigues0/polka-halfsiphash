@@ -26,6 +26,12 @@
 
 #let midsection(it) = align(center, text(size: 1.1em, weight: "bold", it))
 
+#include("anteprojeto.typ")
+
+//  Reset heading counter
+#counter(heading).update(0)
+#pagebreak()
+
 #let title = [An Implementation of Route Probing and Validation on PolKA]
 
 #midsection(text(size: 1.5em, title))
@@ -648,7 +654,7 @@ Upon developing the solution, a set of limitations were identified:
 
 The plan, as per the repository name implies, is to implement a non-reversible hash function, SipHash, more specifically, HalfSipHash@siphash, to be used instead of the CRC32. This would make the system more secure, since CRC32 is a well-known as a checksum function that can be easily reversed@reversingCRC. Also, a proper data compression method for adding exit port and `node_id` into the checksum field is needed, since the current method is not optimal due to data loss.
 
-In the future, it should into PathSec@pathsec, and to do so the ingress edge needs to report the generated `key`, and the egress edge will report the final checksum directly to a blockchain, for auditability and accessibility. Having it directly report to a blockchain instead of a third party circumvents trust issues.
+In the future, it should be integrated into PathSec@pathsec, and to do so the ingress edge needs to report the generated `key`, and the egress edge will report the final checksum directly to a blockchain, for auditability and accessibility. Having it directly report to a blockchain instead of a third party circumvents trust issues.
 
 An interesting work can be done to use some sort of rotating key architecture to detect replay attacks. This is a hard problem, since the key must be rotated in a way that the attacker cannot predict, and the key must be shared between the nodes in a secure, atomic way to prevent the network to enter an irrecoverable state.
 
