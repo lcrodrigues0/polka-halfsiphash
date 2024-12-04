@@ -3,6 +3,7 @@
 #include <v1model.p4>
 
 #include "polka.p4h"
+#include "siphash.p4"
 
 parser MyParser(
     packet_in packet,
@@ -97,13 +98,8 @@ control MySignPacket(
         bit<16> nbase = 0;
         bit<32> min_bound = 0;
         bit<32> max_bound = 0xFFFFFFFF;
-        hash(
-            hdr.polka_probe.l_hash,
-            HashAlgorithm.crc32,
-            min_bound,
-            {hdr.polka_probe.l_hash},
-            max_bound
-        );
+
+        HalfSipHash_2_4_32.apply(hdr.polka_probe.timestamp ++ meta.port ++ meta.switch_id ++ 7w0, hdr.polka_probe.l_hash);
     }
 }
 

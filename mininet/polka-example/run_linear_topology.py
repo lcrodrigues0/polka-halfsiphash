@@ -849,9 +849,9 @@ def run_network_tests():
 
     info("*** Auto-testing network\n")
     try:
-        # test_self()
-        # test_addition()
-        # test_skipping()
+        test_self()
+        test_addition()
+        test_skipping()
         test_detour()
     except Exception as e:
         info(f"*** Test failed: {e}\n")
@@ -861,10 +861,10 @@ def run_network_tests():
 
 if __name__ == "__main__":
     setLogLevel("info")
-    run_network_tests()
+    # run_network_tests()
 
-    # info("*** Running CLI\n")
-    # net = linear_topology()
-    # CLI(net)
-    # info("*** Stopping network\n")
-    # net.stop()
+    info("*** Running CLI\n")
+    net = linear_topology()
+    CLI(net)
+    info("*** Stopping network\n")
+    net.stop()
