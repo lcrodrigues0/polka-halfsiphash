@@ -32,6 +32,7 @@ from scapy.all import AsyncSniffer, bind_layers, Packet, Ether
 from scapy.fields import BitField
 
 
+# order matters. It is the order in the packet header
 class Polka(Packet):
     fields_desc = [
         BitField("version", default=0, size=8),
@@ -179,6 +180,8 @@ def linear_topology(start=True) -> Mininet_wifi:
         net.stop()
         raise e
 
+
+# TODO(e1,10) Could be made generic with a decorator
 
 def add_config_e1(net: Mininet_wifi, command: str) -> Mininet_wifi:
     """Net needs to be stopped"""
@@ -859,12 +862,56 @@ def run_network_tests():
     info("*** ✅ All tests passed.\n")
 
 
+def collect_siphash():
+    """
+    Collect the SIPHashes (all intermediary) from the network
+    """
+
+    info("*** Starting run for collecting hash and intermediaries\n")
+
+    net = linear_topology(start=False)
+    try:
+        net = set_seed_e1(net, 0xABADCAFE)
+        net = set_seed_e10(net, 0xBADDC0DE)
+
+        net.start()
+        net.staticArp()
+
+        # sleep for a bit to let the network stabilize
+        sleep(3)
+
+        sniff = start_sniffing(net)
+
+        test_integrity(net)
+
+        info("*** Stopping sniffing\n")
+        pkts = sniff.stop()
+        pkts.sort(key=lambda pkt: pkt.time)
+
+        for pkt in pkts:
+            probe = pkt.getlayer(PolkaProbe)
+            polka = pkt.getlayer(Polka)
+
+            print(f"{polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
+
+
+
+        info("*** Hashes collected ***\n")
+
+    finally:
+        net.stop()
+
+
+    info("*** ✅ Run finished.\n")
+
+
 if __name__ == "__main__":
     setLogLevel("info")
     # run_network_tests()
+    collect_siphash()
 
-    info("*** Running CLI\n")
-    net = linear_topology()
-    CLI(net)
-    info("*** Stopping network\n")
-    net.stop()
+    # info("*** Running CLI\n")
+    # net = linear_topology()
+    # CLI(net)
+    # info("*** Stopping network\n")
+    # net.stop()
