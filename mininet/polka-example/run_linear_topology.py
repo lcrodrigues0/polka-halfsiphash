@@ -16,7 +16,9 @@
 from os import path as Path
 from typing import Iterable, Callable, TypeVar
 from time import sleep
+import urllib.request
 
+# https://mininet.org/api/classmininet_1_1net_1_1Mininet.html
 from mininet.log import setLogLevel, info, debug
 from mn_wifi.cli import CLI
 from mn_wifi.net import Mininet_wifi
@@ -28,9 +30,11 @@ from polka_controller.controller_polka import (
     set_crc_parameters_common,
 )
 
+# https://scapy.readthedocs.io/en/stable/usage.html#sniffing
 from scapy.all import AsyncSniffer, bind_layers, Packet, Ether
 from scapy.fields import BitField
 
+ENDPOINT_URL = "http://example.com/"
 
 # order matters. It is the order in the packet header
 class Polka(Packet):
@@ -599,6 +603,7 @@ def all_ifaces(net: Mininet_wifi):
     ]
 
 
+# TODO: Always send timestamp when edge detected
 def start_sniffing(net: Mininet_wifi):
     info(f"*** 👃 Sniffing on {all_ifaces(net)}\n")
 
@@ -887,6 +892,21 @@ def collect_siphash():
         info("*** Stopping sniffing\n")
         pkts = sniff.stop()
         pkts.sort(key=lambda pkt: pkt.time)
+
+        def send_pkt(pkt):
+            polka_pkt = pkt.getlayer(Polka)
+            probe_pkt = pkt.getlayer(PolkaProbe)
+            req = urrllib.request.Request(
+                  ENDPOINT_URL,
+                  data = json.dumps(probe_pkt).encode('utf-8')
+            )
+            res = urllib.urlopen(req)
+            print(res.read().decode('utf-8'))
+
+        # Sending the seed can only be done after this, since pkts can arrive out of order
+        # So the pkt has already completed the request.
+        send_pkt(pkts[0])
+        send_pkt(pkts[-1])
 
         for pkt in pkts:
             probe = pkt.getlayer(PolkaProbe)
