@@ -1,20 +1,23 @@
-[tool.poetry]
+[project]
 name = "polka-halfsiphash"
 version = "0.1.0"
 description = ""
-authors = ["Henriquelay <37563861+Henriquelay@users.noreply.github.com>"]
+authors = [
+    { name = "Henriquelay", email = "37563861+Henriquelay@users.noreply.github.com" },
+]
 readme = "README.md"
-package-mode = false
+requires-python = ">=3.12"
+dependencies = [
+    "scapy (>=2.6.1,<3.0.0)",
+    "mininet (>=2.3.0.dev6,<3.0.0)",
+    "thrift (>=0.21.0,<0.22.0)",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-mininet = "^2.3.0.dev6"
-scapy = "2.4.4"
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-black = "^24.4.2"
-pytest = "^8.2.1"
+[project.scripts]
+build_polka = "uv_scripts:build"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = ["ruff>=0.6.7"]
