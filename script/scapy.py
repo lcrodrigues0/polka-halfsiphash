@@ -7,13 +7,12 @@ from time import sleep
 # https://scapy.readthedocs.io/en/stable/usage.html#sniffing
 from scapy.all import AsyncSniffer, bind_layers, Packet, Ether
 from scapy.fields import BitField
-from mininet import Mininet, info
+from mn_wifi.net import Mininet, info # type: ignore assumes import exists, it's from p4-utils
 
-
-from ..run_linear_topology import POLKA_PROTO, PROBE_VERSION
 from .topo import all_ifaces
 
-
+POLKA_PROTO = 0x1234
+PROBE_VERSION = 0xF1
 
 # order matters. It is the order in the packet header
 class Polka(Packet):

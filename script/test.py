@@ -3,12 +3,14 @@ Network tests
 """
 
 from typing import TypeVar, Iterable
-from os import Path
+import os.path as Path
 from time import sleep
 import urllib, json
 
-from mn_wifi import Mininet, info, Packet # type: ignore assumes import exists, it's from p4-utils
+from mininet.log import info
+from mn_wifi.net import Mininet # type: ignore assumes import exists, it's from p4-utils
 from mn_wifi.bmv2 import P4Switch # type: ignore assumes import exists, it's from p4-utils
+from scapy.all import Packet
 
 from .topo import linear_topology, connect_to_core_switch, set_seed_e1, set_seed_e10, all_ifaces, CORE_THRIFT_CORE_OFFSET, LINK_SPEED
 from .thrift import set_crc_parameters_common

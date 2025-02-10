@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # Copyright [2019-2022] Universidade Federal do Espirito Santo
 #                       Instituto Federal do Espirito Santo
 #
@@ -33,10 +33,6 @@ from script.thrift import (
 from script.topo import linear_topology, set_seed_e1, set_seed_e10
 from script.scapy import Polka, PolkaProbe
 import script.test as test
-
-
-POLKA_PROTO = 0x1234
-PROBE_VERSION = 0xF1
 
 
 def run_network_tests():
