@@ -560,9 +560,9 @@ def collect_hashes():
             polka_pkt = pkt.getlayer(Polka)
             probe_pkt = pkt.getlayer(PolkaProbe)
             req = urllib.request.Request(
-                ENDPOINT_URL, data=json.dumps(probe_pkt).encode("utf-8")
+                ENDPOINT_URL, data=json.dumps(probe_pkt.to_dict()).encode("utf-8")
             )
-            res = urllib.urlopen(req)
+            res = urllib.request.urlopen(req)
             print(res.read().decode("utf-8"))
 
         # Sending the seed can only be done after this, since pkts can arrive out of order

@@ -31,6 +31,12 @@ class PolkaProbe(Packet):
         BitField("l_hash", default=0, size=32),
     ]
 
+    def to_dict(self):
+        return {
+            "timestamp": self.timestamp,
+            "l_hash": self.l_hash,
+        }
+
 
 class Ipv4(Packet):
     fields_desc = [
