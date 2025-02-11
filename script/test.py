@@ -20,6 +20,7 @@ from .topo import (
     all_ifaces,
     CORE_THRIFT_CORE_OFFSET,
     LINK_SPEED,
+    polka_json_path,
 )
 from .thrift import set_crc_parameters_common
 from .scapy import start_sniffing, Polka, PolkaProbe
@@ -215,10 +216,12 @@ def integrity(net: Mininet):
     """
     Test the integrity of the network, this is to be used in a suite of tests
     """
-    
+
     first_host = net.get("h1")
     assert first_host is not None, "Host h1 not found"
-    last_host = net.get("h10")  # h11 is right beside h1, so wouldn't traverse all switches
+    last_host = net.get(
+        "h10"
+    )  # h11 is right beside h1, so wouldn't traverse all switches
     assert last_host is not None, "Host h10 not found"
 
     info(
@@ -323,11 +326,10 @@ def addition():
         )
 
         info("*** Adding attacker\n")
-        polka_json_dir = f"{Path.dirname(Path.abspath(__file__))}/polka/"
         attacker = net.addSwitch(
             "s555",
             netcfg=True,
-            json=polka_json_dir + "polka-attacker.json",
+            json=Path.join(polka_json_path, "polka-attacker.json"),
             thriftport=CORE_THRIFT_CORE_OFFSET + 555,
             loglevel="debug",
             cls=P4Switch,
@@ -406,11 +408,10 @@ def detour():
         )
 
         info("*** Adding attacker\n")
-        polka_json_dir = f"{Path.dirname(Path.abspath(__file__))}/polka/"
         attacker = net.addSwitch(
             "s555",
             netcfg=True,
-            json=polka_json_dir + "polka-attacker.json",
+            json=Path.join(polka_json_path, "polka-attacker.json"),
             thriftport=CORE_THRIFT_CORE_OFFSET + 555,
             loglevel="debug",
             cls=P4Switch,
