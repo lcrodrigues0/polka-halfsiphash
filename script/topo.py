@@ -45,9 +45,9 @@ def _linear_topology_add_switches(net: Mininet):
     info("*** Adding P4Switches (core)\n")
     for i in range(1, N_SWITCHES + 1):
         # read the network configuration
-        path = Path.join(Path.split(__file__)[0], "polka")
+        path = Path.join(Path.split(Path.split(__file__)[0])[0], "polka")
         # Add P4 switches (core)
-        print(f"{path=}, {Path.join(path, 'polka-core.json')}")
+        # print(f"{path=}, {Path.join(path, 'polka-core.json')}")
         switch = net.addSwitch(
             f"s{i}",
             netcfg=True,
@@ -62,14 +62,14 @@ def _linear_topology_add_switches(net: Mininet):
     info("*** Adding P4Switches (edge)\n")
     for i in range(1, N_SWITCHES + 1):
         # read the network configuration
-        path = Path.join(Path.split(__file__)[0], "polka")
+        path = Path.join(Path.split(Path.split(__file__)[0])[0], "polka")
         # add P4 switches (edge)
         switch = net.addSwitch(
             f"e{i}",
             netcfg=True,
             json=str(Path.join(path, "polka-edge.json")),
             thriftport=EDGE_THRIFT_CORE_OFFSET + int(i),
-            switch_config=str(Path.join(path, "polka", f"config/e{i}-commands.txt")),
+            switch_config=str(Path.join(path, "config", f"e{i}-commands.txt")),
             loglevel="debug",
             cls=P4Switch,
         )
@@ -143,15 +143,15 @@ def _add_config_e1(net: Mininet, command: str) -> Mininet:
     net.delNode(e1)
 
     # read the network configuration
-    path = Path.join(Path.split(__file__)[0], "polka")
-    directory = f"{path}/polka/config"
-    base_commands = f"{directory}/e1-commands.txt"
+    path = Path.join(Path.split(Path.split(__file__)[0])[0], "polka")
+    directory = Path.join(path, "config")
+    base_commands = Path.join(directory, "e1-commands.txt")
     with open(base_commands, "r") as f:
         commands = f.read()
     commands += command
 
     # Save the new configuration
-    savepath = f"{directory}/e1-commands-overwritten.txt"
+    savepath = Path.join(directory, "e1-commands-overwritten.txt")
     with open(savepath, "w") as f:
         f.write(commands)
 
@@ -191,15 +191,15 @@ def _add_config_e10(net: Mininet, command: str) -> Mininet:
     net.delNode(e10)
 
     # read the network configuration
-    path = Path.join(Path.split(__file__)[0], "polka")
-    directory = str(path.join("config"))
-    base_commands = f"{directory}/e10-commands.txt"
+    path = Path.join(Path.split(Path.split(__file__)[0])[0], "polka")
+    directory = Path.join(path, "config")
+    base_commands = Path.join(directory, "e10-commands.txt")
     with open(base_commands, "r") as f:
         commands = f.read()
     commands += command
 
     # Save the new configuration
-    savepath = f"{directory}/e10-commands-overwritten.txt"
+    savepath = Path.join(directory, "e10-commands-overwritten.txt")
     with open(savepath, "w") as f:
         f.write(commands)
 
