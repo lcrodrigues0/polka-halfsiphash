@@ -215,18 +215,10 @@ def integrity(net: Mininet):
     """
     Test the integrity of the network, this is to be used in a suite of tests
     """
-
-    def hunt_host(net: Mininet, name: str):
-        for host in net.hosts:
-            if host.name == name:
-                return host
-        return None
-
-    first_host = hunt_host(net, "h1")
+    
+    first_host = net.get("h1")
     assert first_host is not None, "Host h1 not found"
-    last_host = hunt_host(
-        net, "h10"
-    )  # h11 is right beside h1, so wouldn't traverse all switches
+    last_host = net.get("h10")  # h11 is right beside h1, so wouldn't traverse all switches
     assert last_host is not None, "Host h10 not found"
 
     info(
