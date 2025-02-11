@@ -13,25 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from os import path as Path
-from typing import Iterable, Callable, TypeVar
-from time import sleep
-import urllib.request
 
 # https://mininet.org/api/hierarchy.html
 from mininet.log import setLogLevel, info, debug
 from mn_wifi.cli import CLI  # type: ignore assumes import exists, it's from p4-utils
-from mn_wifi.net import Mininet  # type: ignore assumes import exists, it's from p4-utils
-from mn_wifi.bmv2 import P4Switch  # type: ignore assumes import exists, it's from p4-utils
 
-import urllib, json
-
-from script.thrift import (
-    thrift_connect_standard,
-    set_crc_parameters_common,
-)
-from script.topo import linear_topology, set_seed_e1, set_seed_e10
-from script.scapy import Polka, PolkaProbe
 import script.test as test
 
 
