@@ -64,7 +64,6 @@ def _linear_topology_add_switches(net: Mininet):
     info("*** Adding P4Switches (edge)\n")
     for i in range(1, N_SWITCHES + 1):
         # read the network configuration
-        path = Path.join(Path.split(Path.split(__file__)[0])[0], "polka")
         # add P4 switches (edge)
         switch = net.addSwitch(
             f"e{i}",
