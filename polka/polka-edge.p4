@@ -72,6 +72,12 @@ control MySeed(
         hdr.polka_probe.timestamp = setseed;
     }
 
+    action randomseed()
+    {
+        hdr.polka_probe.setValid();
+        random(hdr.polka_probe.timestamp, 0, 0xFFFFFFFF);
+    }
+
     // Adds a Polka header to the packet 
     // Table name can't be changed because it is the name defined by node configuration files
     table config {
@@ -81,8 +87,10 @@ control MySeed(
         actions = {
             // Actions names also can't be changed because they are the names defined by node configuration files
             seed;
+            randomseed;
         }
         size = 128;
+        default_action=randomseed;
     }
 
     apply {
@@ -163,7 +171,6 @@ control MyProbe(
     }
 
     apply {
-        hdr.polka.setValid();
         if (hdr.polka.version == PROBE_VERSION) {
             // Decap
             hdr.polka_probe.setInvalid();
