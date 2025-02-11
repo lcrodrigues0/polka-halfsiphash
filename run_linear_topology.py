@@ -42,8 +42,8 @@ def run_network_tests():
 
 if __name__ == "__main__":
     setLogLevel("info")
-    run_network_tests()
-    # collect_siphash()
+    # run_network_tests()
+    test.collect_hashes()
 
     # info("*** Running CLI\n")
     # net = linear_topology()

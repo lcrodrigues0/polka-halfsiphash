@@ -526,12 +526,12 @@ def skipping():
         net.stop()
 
 
-def collect_siphash():
+def collect_hashes():
     """
-    Collect the SIPHashes (all intermediary) from the network
+    Collect the hashes (all intermediary) from the network
     """
 
-    ENDPOINT_URL = "http://example.com/"
+    ENDPOINT_URL = "http://localhost:8283/"
 
     info("*** Starting run for collecting hash and intermediaries\n")
 
