@@ -8,11 +8,19 @@ from time import sleep
 import urllib, json
 
 from mininet.log import info
-from mn_wifi.net import Mininet # type: ignore assumes import exists, it's from p4-utils
-from mn_wifi.bmv2 import P4Switch # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.net import Mininet  # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.bmv2 import P4Switch  # type: ignore assumes import exists, it's from p4-utils
 from scapy.all import Packet
 
-from .topo import linear_topology, connect_to_core_switch, set_seed_e1, set_seed_e10, all_ifaces, CORE_THRIFT_CORE_OFFSET, LINK_SPEED
+from .topo import (
+    linear_topology,
+    connect_to_core_switch,
+    set_seed_e1,
+    set_seed_e10,
+    all_ifaces,
+    CORE_THRIFT_CORE_OFFSET,
+    LINK_SPEED,
+)
 from .thrift import set_crc_parameters_common
 from .scapy import start_sniffing, Polka, PolkaProbe
 
@@ -108,7 +116,7 @@ BASE_DIGESTS = {
             0xBADDC0DE,
             0x5F9298A3,
             0x4C43786D,
-            0X0D614B06,
+            0x0D614B06,
             0x1DD20B9C,
             0x0B1BD6C6,
             0x45E5A48F,
@@ -164,9 +172,9 @@ def check_digest(pkts: Iterable[Packet], seed_src: int, seed_dst: int):
             routes.append([pkt])
         else:
             routes[-1].append(pkt)
-    assert (
-        len(routes) == 4
-    ), f"❌ Expected 4 routes (send, reply, send back, reply back). Got {len(routes)}"
+    assert len(routes) == 4, (
+        f"❌ Expected 4 routes (send, reply, send back, reply back). Got {len(routes)}"
+    )
 
     # Using Python3.8, so can't use `zip(*iterables, strict=True)`
 
@@ -203,7 +211,6 @@ def check_digest(pkts: Iterable[Packet], seed_src: int, seed_dst: int):
                     )
 
 
-
 def integrity(net: Mininet):
     """
     Test the integrity of the network, this is to be used in a suite of tests
@@ -230,8 +237,6 @@ def integrity(net: Mininet):
     packet_loss_pct = net.ping(hosts=[first_host, last_host], timeout=1)
     # Comparing floats (bad), but it's fine because an exact 0.0% packet loss is expected
     assert packet_loss_pct == 0.0, f"Packet loss occurred: {packet_loss_pct}%"
-
-
 
 
 def self():
@@ -281,9 +286,9 @@ def self():
         net.staticArp()
 
         sleep(3)
-        assert (
-            len(all_ifaces(net)) == 49
-        ), f"❌ Expected 49 interfaces. Got {len(all_ifaces(net))}"
+        assert len(all_ifaces(net)) == 49, (
+            f"❌ Expected 49 interfaces. Got {len(all_ifaces(net))}"
+        )
         sniff = start_sniffing(net)
         info("Sniffer is setup.")
         integrity(net)
@@ -297,8 +302,6 @@ def self():
         info("*** SELF TEST DONE ***\n")
     finally:
         net.stop()
-
-
 
 
 def addition():
@@ -323,9 +326,9 @@ def addition():
         info(f"*** Replacing {compromised.name}'s links with compromised route\n")
 
         links = net.delLinkBetween(compromised, next_sw, allLinks=True)
-        assert (
-            len(links) == 1
-        ), f"❌ Expected 1 link to be removed between {compromised.name} and {next_sw.name}"
+        assert len(links) == 1, (
+            f"❌ Expected 1 link to be removed between {compromised.name} and {next_sw.name}"
+        )
 
         info("*** Adding attacker\n")
         polka_json_dir = f"{Path.dirname(Path.abspath(__file__))}/polka/"
@@ -402,13 +405,13 @@ def detour():
         info(f"*** Replacing {prev_sw.name}'s links with compromised route\n")
 
         links = net.delLinkBetween(prev_sw, skipped, allLinks=True)
-        assert (
-            len(links) == 1
-        ), f"❌ Expected 1 link to be removed between {prev_sw.name} and {skipped.name}"
+        assert len(links) == 1, (
+            f"❌ Expected 1 link to be removed between {prev_sw.name} and {skipped.name}"
+        )
         links = net.delLinkBetween(next_sw, skipped, allLinks=True)
-        assert (
-            len(links) == 1
-        ), f"❌ Expected 1 link to be removed between {skipped.name} and {next_sw.name}"
+        assert len(links) == 1, (
+            f"❌ Expected 1 link to be removed between {skipped.name} and {next_sw.name}"
+        )
 
         info("*** Adding attacker\n")
         polka_json_dir = f"{Path.dirname(Path.abspath(__file__))}/polka/"
@@ -489,13 +492,13 @@ def skipping():
         info(f"*** Replacing {skipped.name}'s links with compromised route\n")
 
         links = net.delLinkBetween(skipped, next_sw, allLinks=True)
-        assert (
-            len(links) == 1
-        ), f"❌ Expected 1 link to be removed between {skipped.name} and {next_sw.name}"
+        assert len(links) == 1, (
+            f"❌ Expected 1 link to be removed between {skipped.name} and {next_sw.name}"
+        )
         links = net.delLinkBetween(skipped, prev_sw, allLinks=True)
-        assert (
-            len(links) == 1
-        ), f"❌ Expected 1 link to be removed between {skipped.name} and {prev_sw.name}"
+        assert len(links) == 1, (
+            f"❌ Expected 1 link to be removed between {skipped.name} and {prev_sw.name}"
+        )
 
         new_link = net.addLink(prev_sw, next_sw, port1=3, port2=2, bw=LINK_SPEED)
         info(f"### Created link {new_link}\n")
@@ -564,16 +567,15 @@ def collect_siphash():
             polka_pkt = pkt.getlayer(Polka)
             probe_pkt = pkt.getlayer(PolkaProbe)
             req = urllib.request.Request(
-                  ENDPOINT_URL,
-                  data = json.dumps(probe_pkt).encode('utf-8')
+                ENDPOINT_URL, data=json.dumps(probe_pkt).encode("utf-8")
             )
             res = urllib.urlopen(req)
-            print(res.read().decode('utf-8'))
+            print(res.read().decode("utf-8"))
 
         # Sending the seed can only be done after this, since pkts can arrive out of order
         # So the pkt has already completed the request.
-        send_pkt(pkts[0]) # Viria do controlador
-        send_pkt(pkts[-1]) # Viria do switch
+        send_pkt(pkts[0])  # Viria do controlador
+        send_pkt(pkts[-1])  # Viria do switch
 
         for pkt in pkts:
             probe = pkt.getlayer(PolkaProbe)
@@ -581,12 +583,9 @@ def collect_siphash():
 
             print(f"{polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
 
-
-
         info("*** Hashes collected ***\n")
 
     finally:
         net.stop()
-
 
     info("*** ✅ Run finished.\n")

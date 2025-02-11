@@ -2,7 +2,6 @@
 For thriftport connection and commands. Left parts commented on purpose
 """
 
-
 import sys
 # import hashlib
 
@@ -207,7 +206,7 @@ def thrift_connect(thrift_ip, thrift_port, services, out=sys.stdout):
         my_print("Make sure the switch is running ")
         my_print("and that you have the right port\n")
         sys.exit(1)
-    
+
     # print(clients)
 
     return clients
@@ -217,6 +216,7 @@ def thrift_connect_standard(thrift_ip, thrift_port, out=sys.stdout):
     return thrift_connect(thrift_ip, thrift_port, [("standard", Standard.Client)], out)[
         0
     ]
+
 
 def main():
     switch1 = thrift_connect_standard("0.0.0.0", 50002)

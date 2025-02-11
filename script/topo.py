@@ -8,8 +8,8 @@ from os import path as Path
 
 # https://mininet.org/api/hierarchy.html
 from mininet.log import info
-from mn_wifi.net import Mininet # type: ignore assumes import exists, it's from p4-utils
-from mn_wifi.bmv2 import P4Switch # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.net import Mininet  # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.bmv2 import P4Switch  # type: ignore assumes import exists, it's from p4-utils
 
 
 N_SWITCHES = 10
@@ -120,24 +120,25 @@ def linear_topology(start=True) -> Mininet:
 
 # TODO(e1,10) Could be made generic with a decorator
 
+
 def _add_config_e1(net: Mininet, command: str) -> Mininet:
     """Net needs to be stopped"""
     e1 = net.getNodeByName("e1")
     s1 = net.getNodeByName("s1")
     links = net.delLinkBetween(e1, s1, allLinks=True)
-    assert (
-        len(links) == 1
-    ), f"❌ Expected 1 link to be removed between e1 and s1. Removed {len(links)} links."
+    assert len(links) == 1, (
+        f"❌ Expected 1 link to be removed between e1 and s1. Removed {len(links)} links."
+    )
     h1 = net.getNodeByName("h1")
     links = net.delLinkBetween(e1, h1, allLinks=True)
-    assert (
-        len(links) == 1
-    ), f"❌ Expected 1 link to be removed between e1 and h1. Removed {len(links)} links."
+    assert len(links) == 1, (
+        f"❌ Expected 1 link to be removed between e1 and h1. Removed {len(links)} links."
+    )
     h11 = net.getNodeByName("h11")
     links = net.delLinkBetween(e1, h11, allLinks=True)
-    assert (
-        len(links) == 1
-    ), f"❌ Expected 1 link to be removed between e1 and h11. Removed {len(links)} links."
+    assert len(links) == 1, (
+        f"❌ Expected 1 link to be removed between e1 and h11. Removed {len(links)} links."
+    )
     e1.stop()
     net.delNode(e1)
 
@@ -178,14 +179,14 @@ def _add_config_e10(net: Mininet, command: str) -> Mininet:
     e10 = net.get("e10")
     s10 = net.get("s10")
     links = net.delLinkBetween(e10, s10, allLinks=True)
-    assert (
-        len(links) == 1
-    ), f"❌ Expected 1 link to be removed between e10 and s10. Removed {len(links)} links."
+    assert len(links) == 1, (
+        f"❌ Expected 1 link to be removed between e10 and s10. Removed {len(links)} links."
+    )
     h10 = net.get("h10")
     links = net.delLinkBetween(e10, h10, allLinks=True)
-    assert (
-        len(links) == 1
-    ), f"❌ Expected 1 link to be removed between e10 and h10. Removed {len(links)} links."
+    assert len(links) == 1, (
+        f"❌ Expected 1 link to be removed between e10 and h10. Removed {len(links)} links."
+    )
     e10.stop()
     net.delNode(e10)
 

@@ -6,13 +6,20 @@
 #  options string: py
 #
 
-from thrift.Thrift import TType, TMessageType, TFrozenDict, TException, TApplicationException
+from thrift.Thrift import (
+    TType,
+    TMessageType,
+    TFrozenDict,
+    TException,
+    TApplicationException,
+)
 from thrift.protocol.TProtocol import TProtocolException
 from thrift.TRecursive import fix_spec
 
 import sys
 
 from thrift.transport import TTransport
+
 all_structs = []
 
 
@@ -344,12 +351,18 @@ class BmMatchParamExact(object):
 
     """
 
-
-    def __init__(self, key=None,):
+    def __init__(
+        self,
+        key=None,
+    ):
         self.key = key
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -369,11 +382,13 @@ class BmMatchParamExact(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMatchParamExact')
+        oprot.writeStructBegin("BmMatchParamExact")
         if self.key is not None:
-            oprot.writeFieldBegin('key', TType.STRING, 1)
+            oprot.writeFieldBegin("key", TType.STRING, 1)
             oprot.writeBinary(self.key)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -383,9 +398,8 @@ class BmMatchParamExact(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -402,13 +416,20 @@ class BmMatchParamLPM(object):
 
     """
 
-
-    def __init__(self, key=None, prefix_length=None,):
+    def __init__(
+        self,
+        key=None,
+        prefix_length=None,
+    ):
         self.key = key
         self.prefix_length = prefix_length
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -433,15 +454,17 @@ class BmMatchParamLPM(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMatchParamLPM')
+        oprot.writeStructBegin("BmMatchParamLPM")
         if self.key is not None:
-            oprot.writeFieldBegin('key', TType.STRING, 1)
+            oprot.writeFieldBegin("key", TType.STRING, 1)
             oprot.writeBinary(self.key)
             oprot.writeFieldEnd()
         if self.prefix_length is not None:
-            oprot.writeFieldBegin('prefix_length', TType.I32, 2)
+            oprot.writeFieldBegin("prefix_length", TType.I32, 2)
             oprot.writeI32(self.prefix_length)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -451,9 +474,8 @@ class BmMatchParamLPM(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -470,13 +492,20 @@ class BmMatchParamTernary(object):
 
     """
 
-
-    def __init__(self, key=None, mask=None,):
+    def __init__(
+        self,
+        key=None,
+        mask=None,
+    ):
         self.key = key
         self.mask = mask
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -501,15 +530,17 @@ class BmMatchParamTernary(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMatchParamTernary')
+        oprot.writeStructBegin("BmMatchParamTernary")
         if self.key is not None:
-            oprot.writeFieldBegin('key', TType.STRING, 1)
+            oprot.writeFieldBegin("key", TType.STRING, 1)
             oprot.writeBinary(self.key)
             oprot.writeFieldEnd()
         if self.mask is not None:
-            oprot.writeFieldBegin('mask', TType.STRING, 2)
+            oprot.writeFieldBegin("mask", TType.STRING, 2)
             oprot.writeBinary(self.mask)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -519,9 +550,8 @@ class BmMatchParamTernary(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -537,12 +567,18 @@ class BmMatchParamValid(object):
 
     """
 
-
-    def __init__(self, key=None,):
+    def __init__(
+        self,
+        key=None,
+    ):
         self.key = key
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -562,11 +598,13 @@ class BmMatchParamValid(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMatchParamValid')
+        oprot.writeStructBegin("BmMatchParamValid")
         if self.key is not None:
-            oprot.writeFieldBegin('key', TType.BOOL, 1)
+            oprot.writeFieldBegin("key", TType.BOOL, 1)
             oprot.writeBool(self.key)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -576,9 +614,8 @@ class BmMatchParamValid(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -595,13 +632,20 @@ class BmMatchParamRange(object):
 
     """
 
-
-    def __init__(self, start=None, end_=None,):
+    def __init__(
+        self,
+        start=None,
+        end_=None,
+    ):
         self.start = start
         self.end_ = end_
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -626,15 +670,17 @@ class BmMatchParamRange(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMatchParamRange')
+        oprot.writeStructBegin("BmMatchParamRange")
         if self.start is not None:
-            oprot.writeFieldBegin('start', TType.STRING, 1)
+            oprot.writeFieldBegin("start", TType.STRING, 1)
             oprot.writeBinary(self.start)
             oprot.writeFieldEnd()
         if self.end_ is not None:
-            oprot.writeFieldBegin('end_', TType.STRING, 2)
+            oprot.writeFieldBegin("end_", TType.STRING, 2)
             oprot.writeBinary(self.end_)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -644,9 +690,8 @@ class BmMatchParamRange(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -667,8 +712,15 @@ class BmMatchParam(object):
 
     """
 
-
-    def __init__(self, type=None, exact=None, lpm=None, ternary=None, valid=None, range=None,):
+    def __init__(
+        self,
+        type=None,
+        exact=None,
+        lpm=None,
+        ternary=None,
+        valid=None,
+        range=None,
+    ):
         self.type = type
         self.exact = exact
         self.lpm = lpm
@@ -677,7 +729,11 @@ class BmMatchParam(object):
         self.range = range
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -727,31 +783,33 @@ class BmMatchParam(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMatchParam')
+        oprot.writeStructBegin("BmMatchParam")
         if self.type is not None:
-            oprot.writeFieldBegin('type', TType.I32, 1)
+            oprot.writeFieldBegin("type", TType.I32, 1)
             oprot.writeI32(self.type)
             oprot.writeFieldEnd()
         if self.exact is not None:
-            oprot.writeFieldBegin('exact', TType.STRUCT, 2)
+            oprot.writeFieldBegin("exact", TType.STRUCT, 2)
             self.exact.write(oprot)
             oprot.writeFieldEnd()
         if self.lpm is not None:
-            oprot.writeFieldBegin('lpm', TType.STRUCT, 3)
+            oprot.writeFieldBegin("lpm", TType.STRUCT, 3)
             self.lpm.write(oprot)
             oprot.writeFieldEnd()
         if self.ternary is not None:
-            oprot.writeFieldBegin('ternary', TType.STRUCT, 4)
+            oprot.writeFieldBegin("ternary", TType.STRUCT, 4)
             self.ternary.write(oprot)
             oprot.writeFieldEnd()
         if self.valid is not None:
-            oprot.writeFieldBegin('valid', TType.STRUCT, 5)
+            oprot.writeFieldBegin("valid", TType.STRUCT, 5)
             self.valid.write(oprot)
             oprot.writeFieldEnd()
         if self.range is not None:
-            oprot.writeFieldBegin('range', TType.STRUCT, 6)
+            oprot.writeFieldBegin("range", TType.STRUCT, 6)
             self.range.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -761,9 +819,8 @@ class BmMatchParam(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -779,12 +836,18 @@ class BmAddEntryOptions(object):
 
     """
 
-
-    def __init__(self, priority=None,):
+    def __init__(
+        self,
+        priority=None,
+    ):
         self.priority = priority
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -804,11 +867,13 @@ class BmAddEntryOptions(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmAddEntryOptions')
+        oprot.writeStructBegin("BmAddEntryOptions")
         if self.priority is not None:
-            oprot.writeFieldBegin('priority', TType.I32, 1)
+            oprot.writeFieldBegin("priority", TType.I32, 1)
             oprot.writeI32(self.priority)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -818,9 +883,8 @@ class BmAddEntryOptions(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -837,13 +901,20 @@ class BmCounterValue(object):
 
     """
 
-
-    def __init__(self, bytes=None, packets=None,):
+    def __init__(
+        self,
+        bytes=None,
+        packets=None,
+    ):
         self.bytes = bytes
         self.packets = packets
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -868,15 +939,17 @@ class BmCounterValue(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmCounterValue')
+        oprot.writeStructBegin("BmCounterValue")
         if self.bytes is not None:
-            oprot.writeFieldBegin('bytes', TType.I64, 1)
+            oprot.writeFieldBegin("bytes", TType.I64, 1)
             oprot.writeI64(self.bytes)
             oprot.writeFieldEnd()
         if self.packets is not None:
-            oprot.writeFieldBegin('packets', TType.I64, 2)
+            oprot.writeFieldBegin("packets", TType.I64, 2)
             oprot.writeI64(self.packets)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -886,9 +959,8 @@ class BmCounterValue(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -905,13 +977,20 @@ class BmMeterRateConfig(object):
 
     """
 
-
-    def __init__(self, units_per_micros=None, burst_size=None,):
+    def __init__(
+        self,
+        units_per_micros=None,
+        burst_size=None,
+    ):
         self.units_per_micros = units_per_micros
         self.burst_size = burst_size
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -936,15 +1015,17 @@ class BmMeterRateConfig(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMeterRateConfig')
+        oprot.writeStructBegin("BmMeterRateConfig")
         if self.units_per_micros is not None:
-            oprot.writeFieldBegin('units_per_micros', TType.DOUBLE, 1)
+            oprot.writeFieldBegin("units_per_micros", TType.DOUBLE, 1)
             oprot.writeDouble(self.units_per_micros)
             oprot.writeFieldEnd()
         if self.burst_size is not None:
-            oprot.writeFieldBegin('burst_size', TType.I32, 2)
+            oprot.writeFieldBegin("burst_size", TType.I32, 2)
             oprot.writeI32(self.burst_size)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -954,9 +1035,8 @@ class BmMeterRateConfig(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -972,12 +1052,18 @@ class InvalidTableOperation(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -997,11 +1083,13 @@ class InvalidTableOperation(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidTableOperation')
+        oprot.writeStructBegin("InvalidTableOperation")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1014,9 +1102,8 @@ class InvalidTableOperation(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1032,12 +1119,18 @@ class InvalidCounterOperation(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1057,11 +1150,13 @@ class InvalidCounterOperation(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidCounterOperation')
+        oprot.writeStructBegin("InvalidCounterOperation")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1074,9 +1169,8 @@ class InvalidCounterOperation(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1092,12 +1186,18 @@ class InvalidSwapOperation(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1117,11 +1217,13 @@ class InvalidSwapOperation(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidSwapOperation')
+        oprot.writeStructBegin("InvalidSwapOperation")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1134,9 +1236,8 @@ class InvalidSwapOperation(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1152,12 +1253,18 @@ class InvalidMeterOperation(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1177,11 +1284,13 @@ class InvalidMeterOperation(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidMeterOperation')
+        oprot.writeStructBegin("InvalidMeterOperation")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1194,9 +1303,8 @@ class InvalidMeterOperation(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1212,12 +1320,18 @@ class InvalidRegisterOperation(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1237,11 +1351,13 @@ class InvalidRegisterOperation(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidRegisterOperation')
+        oprot.writeStructBegin("InvalidRegisterOperation")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1254,9 +1370,8 @@ class InvalidRegisterOperation(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1272,12 +1387,18 @@ class InvalidParseVSetOperation(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1297,11 +1418,13 @@ class InvalidParseVSetOperation(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidParseVSetOperation')
+        oprot.writeStructBegin("InvalidParseVSetOperation")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1314,9 +1437,8 @@ class InvalidParseVSetOperation(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1332,12 +1454,18 @@ class InvalidLearnOperation(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1357,11 +1485,13 @@ class InvalidLearnOperation(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidLearnOperation')
+        oprot.writeStructBegin("InvalidLearnOperation")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1374,9 +1504,8 @@ class InvalidLearnOperation(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1392,12 +1521,18 @@ class InvalidDevMgrOperation(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1417,11 +1552,13 @@ class InvalidDevMgrOperation(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidDevMgrOperation')
+        oprot.writeStructBegin("InvalidDevMgrOperation")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1434,9 +1571,8 @@ class InvalidDevMgrOperation(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1455,15 +1591,24 @@ class DevMgrPortInfo(object):
 
     """
 
-
-    def __init__(self, port_num=None, iface_name=None, is_up=None, extra=None,):
+    def __init__(
+        self,
+        port_num=None,
+        iface_name=None,
+        is_up=None,
+        extra=None,
+    ):
         self.port_num = port_num
         self.iface_name = iface_name
         self.is_up = is_up
         self.extra = extra
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1478,7 +1623,11 @@ class DevMgrPortInfo(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.iface_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.iface_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -1491,8 +1640,16 @@ class DevMgrPortInfo(object):
                     self.extra = {}
                     (_ktype1, _vtype2, _size0) = iprot.readMapBegin()
                     for _i4 in range(_size0):
-                        _key5 = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
-                        _val6 = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                        _key5 = (
+                            iprot.readString().decode("utf-8")
+                            if sys.version_info[0] == 2
+                            else iprot.readString()
+                        )
+                        _val6 = (
+                            iprot.readString().decode("utf-8")
+                            if sys.version_info[0] == 2
+                            else iprot.readString()
+                        )
                         self.extra[_key5] = _val6
                     iprot.readMapEnd()
                 else:
@@ -1504,27 +1661,37 @@ class DevMgrPortInfo(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('DevMgrPortInfo')
+        oprot.writeStructBegin("DevMgrPortInfo")
         if self.port_num is not None:
-            oprot.writeFieldBegin('port_num', TType.I32, 1)
+            oprot.writeFieldBegin("port_num", TType.I32, 1)
             oprot.writeI32(self.port_num)
             oprot.writeFieldEnd()
         if self.iface_name is not None:
-            oprot.writeFieldBegin('iface_name', TType.STRING, 2)
-            oprot.writeString(self.iface_name.encode('utf-8') if sys.version_info[0] == 2 else self.iface_name)
+            oprot.writeFieldBegin("iface_name", TType.STRING, 2)
+            oprot.writeString(
+                self.iface_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.iface_name
+            )
             oprot.writeFieldEnd()
         if self.is_up is not None:
-            oprot.writeFieldBegin('is_up', TType.BOOL, 3)
+            oprot.writeFieldBegin("is_up", TType.BOOL, 3)
             oprot.writeBool(self.is_up)
             oprot.writeFieldEnd()
         if self.extra is not None:
-            oprot.writeFieldBegin('extra', TType.MAP, 4)
+            oprot.writeFieldBegin("extra", TType.MAP, 4)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.extra))
             for kiter7, viter8 in self.extra.items():
-                oprot.writeString(kiter7.encode('utf-8') if sys.version_info[0] == 2 else kiter7)
-                oprot.writeString(viter8.encode('utf-8') if sys.version_info[0] == 2 else viter8)
+                oprot.writeString(
+                    kiter7.encode("utf-8") if sys.version_info[0] == 2 else kiter7
+                )
+                oprot.writeString(
+                    viter8.encode("utf-8") if sys.version_info[0] == 2 else viter8
+                )
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1534,9 +1701,8 @@ class DevMgrPortInfo(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1556,8 +1722,14 @@ class BmCrc16Config(object):
 
     """
 
-
-    def __init__(self, polynomial=None, initial_remainder=None, final_xor_value=None, data_reflected=None, remainder_reflected=None,):
+    def __init__(
+        self,
+        polynomial=None,
+        initial_remainder=None,
+        final_xor_value=None,
+        data_reflected=None,
+        remainder_reflected=None,
+    ):
         self.polynomial = polynomial
         self.initial_remainder = initial_remainder
         self.final_xor_value = final_xor_value
@@ -1565,7 +1737,11 @@ class BmCrc16Config(object):
         self.remainder_reflected = remainder_reflected
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1605,27 +1781,29 @@ class BmCrc16Config(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmCrc16Config')
+        oprot.writeStructBegin("BmCrc16Config")
         if self.polynomial is not None:
-            oprot.writeFieldBegin('polynomial', TType.I16, 1)
+            oprot.writeFieldBegin("polynomial", TType.I16, 1)
             oprot.writeI16(self.polynomial)
             oprot.writeFieldEnd()
         if self.initial_remainder is not None:
-            oprot.writeFieldBegin('initial_remainder', TType.I16, 2)
+            oprot.writeFieldBegin("initial_remainder", TType.I16, 2)
             oprot.writeI16(self.initial_remainder)
             oprot.writeFieldEnd()
         if self.final_xor_value is not None:
-            oprot.writeFieldBegin('final_xor_value', TType.I16, 3)
+            oprot.writeFieldBegin("final_xor_value", TType.I16, 3)
             oprot.writeI16(self.final_xor_value)
             oprot.writeFieldEnd()
         if self.data_reflected is not None:
-            oprot.writeFieldBegin('data_reflected', TType.BOOL, 4)
+            oprot.writeFieldBegin("data_reflected", TType.BOOL, 4)
             oprot.writeBool(self.data_reflected)
             oprot.writeFieldEnd()
         if self.remainder_reflected is not None:
-            oprot.writeFieldBegin('remainder_reflected', TType.BOOL, 5)
+            oprot.writeFieldBegin("remainder_reflected", TType.BOOL, 5)
             oprot.writeBool(self.remainder_reflected)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1635,9 +1813,8 @@ class BmCrc16Config(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1657,8 +1834,14 @@ class BmCrc32Config(object):
 
     """
 
-
-    def __init__(self, polynomial=None, initial_remainder=None, final_xor_value=None, data_reflected=None, remainder_reflected=None,):
+    def __init__(
+        self,
+        polynomial=None,
+        initial_remainder=None,
+        final_xor_value=None,
+        data_reflected=None,
+        remainder_reflected=None,
+    ):
         self.polynomial = polynomial
         self.initial_remainder = initial_remainder
         self.final_xor_value = final_xor_value
@@ -1666,7 +1849,11 @@ class BmCrc32Config(object):
         self.remainder_reflected = remainder_reflected
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1706,27 +1893,29 @@ class BmCrc32Config(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmCrc32Config')
+        oprot.writeStructBegin("BmCrc32Config")
         if self.polynomial is not None:
-            oprot.writeFieldBegin('polynomial', TType.I32, 1)
+            oprot.writeFieldBegin("polynomial", TType.I32, 1)
             oprot.writeI32(self.polynomial)
             oprot.writeFieldEnd()
         if self.initial_remainder is not None:
-            oprot.writeFieldBegin('initial_remainder', TType.I32, 2)
+            oprot.writeFieldBegin("initial_remainder", TType.I32, 2)
             oprot.writeI32(self.initial_remainder)
             oprot.writeFieldEnd()
         if self.final_xor_value is not None:
-            oprot.writeFieldBegin('final_xor_value', TType.I32, 3)
+            oprot.writeFieldBegin("final_xor_value", TType.I32, 3)
             oprot.writeI32(self.final_xor_value)
             oprot.writeFieldEnd()
         if self.data_reflected is not None:
-            oprot.writeFieldBegin('data_reflected', TType.BOOL, 4)
+            oprot.writeFieldBegin("data_reflected", TType.BOOL, 4)
             oprot.writeBool(self.data_reflected)
             oprot.writeFieldEnd()
         if self.remainder_reflected is not None:
-            oprot.writeFieldBegin('remainder_reflected', TType.BOOL, 5)
+            oprot.writeFieldBegin("remainder_reflected", TType.BOOL, 5)
             oprot.writeBool(self.remainder_reflected)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1736,9 +1925,8 @@ class BmCrc32Config(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1754,12 +1942,18 @@ class InvalidCrcOperation(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1779,11 +1973,13 @@ class InvalidCrcOperation(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidCrcOperation')
+        oprot.writeStructBegin("InvalidCrcOperation")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1796,9 +1992,8 @@ class InvalidCrcOperation(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1818,8 +2013,14 @@ class BmActionEntry(object):
 
     """
 
-
-    def __init__(self, action_type=None, action_name=None, action_data=None, mbr_handle=None, grp_handle=None,):
+    def __init__(
+        self,
+        action_type=None,
+        action_name=None,
+        action_data=None,
+        mbr_handle=None,
+        grp_handle=None,
+    ):
         self.action_type = action_type
         self.action_name = action_name
         self.action_data = action_data
@@ -1827,7 +2028,11 @@ class BmActionEntry(object):
         self.grp_handle = grp_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1842,7 +2047,11 @@ class BmActionEntry(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.action_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.action_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -1872,30 +2081,36 @@ class BmActionEntry(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmActionEntry')
+        oprot.writeStructBegin("BmActionEntry")
         if self.action_type is not None:
-            oprot.writeFieldBegin('action_type', TType.I32, 1)
+            oprot.writeFieldBegin("action_type", TType.I32, 1)
             oprot.writeI32(self.action_type)
             oprot.writeFieldEnd()
         if self.action_name is not None:
-            oprot.writeFieldBegin('action_name', TType.STRING, 2)
-            oprot.writeString(self.action_name.encode('utf-8') if sys.version_info[0] == 2 else self.action_name)
+            oprot.writeFieldBegin("action_name", TType.STRING, 2)
+            oprot.writeString(
+                self.action_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.action_name
+            )
             oprot.writeFieldEnd()
         if self.action_data is not None:
-            oprot.writeFieldBegin('action_data', TType.LIST, 3)
+            oprot.writeFieldBegin("action_data", TType.LIST, 3)
             oprot.writeListBegin(TType.STRING, len(self.action_data))
             for iter15 in self.action_data:
                 oprot.writeBinary(iter15)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.mbr_handle is not None:
-            oprot.writeFieldBegin('mbr_handle', TType.I32, 4)
+            oprot.writeFieldBegin("mbr_handle", TType.I32, 4)
             oprot.writeI32(self.mbr_handle)
             oprot.writeFieldEnd()
         if self.grp_handle is not None:
-            oprot.writeFieldBegin('grp_handle', TType.I32, 5)
+            oprot.writeFieldBegin("grp_handle", TType.I32, 5)
             oprot.writeI32(self.grp_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1905,9 +2120,8 @@ class BmActionEntry(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1924,13 +2138,20 @@ class BmMtEntryLife(object):
 
     """
 
-
-    def __init__(self, timeout_ms=None, time_since_hit_ms=None,):
+    def __init__(
+        self,
+        timeout_ms=None,
+        time_since_hit_ms=None,
+    ):
         self.timeout_ms = timeout_ms
         self.time_since_hit_ms = time_since_hit_ms
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1955,15 +2176,17 @@ class BmMtEntryLife(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMtEntryLife')
+        oprot.writeStructBegin("BmMtEntryLife")
         if self.timeout_ms is not None:
-            oprot.writeFieldBegin('timeout_ms', TType.I32, 1)
+            oprot.writeFieldBegin("timeout_ms", TType.I32, 1)
             oprot.writeI32(self.timeout_ms)
             oprot.writeFieldEnd()
         if self.time_since_hit_ms is not None:
-            oprot.writeFieldBegin('time_since_hit_ms', TType.I32, 2)
+            oprot.writeFieldBegin("time_since_hit_ms", TType.I32, 2)
             oprot.writeI32(self.time_since_hit_ms)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1973,9 +2196,8 @@ class BmMtEntryLife(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -1995,8 +2217,14 @@ class BmMtEntry(object):
 
     """
 
-
-    def __init__(self, match_key=None, options=None, entry_handle=None, action_entry=None, life=None,):
+    def __init__(
+        self,
+        match_key=None,
+        options=None,
+        entry_handle=None,
+        action_entry=None,
+        life=None,
+    ):
         self.match_key = match_key
         self.options = options
         self.entry_handle = entry_handle
@@ -2004,7 +2232,11 @@ class BmMtEntry(object):
         self.life = life
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -2053,30 +2285,32 @@ class BmMtEntry(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMtEntry')
+        oprot.writeStructBegin("BmMtEntry")
         if self.match_key is not None:
-            oprot.writeFieldBegin('match_key', TType.LIST, 1)
+            oprot.writeFieldBegin("match_key", TType.LIST, 1)
             oprot.writeListBegin(TType.STRUCT, len(self.match_key))
             for iter22 in self.match_key:
                 iter22.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.options is not None:
-            oprot.writeFieldBegin('options', TType.STRUCT, 2)
+            oprot.writeFieldBegin("options", TType.STRUCT, 2)
             self.options.write(oprot)
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         if self.action_entry is not None:
-            oprot.writeFieldBegin('action_entry', TType.STRUCT, 4)
+            oprot.writeFieldBegin("action_entry", TType.STRUCT, 4)
             self.action_entry.write(oprot)
             oprot.writeFieldEnd()
         if self.life is not None:
-            oprot.writeFieldBegin('life', TType.STRUCT, 5)
+            oprot.writeFieldBegin("life", TType.STRUCT, 5)
             self.life.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -2086,9 +2320,8 @@ class BmMtEntry(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -2106,14 +2339,22 @@ class BmMtActProfMember(object):
 
     """
 
-
-    def __init__(self, mbr_handle=None, action_name=None, action_data=None,):
+    def __init__(
+        self,
+        mbr_handle=None,
+        action_name=None,
+        action_data=None,
+    ):
         self.mbr_handle = mbr_handle
         self.action_name = action_name
         self.action_data = action_data
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -2128,7 +2369,11 @@ class BmMtActProfMember(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.action_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.action_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -2148,19 +2393,25 @@ class BmMtActProfMember(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMtActProfMember')
+        oprot.writeStructBegin("BmMtActProfMember")
         if self.mbr_handle is not None:
-            oprot.writeFieldBegin('mbr_handle', TType.I32, 1)
+            oprot.writeFieldBegin("mbr_handle", TType.I32, 1)
             oprot.writeI32(self.mbr_handle)
             oprot.writeFieldEnd()
         if self.action_name is not None:
-            oprot.writeFieldBegin('action_name', TType.STRING, 2)
-            oprot.writeString(self.action_name.encode('utf-8') if sys.version_info[0] == 2 else self.action_name)
+            oprot.writeFieldBegin("action_name", TType.STRING, 2)
+            oprot.writeString(
+                self.action_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.action_name
+            )
             oprot.writeFieldEnd()
         if self.action_data is not None:
-            oprot.writeFieldBegin('action_data', TType.LIST, 3)
+            oprot.writeFieldBegin("action_data", TType.LIST, 3)
             oprot.writeListBegin(TType.STRING, len(self.action_data))
             for iter29 in self.action_data:
                 oprot.writeBinary(iter29)
@@ -2173,9 +2424,8 @@ class BmMtActProfMember(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -2192,13 +2442,20 @@ class BmMtActProfGroup(object):
 
     """
 
-
-    def __init__(self, grp_handle=None, mbr_handles=None,):
+    def __init__(
+        self,
+        grp_handle=None,
+        mbr_handles=None,
+    ):
         self.grp_handle = grp_handle
         self.mbr_handles = mbr_handles
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -2228,15 +2485,17 @@ class BmMtActProfGroup(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmMtActProfGroup')
+        oprot.writeStructBegin("BmMtActProfGroup")
         if self.grp_handle is not None:
-            oprot.writeFieldBegin('grp_handle', TType.I32, 1)
+            oprot.writeFieldBegin("grp_handle", TType.I32, 1)
             oprot.writeI32(self.grp_handle)
             oprot.writeFieldEnd()
         if self.mbr_handles is not None:
-            oprot.writeFieldBegin('mbr_handles', TType.LIST, 2)
+            oprot.writeFieldBegin("mbr_handles", TType.LIST, 2)
             oprot.writeListBegin(TType.I32, len(self.mbr_handles))
             for iter36 in self.mbr_handles:
                 oprot.writeI32(iter36)
@@ -2249,9 +2508,8 @@ class BmMtActProfGroup(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -2271,8 +2529,14 @@ class BmConfig(object):
 
     """
 
-
-    def __init__(self, device_id=None, thrift_port=None, notifications_socket=None, elogger_socket=None, debugger_socket=None,):
+    def __init__(
+        self,
+        device_id=None,
+        thrift_port=None,
+        notifications_socket=None,
+        elogger_socket=None,
+        debugger_socket=None,
+    ):
         self.device_id = device_id
         self.thrift_port = thrift_port
         self.notifications_socket = notifications_socket
@@ -2280,7 +2544,11 @@ class BmConfig(object):
         self.debugger_socket = debugger_socket
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -2300,17 +2568,29 @@ class BmConfig(object):
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRING:
-                    self.notifications_socket = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.notifications_socket = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRING:
-                    self.elogger_socket = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.elogger_socket = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 5:
                 if ftype == TType.STRING:
-                    self.debugger_socket = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.debugger_socket = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -2320,28 +2600,42 @@ class BmConfig(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('BmConfig')
+        oprot.writeStructBegin("BmConfig")
         if self.device_id is not None:
-            oprot.writeFieldBegin('device_id', TType.I64, 1)
+            oprot.writeFieldBegin("device_id", TType.I64, 1)
             oprot.writeI64(self.device_id)
             oprot.writeFieldEnd()
         if self.thrift_port is not None:
-            oprot.writeFieldBegin('thrift_port', TType.I32, 2)
+            oprot.writeFieldBegin("thrift_port", TType.I32, 2)
             oprot.writeI32(self.thrift_port)
             oprot.writeFieldEnd()
         if self.notifications_socket is not None:
-            oprot.writeFieldBegin('notifications_socket', TType.STRING, 3)
-            oprot.writeString(self.notifications_socket.encode('utf-8') if sys.version_info[0] == 2 else self.notifications_socket)
+            oprot.writeFieldBegin("notifications_socket", TType.STRING, 3)
+            oprot.writeString(
+                self.notifications_socket.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.notifications_socket
+            )
             oprot.writeFieldEnd()
         if self.elogger_socket is not None:
-            oprot.writeFieldBegin('elogger_socket', TType.STRING, 4)
-            oprot.writeString(self.elogger_socket.encode('utf-8') if sys.version_info[0] == 2 else self.elogger_socket)
+            oprot.writeFieldBegin("elogger_socket", TType.STRING, 4)
+            oprot.writeString(
+                self.elogger_socket.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.elogger_socket
+            )
             oprot.writeFieldEnd()
         if self.debugger_socket is not None:
-            oprot.writeFieldBegin('debugger_socket', TType.STRING, 5)
-            oprot.writeString(self.debugger_socket.encode('utf-8') if sys.version_info[0] == 2 else self.debugger_socket)
+            oprot.writeFieldBegin("debugger_socket", TType.STRING, 5)
+            oprot.writeString(
+                self.debugger_socket.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.debugger_socket
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -2350,9 +2644,8 @@ class BmConfig(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
@@ -2368,12 +2661,18 @@ class InvalidIdLookup(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -2393,11 +2692,13 @@ class InvalidIdLookup(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidIdLookup')
+        oprot.writeStructBegin("InvalidIdLookup")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -2410,191 +2711,582 @@ class InvalidIdLookup(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(BmMatchParamExact)
 BmMatchParamExact.thrift_spec = (
     None,  # 0
-    (1, TType.STRING, 'key', 'BINARY', None, ),  # 1
+    (
+        1,
+        TType.STRING,
+        "key",
+        "BINARY",
+        None,
+    ),  # 1
 )
 all_structs.append(BmMatchParamLPM)
 BmMatchParamLPM.thrift_spec = (
     None,  # 0
-    (1, TType.STRING, 'key', 'BINARY', None, ),  # 1
-    (2, TType.I32, 'prefix_length', None, None, ),  # 2
+    (
+        1,
+        TType.STRING,
+        "key",
+        "BINARY",
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "prefix_length",
+        None,
+        None,
+    ),  # 2
 )
 all_structs.append(BmMatchParamTernary)
 BmMatchParamTernary.thrift_spec = (
     None,  # 0
-    (1, TType.STRING, 'key', 'BINARY', None, ),  # 1
-    (2, TType.STRING, 'mask', 'BINARY', None, ),  # 2
+    (
+        1,
+        TType.STRING,
+        "key",
+        "BINARY",
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "mask",
+        "BINARY",
+        None,
+    ),  # 2
 )
 all_structs.append(BmMatchParamValid)
 BmMatchParamValid.thrift_spec = (
     None,  # 0
-    (1, TType.BOOL, 'key', None, None, ),  # 1
+    (
+        1,
+        TType.BOOL,
+        "key",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(BmMatchParamRange)
 BmMatchParamRange.thrift_spec = (
     None,  # 0
-    (1, TType.STRING, 'start', 'BINARY', None, ),  # 1
-    (2, TType.STRING, 'end_', 'BINARY', None, ),  # 2
+    (
+        1,
+        TType.STRING,
+        "start",
+        "BINARY",
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "end_",
+        "BINARY",
+        None,
+    ),  # 2
 )
 all_structs.append(BmMatchParam)
 BmMatchParam.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'type', None, None, ),  # 1
-    (2, TType.STRUCT, 'exact', [BmMatchParamExact, None], None, ),  # 2
-    (3, TType.STRUCT, 'lpm', [BmMatchParamLPM, None], None, ),  # 3
-    (4, TType.STRUCT, 'ternary', [BmMatchParamTernary, None], None, ),  # 4
-    (5, TType.STRUCT, 'valid', [BmMatchParamValid, None], None, ),  # 5
-    (6, TType.STRUCT, 'range', [BmMatchParamRange, None], None, ),  # 6
+    (
+        1,
+        TType.I32,
+        "type",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRUCT,
+        "exact",
+        [BmMatchParamExact, None],
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRUCT,
+        "lpm",
+        [BmMatchParamLPM, None],
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRUCT,
+        "ternary",
+        [BmMatchParamTernary, None],
+        None,
+    ),  # 4
+    (
+        5,
+        TType.STRUCT,
+        "valid",
+        [BmMatchParamValid, None],
+        None,
+    ),  # 5
+    (
+        6,
+        TType.STRUCT,
+        "range",
+        [BmMatchParamRange, None],
+        None,
+    ),  # 6
 )
 all_structs.append(BmAddEntryOptions)
 BmAddEntryOptions.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'priority', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "priority",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(BmCounterValue)
 BmCounterValue.thrift_spec = (
     None,  # 0
-    (1, TType.I64, 'bytes', None, None, ),  # 1
-    (2, TType.I64, 'packets', None, None, ),  # 2
+    (
+        1,
+        TType.I64,
+        "bytes",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I64,
+        "packets",
+        None,
+        None,
+    ),  # 2
 )
 all_structs.append(BmMeterRateConfig)
 BmMeterRateConfig.thrift_spec = (
     None,  # 0
-    (1, TType.DOUBLE, 'units_per_micros', None, None, ),  # 1
-    (2, TType.I32, 'burst_size', None, None, ),  # 2
+    (
+        1,
+        TType.DOUBLE,
+        "units_per_micros",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "burst_size",
+        None,
+        None,
+    ),  # 2
 )
 all_structs.append(InvalidTableOperation)
 InvalidTableOperation.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(InvalidCounterOperation)
 InvalidCounterOperation.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(InvalidSwapOperation)
 InvalidSwapOperation.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(InvalidMeterOperation)
 InvalidMeterOperation.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(InvalidRegisterOperation)
 InvalidRegisterOperation.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(InvalidParseVSetOperation)
 InvalidParseVSetOperation.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(InvalidLearnOperation)
 InvalidLearnOperation.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(InvalidDevMgrOperation)
 InvalidDevMgrOperation.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(DevMgrPortInfo)
 DevMgrPortInfo.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'port_num', None, None, ),  # 1
-    (2, TType.STRING, 'iface_name', 'UTF8', None, ),  # 2
-    (3, TType.BOOL, 'is_up', None, None, ),  # 3
-    (4, TType.MAP, 'extra', (TType.STRING, 'UTF8', TType.STRING, 'UTF8', False), None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "port_num",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "iface_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.BOOL,
+        "is_up",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.MAP,
+        "extra",
+        (TType.STRING, "UTF8", TType.STRING, "UTF8", False),
+        None,
+    ),  # 4
 )
 all_structs.append(BmCrc16Config)
 BmCrc16Config.thrift_spec = (
     None,  # 0
-    (1, TType.I16, 'polynomial', None, None, ),  # 1
-    (2, TType.I16, 'initial_remainder', None, None, ),  # 2
-    (3, TType.I16, 'final_xor_value', None, None, ),  # 3
-    (4, TType.BOOL, 'data_reflected', None, None, ),  # 4
-    (5, TType.BOOL, 'remainder_reflected', None, None, ),  # 5
+    (
+        1,
+        TType.I16,
+        "polynomial",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I16,
+        "initial_remainder",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I16,
+        "final_xor_value",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.BOOL,
+        "data_reflected",
+        None,
+        None,
+    ),  # 4
+    (
+        5,
+        TType.BOOL,
+        "remainder_reflected",
+        None,
+        None,
+    ),  # 5
 )
 all_structs.append(BmCrc32Config)
 BmCrc32Config.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'polynomial', None, None, ),  # 1
-    (2, TType.I32, 'initial_remainder', None, None, ),  # 2
-    (3, TType.I32, 'final_xor_value', None, None, ),  # 3
-    (4, TType.BOOL, 'data_reflected', None, None, ),  # 4
-    (5, TType.BOOL, 'remainder_reflected', None, None, ),  # 5
+    (
+        1,
+        TType.I32,
+        "polynomial",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "initial_remainder",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "final_xor_value",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.BOOL,
+        "data_reflected",
+        None,
+        None,
+    ),  # 4
+    (
+        5,
+        TType.BOOL,
+        "remainder_reflected",
+        None,
+        None,
+    ),  # 5
 )
 all_structs.append(InvalidCrcOperation)
 InvalidCrcOperation.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 all_structs.append(BmActionEntry)
 BmActionEntry.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'action_type', None, None, ),  # 1
-    (2, TType.STRING, 'action_name', 'UTF8', None, ),  # 2
-    (3, TType.LIST, 'action_data', (TType.STRING, 'BINARY', False), None, ),  # 3
-    (4, TType.I32, 'mbr_handle', None, None, ),  # 4
-    (5, TType.I32, 'grp_handle', None, None, ),  # 5
+    (
+        1,
+        TType.I32,
+        "action_type",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "action_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.LIST,
+        "action_data",
+        (TType.STRING, "BINARY", False),
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I32,
+        "mbr_handle",
+        None,
+        None,
+    ),  # 4
+    (
+        5,
+        TType.I32,
+        "grp_handle",
+        None,
+        None,
+    ),  # 5
 )
 all_structs.append(BmMtEntryLife)
 BmMtEntryLife.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'timeout_ms', None, None, ),  # 1
-    (2, TType.I32, 'time_since_hit_ms', None, None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "timeout_ms",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "time_since_hit_ms",
+        None,
+        None,
+    ),  # 2
 )
 all_structs.append(BmMtEntry)
 BmMtEntry.thrift_spec = (
     None,  # 0
-    (1, TType.LIST, 'match_key', (TType.STRUCT, [BmMatchParam, None], False), None, ),  # 1
-    (2, TType.STRUCT, 'options', [BmAddEntryOptions, None], None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
-    (4, TType.STRUCT, 'action_entry', [BmActionEntry, None], None, ),  # 4
-    (5, TType.STRUCT, 'life', [BmMtEntryLife, None], None, ),  # 5
+    (
+        1,
+        TType.LIST,
+        "match_key",
+        (TType.STRUCT, [BmMatchParam, None], False),
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRUCT,
+        "options",
+        [BmAddEntryOptions, None],
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRUCT,
+        "action_entry",
+        [BmActionEntry, None],
+        None,
+    ),  # 4
+    (
+        5,
+        TType.STRUCT,
+        "life",
+        [BmMtEntryLife, None],
+        None,
+    ),  # 5
 )
 all_structs.append(BmMtActProfMember)
 BmMtActProfMember.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'mbr_handle', None, None, ),  # 1
-    (2, TType.STRING, 'action_name', 'UTF8', None, ),  # 2
-    (3, TType.LIST, 'action_data', (TType.STRING, 'BINARY', False), None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "mbr_handle",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "action_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.LIST,
+        "action_data",
+        (TType.STRING, "BINARY", False),
+        None,
+    ),  # 3
 )
 all_structs.append(BmMtActProfGroup)
 BmMtActProfGroup.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'grp_handle', None, None, ),  # 1
-    (2, TType.LIST, 'mbr_handles', (TType.I32, None, False), None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "grp_handle",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.LIST,
+        "mbr_handles",
+        (TType.I32, None, False),
+        None,
+    ),  # 2
 )
 all_structs.append(BmConfig)
 BmConfig.thrift_spec = (
     None,  # 0
-    (1, TType.I64, 'device_id', None, None, ),  # 1
-    (2, TType.I32, 'thrift_port', None, None, ),  # 2
-    (3, TType.STRING, 'notifications_socket', 'UTF8', None, ),  # 3
-    (4, TType.STRING, 'elogger_socket', 'UTF8', None, ),  # 4
-    (5, TType.STRING, 'debugger_socket', 'UTF8', None, ),  # 5
+    (
+        1,
+        TType.I64,
+        "device_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "thrift_port",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRING,
+        "notifications_socket",
+        "UTF8",
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRING,
+        "elogger_socket",
+        "UTF8",
+        None,
+    ),  # 4
+    (
+        5,
+        TType.STRING,
+        "debugger_socket",
+        "UTF8",
+        None,
+    ),  # 5
 )
 all_structs.append(InvalidIdLookup)
 InvalidIdLookup.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 fix_spec(all_structs)
 del all_structs

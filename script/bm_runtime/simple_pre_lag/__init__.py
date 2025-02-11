@@ -1,1 +1,1 @@
-__all__ = ['ttypes', 'constants', 'SimplePreLAG']
+__all__ = ["ttypes", "constants", "SimplePreLAG"]

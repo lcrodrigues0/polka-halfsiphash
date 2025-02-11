@@ -6,13 +6,20 @@
 #  options string: py
 #
 
-from thrift.Thrift import TType, TMessageType, TFrozenDict, TException, TApplicationException
+from thrift.Thrift import (
+    TType,
+    TMessageType,
+    TFrozenDict,
+    TException,
+    TApplicationException,
+)
 from thrift.protocol.TProtocol import TProtocolException
 from thrift.TRecursive import fix_spec
 
 import sys
 
 from thrift.transport import TTransport
+
 all_structs = []
 
 
@@ -47,12 +54,18 @@ class InvalidMcOperation(TException):
 
     """
 
-
-    def __init__(self, code=None,):
+    def __init__(
+        self,
+        code=None,
+    ):
         self.code = code
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -72,11 +85,13 @@ class InvalidMcOperation(TException):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('InvalidMcOperation')
+        oprot.writeStructBegin("InvalidMcOperation")
         if self.code is not None:
-            oprot.writeFieldBegin('code', TType.I32, 1)
+            oprot.writeFieldBegin("code", TType.I32, 1)
             oprot.writeI32(self.code)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -89,19 +104,26 @@ class InvalidMcOperation(TException):
         return repr(self)
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(InvalidMcOperation)
 InvalidMcOperation.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'code', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "code",
+        None,
+        None,
+    ),  # 1
 )
 fix_spec(all_structs)
 del all_structs

@@ -6,7 +6,13 @@
 #  options string: py
 #
 
-from thrift.Thrift import TType, TMessageType, TFrozenDict, TException, TApplicationException
+from thrift.Thrift import (
+    TType,
+    TMessageType,
+    TFrozenDict,
+    TException,
+    TApplicationException,
+)
 from thrift.protocol.TProtocol import TProtocolException
 from thrift.TRecursive import fix_spec
 
@@ -15,6 +21,7 @@ import logging
 from .ttypes import *
 from thrift.Thrift import TProcessor
 from thrift.transport import TTransport
+
 all_structs = []
 
 
@@ -125,7 +132,9 @@ class Client(Iface):
         return self.recv_bm_mc_mgrp_create()
 
     def send_bm_mc_mgrp_create(self, cxt_id, mgrp):
-        self._oprot.writeMessageBegin('bm_mc_mgrp_create', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mc_mgrp_create", TMessageType.CALL, self._seqid
+        )
         args = bm_mc_mgrp_create_args()
         args.cxt_id = cxt_id
         args.mgrp = mgrp
@@ -148,7 +157,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mc_mgrp_create failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mc_mgrp_create failed: unknown result",
+        )
 
     def bm_mc_mgrp_destroy(self, cxt_id, mgrp_handle):
         """
@@ -161,7 +173,9 @@ class Client(Iface):
         self.recv_bm_mc_mgrp_destroy()
 
     def send_bm_mc_mgrp_destroy(self, cxt_id, mgrp_handle):
-        self._oprot.writeMessageBegin('bm_mc_mgrp_destroy', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mc_mgrp_destroy", TMessageType.CALL, self._seqid
+        )
         args = bm_mc_mgrp_destroy_args()
         args.cxt_id = cxt_id
         args.mgrp_handle = mgrp_handle
@@ -197,7 +211,9 @@ class Client(Iface):
         return self.recv_bm_mc_node_create()
 
     def send_bm_mc_node_create(self, cxt_id, rid, port_map, lag_map):
-        self._oprot.writeMessageBegin('bm_mc_node_create', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mc_node_create", TMessageType.CALL, self._seqid
+        )
         args = bm_mc_node_create_args()
         args.cxt_id = cxt_id
         args.rid = rid
@@ -222,7 +238,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mc_node_create failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mc_node_create failed: unknown result",
+        )
 
     def bm_mc_node_associate(self, cxt_id, mgrp_handle, l1_handle):
         """
@@ -236,7 +255,9 @@ class Client(Iface):
         self.recv_bm_mc_node_associate()
 
     def send_bm_mc_node_associate(self, cxt_id, mgrp_handle, l1_handle):
-        self._oprot.writeMessageBegin('bm_mc_node_associate', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mc_node_associate", TMessageType.CALL, self._seqid
+        )
         args = bm_mc_node_associate_args()
         args.cxt_id = cxt_id
         args.mgrp_handle = mgrp_handle
@@ -272,7 +293,9 @@ class Client(Iface):
         self.recv_bm_mc_node_dissociate()
 
     def send_bm_mc_node_dissociate(self, cxt_id, mgrp_handle, l1_handle):
-        self._oprot.writeMessageBegin('bm_mc_node_dissociate', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mc_node_dissociate", TMessageType.CALL, self._seqid
+        )
         args = bm_mc_node_dissociate_args()
         args.cxt_id = cxt_id
         args.mgrp_handle = mgrp_handle
@@ -307,7 +330,9 @@ class Client(Iface):
         self.recv_bm_mc_node_destroy()
 
     def send_bm_mc_node_destroy(self, cxt_id, l1_handle):
-        self._oprot.writeMessageBegin('bm_mc_node_destroy', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mc_node_destroy", TMessageType.CALL, self._seqid
+        )
         args = bm_mc_node_destroy_args()
         args.cxt_id = cxt_id
         args.l1_handle = l1_handle
@@ -343,7 +368,9 @@ class Client(Iface):
         self.recv_bm_mc_node_update()
 
     def send_bm_mc_node_update(self, cxt_id, l1_handle, port_map, lag_map):
-        self._oprot.writeMessageBegin('bm_mc_node_update', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mc_node_update", TMessageType.CALL, self._seqid
+        )
         args = bm_mc_node_update_args()
         args.cxt_id = cxt_id
         args.l1_handle = l1_handle
@@ -380,7 +407,9 @@ class Client(Iface):
         self.recv_bm_mc_set_lag_membership()
 
     def send_bm_mc_set_lag_membership(self, cxt_id, lag_index, port_map):
-        self._oprot.writeMessageBegin('bm_mc_set_lag_membership', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mc_set_lag_membership", TMessageType.CALL, self._seqid
+        )
         args = bm_mc_set_lag_membership_args()
         args.cxt_id = cxt_id
         args.lag_index = lag_index
@@ -414,7 +443,9 @@ class Client(Iface):
         return self.recv_bm_mc_get_entries()
 
     def send_bm_mc_get_entries(self, cxt_id):
-        self._oprot.writeMessageBegin('bm_mc_get_entries', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mc_get_entries", TMessageType.CALL, self._seqid
+        )
         args = bm_mc_get_entries_args()
         args.cxt_id = cxt_id
         args.write(self._oprot)
@@ -436,7 +467,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mc_get_entries failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mc_get_entries failed: unknown result",
+        )
 
 
 class Processor(Iface, TProcessor):
@@ -446,11 +480,17 @@ class Processor(Iface, TProcessor):
         self._processMap["bm_mc_mgrp_create"] = Processor.process_bm_mc_mgrp_create
         self._processMap["bm_mc_mgrp_destroy"] = Processor.process_bm_mc_mgrp_destroy
         self._processMap["bm_mc_node_create"] = Processor.process_bm_mc_node_create
-        self._processMap["bm_mc_node_associate"] = Processor.process_bm_mc_node_associate
-        self._processMap["bm_mc_node_dissociate"] = Processor.process_bm_mc_node_dissociate
+        self._processMap["bm_mc_node_associate"] = (
+            Processor.process_bm_mc_node_associate
+        )
+        self._processMap["bm_mc_node_dissociate"] = (
+            Processor.process_bm_mc_node_dissociate
+        )
         self._processMap["bm_mc_node_destroy"] = Processor.process_bm_mc_node_destroy
         self._processMap["bm_mc_node_update"] = Processor.process_bm_mc_node_update
-        self._processMap["bm_mc_set_lag_membership"] = Processor.process_bm_mc_set_lag_membership
+        self._processMap["bm_mc_set_lag_membership"] = (
+            Processor.process_bm_mc_set_lag_membership
+        )
         self._processMap["bm_mc_get_entries"] = Processor.process_bm_mc_get_entries
 
     def process(self, iprot, oprot):
@@ -458,7 +498,9 @@ class Processor(Iface, TProcessor):
         if name not in self._processMap:
             iprot.skip(TType.STRUCT)
             iprot.readMessageEnd()
-            x = TApplicationException(TApplicationException.UNKNOWN_METHOD, 'Unknown function %s' % (name))
+            x = TApplicationException(
+                TApplicationException.UNKNOWN_METHOD, "Unknown function %s" % (name)
+            )
             oprot.writeMessageBegin(name, TMessageType.EXCEPTION, seqid)
             x.write(oprot)
             oprot.writeMessageEnd()
@@ -482,13 +524,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mc_mgrp_create", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -508,13 +552,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mc_mgrp_destroy", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -526,7 +572,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mc_node_create_result()
         try:
-            result.success = self._handler.bm_mc_node_create(args.cxt_id, args.rid, args.port_map, args.lag_map)
+            result.success = self._handler.bm_mc_node_create(
+                args.cxt_id, args.rid, args.port_map, args.lag_map
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -534,13 +582,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mc_node_create", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -552,7 +602,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mc_node_associate_result()
         try:
-            self._handler.bm_mc_node_associate(args.cxt_id, args.mgrp_handle, args.l1_handle)
+            self._handler.bm_mc_node_associate(
+                args.cxt_id, args.mgrp_handle, args.l1_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -560,13 +612,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mc_node_associate", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -578,7 +632,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mc_node_dissociate_result()
         try:
-            self._handler.bm_mc_node_dissociate(args.cxt_id, args.mgrp_handle, args.l1_handle)
+            self._handler.bm_mc_node_dissociate(
+                args.cxt_id, args.mgrp_handle, args.l1_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -586,13 +642,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mc_node_dissociate", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -612,13 +670,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mc_node_destroy", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -630,7 +690,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mc_node_update_result()
         try:
-            self._handler.bm_mc_node_update(args.cxt_id, args.l1_handle, args.port_map, args.lag_map)
+            self._handler.bm_mc_node_update(
+                args.cxt_id, args.l1_handle, args.port_map, args.lag_map
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -638,13 +700,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mc_node_update", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -656,7 +720,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mc_set_lag_membership_result()
         try:
-            self._handler.bm_mc_set_lag_membership(args.cxt_id, args.lag_index, args.port_map)
+            self._handler.bm_mc_set_lag_membership(
+                args.cxt_id, args.lag_index, args.port_map
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -664,13 +730,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mc_set_lag_membership", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -690,17 +758,20 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mc_get_entries", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
         oprot.trans.flush()
+
 
 # HELPER FUNCTIONS AND STRUCTURES
 
@@ -713,13 +784,20 @@ class bm_mc_mgrp_create_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, mgrp=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        mgrp=None,
+    ):
         self.cxt_id = cxt_id
         self.mgrp = mgrp
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -744,15 +822,17 @@ class bm_mc_mgrp_create_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_mgrp_create_args')
+        oprot.writeStructBegin("bm_mc_mgrp_create_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.mgrp is not None:
-            oprot.writeFieldBegin('mgrp', TType.I32, 2)
+            oprot.writeFieldBegin("mgrp", TType.I32, 2)
             oprot.writeI32(self.mgrp)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -762,20 +842,33 @@ class bm_mc_mgrp_create_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_mgrp_create_args)
 bm_mc_mgrp_create_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'mgrp', None, None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "mgrp",
+        None,
+        None,
+    ),  # 2
 )
 
 
@@ -787,13 +880,20 @@ class bm_mc_mgrp_create_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -819,15 +919,17 @@ class bm_mc_mgrp_create_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_mgrp_create_result')
+        oprot.writeStructBegin("bm_mc_mgrp_create_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.I32, 0)
+            oprot.writeFieldBegin("success", TType.I32, 0)
             oprot.writeI32(self.success)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -837,19 +939,32 @@ class bm_mc_mgrp_create_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_mgrp_create_result)
 bm_mc_mgrp_create_result.thrift_spec = (
-    (0, TType.I32, 'success', None, None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMcOperation, None], None, ),  # 1
+    (
+        0,
+        TType.I32,
+        "success",
+        None,
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMcOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -861,13 +976,20 @@ class bm_mc_mgrp_destroy_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, mgrp_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        mgrp_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.mgrp_handle = mgrp_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -892,15 +1014,17 @@ class bm_mc_mgrp_destroy_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_mgrp_destroy_args')
+        oprot.writeStructBegin("bm_mc_mgrp_destroy_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.mgrp_handle is not None:
-            oprot.writeFieldBegin('mgrp_handle', TType.I32, 2)
+            oprot.writeFieldBegin("mgrp_handle", TType.I32, 2)
             oprot.writeI32(self.mgrp_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -910,20 +1034,33 @@ class bm_mc_mgrp_destroy_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_mgrp_destroy_args)
 bm_mc_mgrp_destroy_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'mgrp_handle', None, None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "mgrp_handle",
+        None,
+        None,
+    ),  # 2
 )
 
 
@@ -934,12 +1071,18 @@ class bm_mc_mgrp_destroy_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -960,11 +1103,13 @@ class bm_mc_mgrp_destroy_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_mgrp_destroy_result')
+        oprot.writeStructBegin("bm_mc_mgrp_destroy_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -974,19 +1119,26 @@ class bm_mc_mgrp_destroy_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_mgrp_destroy_result)
 bm_mc_mgrp_destroy_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMcOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMcOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -1000,15 +1152,24 @@ class bm_mc_node_create_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, rid=None, port_map=None, lag_map=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        rid=None,
+        port_map=None,
+        lag_map=None,
+    ):
         self.cxt_id = cxt_id
         self.rid = rid
         self.port_map = port_map
         self.lag_map = lag_map
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1028,12 +1189,20 @@ class bm_mc_node_create_args(object):
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRING:
-                    self.port_map = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.port_map = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRING:
-                    self.lag_map = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.lag_map = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -1043,24 +1212,34 @@ class bm_mc_node_create_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_node_create_args')
+        oprot.writeStructBegin("bm_mc_node_create_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.rid is not None:
-            oprot.writeFieldBegin('rid', TType.I32, 2)
+            oprot.writeFieldBegin("rid", TType.I32, 2)
             oprot.writeI32(self.rid)
             oprot.writeFieldEnd()
         if self.port_map is not None:
-            oprot.writeFieldBegin('port_map', TType.STRING, 3)
-            oprot.writeString(self.port_map.encode('utf-8') if sys.version_info[0] == 2 else self.port_map)
+            oprot.writeFieldBegin("port_map", TType.STRING, 3)
+            oprot.writeString(
+                self.port_map.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.port_map
+            )
             oprot.writeFieldEnd()
         if self.lag_map is not None:
-            oprot.writeFieldBegin('lag_map', TType.STRING, 4)
-            oprot.writeString(self.lag_map.encode('utf-8') if sys.version_info[0] == 2 else self.lag_map)
+            oprot.writeFieldBegin("lag_map", TType.STRING, 4)
+            oprot.writeString(
+                self.lag_map.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.lag_map
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -1069,22 +1248,47 @@ class bm_mc_node_create_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_node_create_args)
 bm_mc_node_create_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'rid', None, None, ),  # 2
-    (3, TType.STRING, 'port_map', 'UTF8', None, ),  # 3
-    (4, TType.STRING, 'lag_map', 'UTF8', None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "rid",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRING,
+        "port_map",
+        "UTF8",
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRING,
+        "lag_map",
+        "UTF8",
+        None,
+    ),  # 4
 )
 
 
@@ -1096,13 +1300,20 @@ class bm_mc_node_create_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1128,15 +1339,17 @@ class bm_mc_node_create_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_node_create_result')
+        oprot.writeStructBegin("bm_mc_node_create_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.I32, 0)
+            oprot.writeFieldBegin("success", TType.I32, 0)
             oprot.writeI32(self.success)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1146,19 +1359,32 @@ class bm_mc_node_create_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_node_create_result)
 bm_mc_node_create_result.thrift_spec = (
-    (0, TType.I32, 'success', None, None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMcOperation, None], None, ),  # 1
+    (
+        0,
+        TType.I32,
+        "success",
+        None,
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMcOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -1171,14 +1397,22 @@ class bm_mc_node_associate_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, mgrp_handle=None, l1_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        mgrp_handle=None,
+        l1_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.mgrp_handle = mgrp_handle
         self.l1_handle = l1_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1208,19 +1442,21 @@ class bm_mc_node_associate_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_node_associate_args')
+        oprot.writeStructBegin("bm_mc_node_associate_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.mgrp_handle is not None:
-            oprot.writeFieldBegin('mgrp_handle', TType.I32, 2)
+            oprot.writeFieldBegin("mgrp_handle", TType.I32, 2)
             oprot.writeI32(self.mgrp_handle)
             oprot.writeFieldEnd()
         if self.l1_handle is not None:
-            oprot.writeFieldBegin('l1_handle', TType.I32, 3)
+            oprot.writeFieldBegin("l1_handle", TType.I32, 3)
             oprot.writeI32(self.l1_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1230,21 +1466,40 @@ class bm_mc_node_associate_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_node_associate_args)
 bm_mc_node_associate_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'mgrp_handle', None, None, ),  # 2
-    (3, TType.I32, 'l1_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "mgrp_handle",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "l1_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -1255,12 +1510,18 @@ class bm_mc_node_associate_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1281,11 +1542,13 @@ class bm_mc_node_associate_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_node_associate_result')
+        oprot.writeStructBegin("bm_mc_node_associate_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1295,19 +1558,26 @@ class bm_mc_node_associate_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_node_associate_result)
 bm_mc_node_associate_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMcOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMcOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -1320,14 +1590,22 @@ class bm_mc_node_dissociate_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, mgrp_handle=None, l1_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        mgrp_handle=None,
+        l1_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.mgrp_handle = mgrp_handle
         self.l1_handle = l1_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1357,19 +1635,21 @@ class bm_mc_node_dissociate_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_node_dissociate_args')
+        oprot.writeStructBegin("bm_mc_node_dissociate_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.mgrp_handle is not None:
-            oprot.writeFieldBegin('mgrp_handle', TType.I32, 2)
+            oprot.writeFieldBegin("mgrp_handle", TType.I32, 2)
             oprot.writeI32(self.mgrp_handle)
             oprot.writeFieldEnd()
         if self.l1_handle is not None:
-            oprot.writeFieldBegin('l1_handle', TType.I32, 3)
+            oprot.writeFieldBegin("l1_handle", TType.I32, 3)
             oprot.writeI32(self.l1_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1379,21 +1659,40 @@ class bm_mc_node_dissociate_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_node_dissociate_args)
 bm_mc_node_dissociate_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'mgrp_handle', None, None, ),  # 2
-    (3, TType.I32, 'l1_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "mgrp_handle",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "l1_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -1404,12 +1703,18 @@ class bm_mc_node_dissociate_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1430,11 +1735,13 @@ class bm_mc_node_dissociate_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_node_dissociate_result')
+        oprot.writeStructBegin("bm_mc_node_dissociate_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1444,19 +1751,26 @@ class bm_mc_node_dissociate_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_node_dissociate_result)
 bm_mc_node_dissociate_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMcOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMcOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -1468,13 +1782,20 @@ class bm_mc_node_destroy_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, l1_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        l1_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.l1_handle = l1_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1499,15 +1820,17 @@ class bm_mc_node_destroy_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_node_destroy_args')
+        oprot.writeStructBegin("bm_mc_node_destroy_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.l1_handle is not None:
-            oprot.writeFieldBegin('l1_handle', TType.I32, 2)
+            oprot.writeFieldBegin("l1_handle", TType.I32, 2)
             oprot.writeI32(self.l1_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1517,20 +1840,33 @@ class bm_mc_node_destroy_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_node_destroy_args)
 bm_mc_node_destroy_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'l1_handle', None, None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "l1_handle",
+        None,
+        None,
+    ),  # 2
 )
 
 
@@ -1541,12 +1877,18 @@ class bm_mc_node_destroy_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1567,11 +1909,13 @@ class bm_mc_node_destroy_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_node_destroy_result')
+        oprot.writeStructBegin("bm_mc_node_destroy_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1581,19 +1925,26 @@ class bm_mc_node_destroy_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_node_destroy_result)
 bm_mc_node_destroy_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMcOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMcOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -1607,15 +1958,24 @@ class bm_mc_node_update_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, l1_handle=None, port_map=None, lag_map=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        l1_handle=None,
+        port_map=None,
+        lag_map=None,
+    ):
         self.cxt_id = cxt_id
         self.l1_handle = l1_handle
         self.port_map = port_map
         self.lag_map = lag_map
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1635,12 +1995,20 @@ class bm_mc_node_update_args(object):
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRING:
-                    self.port_map = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.port_map = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRING:
-                    self.lag_map = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.lag_map = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -1650,24 +2018,34 @@ class bm_mc_node_update_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_node_update_args')
+        oprot.writeStructBegin("bm_mc_node_update_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.l1_handle is not None:
-            oprot.writeFieldBegin('l1_handle', TType.I32, 2)
+            oprot.writeFieldBegin("l1_handle", TType.I32, 2)
             oprot.writeI32(self.l1_handle)
             oprot.writeFieldEnd()
         if self.port_map is not None:
-            oprot.writeFieldBegin('port_map', TType.STRING, 3)
-            oprot.writeString(self.port_map.encode('utf-8') if sys.version_info[0] == 2 else self.port_map)
+            oprot.writeFieldBegin("port_map", TType.STRING, 3)
+            oprot.writeString(
+                self.port_map.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.port_map
+            )
             oprot.writeFieldEnd()
         if self.lag_map is not None:
-            oprot.writeFieldBegin('lag_map', TType.STRING, 4)
-            oprot.writeString(self.lag_map.encode('utf-8') if sys.version_info[0] == 2 else self.lag_map)
+            oprot.writeFieldBegin("lag_map", TType.STRING, 4)
+            oprot.writeString(
+                self.lag_map.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.lag_map
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -1676,22 +2054,47 @@ class bm_mc_node_update_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_node_update_args)
 bm_mc_node_update_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'l1_handle', None, None, ),  # 2
-    (3, TType.STRING, 'port_map', 'UTF8', None, ),  # 3
-    (4, TType.STRING, 'lag_map', 'UTF8', None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "l1_handle",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRING,
+        "port_map",
+        "UTF8",
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRING,
+        "lag_map",
+        "UTF8",
+        None,
+    ),  # 4
 )
 
 
@@ -1702,12 +2105,18 @@ class bm_mc_node_update_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1728,11 +2137,13 @@ class bm_mc_node_update_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_node_update_result')
+        oprot.writeStructBegin("bm_mc_node_update_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1742,19 +2153,26 @@ class bm_mc_node_update_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_node_update_result)
 bm_mc_node_update_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMcOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMcOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -1767,14 +2185,22 @@ class bm_mc_set_lag_membership_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, lag_index=None, port_map=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        lag_index=None,
+        port_map=None,
+    ):
         self.cxt_id = cxt_id
         self.lag_index = lag_index
         self.port_map = port_map
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1794,7 +2220,11 @@ class bm_mc_set_lag_membership_args(object):
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRING:
-                    self.port_map = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.port_map = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -1804,20 +2234,26 @@ class bm_mc_set_lag_membership_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_set_lag_membership_args')
+        oprot.writeStructBegin("bm_mc_set_lag_membership_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.lag_index is not None:
-            oprot.writeFieldBegin('lag_index', TType.I16, 2)
+            oprot.writeFieldBegin("lag_index", TType.I16, 2)
             oprot.writeI16(self.lag_index)
             oprot.writeFieldEnd()
         if self.port_map is not None:
-            oprot.writeFieldBegin('port_map', TType.STRING, 3)
-            oprot.writeString(self.port_map.encode('utf-8') if sys.version_info[0] == 2 else self.port_map)
+            oprot.writeFieldBegin("port_map", TType.STRING, 3)
+            oprot.writeString(
+                self.port_map.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.port_map
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -1826,21 +2262,40 @@ class bm_mc_set_lag_membership_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_set_lag_membership_args)
 bm_mc_set_lag_membership_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I16, 'lag_index', None, None, ),  # 2
-    (3, TType.STRING, 'port_map', 'UTF8', None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I16,
+        "lag_index",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRING,
+        "port_map",
+        "UTF8",
+        None,
+    ),  # 3
 )
 
 
@@ -1851,12 +2306,18 @@ class bm_mc_set_lag_membership_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1877,11 +2338,13 @@ class bm_mc_set_lag_membership_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_set_lag_membership_result')
+        oprot.writeStructBegin("bm_mc_set_lag_membership_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1891,19 +2354,26 @@ class bm_mc_set_lag_membership_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_set_lag_membership_result)
 bm_mc_set_lag_membership_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMcOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMcOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -1914,12 +2384,18 @@ class bm_mc_get_entries_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+    ):
         self.cxt_id = cxt_id
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1939,11 +2415,13 @@ class bm_mc_get_entries_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_get_entries_args')
+        oprot.writeStructBegin("bm_mc_get_entries_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1953,19 +2431,26 @@ class bm_mc_get_entries_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_get_entries_args)
 bm_mc_get_entries_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
 )
 
 
@@ -1977,13 +2462,20 @@ class bm_mc_get_entries_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -1993,7 +2485,11 @@ class bm_mc_get_entries_result(object):
                 break
             if fid == 0:
                 if ftype == TType.STRING:
-                    self.success = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.success = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 1:
@@ -2009,15 +2505,21 @@ class bm_mc_get_entries_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mc_get_entries_result')
+        oprot.writeStructBegin("bm_mc_get_entries_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRING, 0)
-            oprot.writeString(self.success.encode('utf-8') if sys.version_info[0] == 2 else self.success)
+            oprot.writeFieldBegin("success", TType.STRING, 0)
+            oprot.writeString(
+                self.success.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.success
+            )
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -2027,20 +2529,32 @@ class bm_mc_get_entries_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mc_get_entries_result)
 bm_mc_get_entries_result.thrift_spec = (
-    (0, TType.STRING, 'success', 'UTF8', None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMcOperation, None], None, ),  # 1
+    (
+        0,
+        TType.STRING,
+        "success",
+        "UTF8",
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMcOperation, None],
+        None,
+    ),  # 1
 )
 fix_spec(all_structs)
 del all_structs
-

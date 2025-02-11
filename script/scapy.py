@@ -7,12 +7,13 @@ from time import sleep
 # https://scapy.readthedocs.io/en/stable/usage.html#sniffing
 from scapy.all import AsyncSniffer, bind_layers, Packet, Ether
 from scapy.fields import BitField
-from mn_wifi.net import Mininet, info # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.net import Mininet, info  # type: ignore assumes import exists, it's from p4-utils
 
 from .topo import all_ifaces
 
 POLKA_PROTO = 0x1234
 PROBE_VERSION = 0xF1
+
 
 # order matters. It is the order in the packet header
 class Polka(Packet):
@@ -47,11 +48,10 @@ class Ipv4(Packet):
         BitField("dst_addr", default=0, size=32),
     ]
 
+
 bind_layers(Ether, Polka, type=POLKA_PROTO)
 bind_layers(Polka, PolkaProbe, version=PROBE_VERSION)
 bind_layers(PolkaProbe, Ipv4)
-
-
 
 
 # TODO: Always send timestamp when edge detected

@@ -20,9 +20,9 @@ import urllib.request
 
 # https://mininet.org/api/hierarchy.html
 from mininet.log import setLogLevel, info, debug
-from mn_wifi.cli import CLI # type: ignore assumes import exists, it's from p4-utils
-from mn_wifi.net import Mininet # type: ignore assumes import exists, it's from p4-utils
-from mn_wifi.bmv2 import P4Switch # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.cli import CLI  # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.net import Mininet  # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.bmv2 import P4Switch  # type: ignore assumes import exists, it's from p4-utils
 
 import urllib, json
 
@@ -51,8 +51,6 @@ def run_network_tests():
         info(f"*** Test failed: {e}\n")
         raise e
     info("*** ✅ All tests passed.\n")
-
-
 
 
 if __name__ == "__main__":

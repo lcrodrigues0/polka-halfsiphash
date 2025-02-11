@@ -6,7 +6,13 @@
 #  options string: py
 #
 
-from thrift.Thrift import TType, TMessageType, TFrozenDict, TException, TApplicationException
+from thrift.Thrift import (
+    TType,
+    TMessageType,
+    TFrozenDict,
+    TException,
+    TApplicationException,
+)
 from thrift.protocol.TProtocol import TProtocolException
 from thrift.TRecursive import fix_spec
 
@@ -15,6 +21,7 @@ import logging
 from .ttypes import *
 from thrift.Thrift import TProcessor
 from thrift.transport import TTransport
+
 all_structs = []
 
 
@@ -38,7 +45,9 @@ class Iface(object):
         """
         pass
 
-    def bm_mt_add_entry(self, cxt_id, table_name, match_key, action_name, action_data, options):
+    def bm_mt_add_entry(
+        self, cxt_id, table_name, match_key, action_name, action_data, options
+    ):
         """
         Parameters:
          - cxt_id
@@ -81,7 +90,9 @@ class Iface(object):
         """
         pass
 
-    def bm_mt_modify_entry(self, cxt_id, table_name, entry_handle, action_name, action_data):
+    def bm_mt_modify_entry(
+        self, cxt_id, table_name, entry_handle, action_name, action_data
+    ):
         """
         Parameters:
          - cxt_id
@@ -104,7 +115,9 @@ class Iface(object):
         """
         pass
 
-    def bm_mt_act_prof_add_member(self, cxt_id, act_prof_name, action_name, action_data):
+    def bm_mt_act_prof_add_member(
+        self, cxt_id, act_prof_name, action_name, action_data
+    ):
         """
         Parameters:
          - cxt_id
@@ -125,7 +138,9 @@ class Iface(object):
         """
         pass
 
-    def bm_mt_act_prof_modify_member(self, cxt_id, act_prof_name, mbr_handle, action_name, action_data):
+    def bm_mt_act_prof_modify_member(
+        self, cxt_id, act_prof_name, mbr_handle, action_name, action_data
+    ):
         """
         Parameters:
          - cxt_id
@@ -156,7 +171,9 @@ class Iface(object):
         """
         pass
 
-    def bm_mt_act_prof_add_member_to_group(self, cxt_id, act_prof_name, mbr_handle, grp_handle):
+    def bm_mt_act_prof_add_member_to_group(
+        self, cxt_id, act_prof_name, mbr_handle, grp_handle
+    ):
         """
         Parameters:
          - cxt_id
@@ -167,7 +184,9 @@ class Iface(object):
         """
         pass
 
-    def bm_mt_act_prof_remove_member_from_group(self, cxt_id, act_prof_name, mbr_handle, grp_handle):
+    def bm_mt_act_prof_remove_member_from_group(
+        self, cxt_id, act_prof_name, mbr_handle, grp_handle
+    ):
         """
         Parameters:
          - cxt_id
@@ -216,7 +235,9 @@ class Iface(object):
         """
         pass
 
-    def bm_mt_indirect_add_entry(self, cxt_id, table_name, match_key, mbr_handle, options):
+    def bm_mt_indirect_add_entry(
+        self, cxt_id, table_name, match_key, mbr_handle, options
+    ):
         """
         Parameters:
          - cxt_id
@@ -249,7 +270,9 @@ class Iface(object):
         """
         pass
 
-    def bm_mt_indirect_set_entry_ttl(self, cxt_id, table_name, entry_handle, timeout_ms):
+    def bm_mt_indirect_set_entry_ttl(
+        self, cxt_id, table_name, entry_handle, timeout_ms
+    ):
         """
         Parameters:
          - cxt_id
@@ -279,7 +302,9 @@ class Iface(object):
         """
         pass
 
-    def bm_mt_indirect_ws_add_entry(self, cxt_id, table_name, match_key, grp_handle, options):
+    def bm_mt_indirect_ws_add_entry(
+        self, cxt_id, table_name, match_key, grp_handle, options
+    ):
         """
         Parameters:
          - cxt_id
@@ -291,7 +316,9 @@ class Iface(object):
         """
         pass
 
-    def bm_mt_indirect_ws_modify_entry(self, cxt_id, table_name, entry_handle, grp_handle):
+    def bm_mt_indirect_ws_modify_entry(
+        self, cxt_id, table_name, entry_handle, grp_handle
+    ):
         """
         Parameters:
          - cxt_id
@@ -545,7 +572,9 @@ class Iface(object):
         """
         pass
 
-    def bm_register_write_range(self, cxt_id, register_array_name, start_index, end_index, value):
+    def bm_register_write_range(
+        self, cxt_id, register_array_name, start_index, end_index, value
+    ):
         """
         Parameters:
          - cxt_id
@@ -689,7 +718,9 @@ class Client(Iface):
         return self.recv_bm_mt_get_num_entries()
 
     def send_bm_mt_get_num_entries(self, cxt_id, table_name):
-        self._oprot.writeMessageBegin('bm_mt_get_num_entries', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_get_num_entries", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_get_num_entries_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -712,7 +743,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_get_num_entries failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_get_num_entries failed: unknown result",
+        )
 
     def bm_mt_clear_entries(self, cxt_id, table_name, reset_default_entry):
         """
@@ -726,7 +760,9 @@ class Client(Iface):
         self.recv_bm_mt_clear_entries()
 
     def send_bm_mt_clear_entries(self, cxt_id, table_name, reset_default_entry):
-        self._oprot.writeMessageBegin('bm_mt_clear_entries', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_clear_entries", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_clear_entries_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -750,7 +786,9 @@ class Client(Iface):
             raise result.ouch
         return
 
-    def bm_mt_add_entry(self, cxt_id, table_name, match_key, action_name, action_data, options):
+    def bm_mt_add_entry(
+        self, cxt_id, table_name, match_key, action_name, action_data, options
+    ):
         """
         Parameters:
          - cxt_id
@@ -761,11 +799,15 @@ class Client(Iface):
          - options
 
         """
-        self.send_bm_mt_add_entry(cxt_id, table_name, match_key, action_name, action_data, options)
+        self.send_bm_mt_add_entry(
+            cxt_id, table_name, match_key, action_name, action_data, options
+        )
         return self.recv_bm_mt_add_entry()
 
-    def send_bm_mt_add_entry(self, cxt_id, table_name, match_key, action_name, action_data, options):
-        self._oprot.writeMessageBegin('bm_mt_add_entry', TMessageType.CALL, self._seqid)
+    def send_bm_mt_add_entry(
+        self, cxt_id, table_name, match_key, action_name, action_data, options
+    ):
+        self._oprot.writeMessageBegin("bm_mt_add_entry", TMessageType.CALL, self._seqid)
         args = bm_mt_add_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -792,7 +834,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_add_entry failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_add_entry failed: unknown result",
+        )
 
     def bm_mt_set_default_action(self, cxt_id, table_name, action_name, action_data):
         """
@@ -806,8 +851,12 @@ class Client(Iface):
         self.send_bm_mt_set_default_action(cxt_id, table_name, action_name, action_data)
         self.recv_bm_mt_set_default_action()
 
-    def send_bm_mt_set_default_action(self, cxt_id, table_name, action_name, action_data):
-        self._oprot.writeMessageBegin('bm_mt_set_default_action', TMessageType.CALL, self._seqid)
+    def send_bm_mt_set_default_action(
+        self, cxt_id, table_name, action_name, action_data
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_set_default_action", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_set_default_action_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -843,7 +892,9 @@ class Client(Iface):
         self.recv_bm_mt_reset_default_entry()
 
     def send_bm_mt_reset_default_entry(self, cxt_id, table_name):
-        self._oprot.writeMessageBegin('bm_mt_reset_default_entry', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_reset_default_entry", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_reset_default_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -878,7 +929,9 @@ class Client(Iface):
         self.recv_bm_mt_delete_entry()
 
     def send_bm_mt_delete_entry(self, cxt_id, table_name, entry_handle):
-        self._oprot.writeMessageBegin('bm_mt_delete_entry', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_delete_entry", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_delete_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -902,7 +955,9 @@ class Client(Iface):
             raise result.ouch
         return
 
-    def bm_mt_modify_entry(self, cxt_id, table_name, entry_handle, action_name, action_data):
+    def bm_mt_modify_entry(
+        self, cxt_id, table_name, entry_handle, action_name, action_data
+    ):
         """
         Parameters:
          - cxt_id
@@ -912,11 +967,17 @@ class Client(Iface):
          - action_data
 
         """
-        self.send_bm_mt_modify_entry(cxt_id, table_name, entry_handle, action_name, action_data)
+        self.send_bm_mt_modify_entry(
+            cxt_id, table_name, entry_handle, action_name, action_data
+        )
         self.recv_bm_mt_modify_entry()
 
-    def send_bm_mt_modify_entry(self, cxt_id, table_name, entry_handle, action_name, action_data):
-        self._oprot.writeMessageBegin('bm_mt_modify_entry', TMessageType.CALL, self._seqid)
+    def send_bm_mt_modify_entry(
+        self, cxt_id, table_name, entry_handle, action_name, action_data
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_modify_entry", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_modify_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -955,7 +1016,9 @@ class Client(Iface):
         self.recv_bm_mt_set_entry_ttl()
 
     def send_bm_mt_set_entry_ttl(self, cxt_id, table_name, entry_handle, timeout_ms):
-        self._oprot.writeMessageBegin('bm_mt_set_entry_ttl', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_set_entry_ttl", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_set_entry_ttl_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -980,7 +1043,9 @@ class Client(Iface):
             raise result.ouch
         return
 
-    def bm_mt_act_prof_add_member(self, cxt_id, act_prof_name, action_name, action_data):
+    def bm_mt_act_prof_add_member(
+        self, cxt_id, act_prof_name, action_name, action_data
+    ):
         """
         Parameters:
          - cxt_id
@@ -989,11 +1054,17 @@ class Client(Iface):
          - action_data
 
         """
-        self.send_bm_mt_act_prof_add_member(cxt_id, act_prof_name, action_name, action_data)
+        self.send_bm_mt_act_prof_add_member(
+            cxt_id, act_prof_name, action_name, action_data
+        )
         return self.recv_bm_mt_act_prof_add_member()
 
-    def send_bm_mt_act_prof_add_member(self, cxt_id, act_prof_name, action_name, action_data):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_add_member', TMessageType.CALL, self._seqid)
+    def send_bm_mt_act_prof_add_member(
+        self, cxt_id, act_prof_name, action_name, action_data
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_add_member", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_add_member_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1018,7 +1089,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_act_prof_add_member failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_act_prof_add_member failed: unknown result",
+        )
 
     def bm_mt_act_prof_delete_member(self, cxt_id, act_prof_name, mbr_handle):
         """
@@ -1032,7 +1106,9 @@ class Client(Iface):
         self.recv_bm_mt_act_prof_delete_member()
 
     def send_bm_mt_act_prof_delete_member(self, cxt_id, act_prof_name, mbr_handle):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_delete_member', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_delete_member", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_delete_member_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1056,7 +1132,9 @@ class Client(Iface):
             raise result.ouch
         return
 
-    def bm_mt_act_prof_modify_member(self, cxt_id, act_prof_name, mbr_handle, action_name, action_data):
+    def bm_mt_act_prof_modify_member(
+        self, cxt_id, act_prof_name, mbr_handle, action_name, action_data
+    ):
         """
         Parameters:
          - cxt_id
@@ -1066,11 +1144,17 @@ class Client(Iface):
          - action_data
 
         """
-        self.send_bm_mt_act_prof_modify_member(cxt_id, act_prof_name, mbr_handle, action_name, action_data)
+        self.send_bm_mt_act_prof_modify_member(
+            cxt_id, act_prof_name, mbr_handle, action_name, action_data
+        )
         self.recv_bm_mt_act_prof_modify_member()
 
-    def send_bm_mt_act_prof_modify_member(self, cxt_id, act_prof_name, mbr_handle, action_name, action_data):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_modify_member', TMessageType.CALL, self._seqid)
+    def send_bm_mt_act_prof_modify_member(
+        self, cxt_id, act_prof_name, mbr_handle, action_name, action_data
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_modify_member", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_modify_member_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1107,7 +1191,9 @@ class Client(Iface):
         return self.recv_bm_mt_act_prof_create_group()
 
     def send_bm_mt_act_prof_create_group(self, cxt_id, act_prof_name):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_create_group', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_create_group", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_create_group_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1130,7 +1216,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_act_prof_create_group failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_act_prof_create_group failed: unknown result",
+        )
 
     def bm_mt_act_prof_delete_group(self, cxt_id, act_prof_name, grp_handle):
         """
@@ -1144,7 +1233,9 @@ class Client(Iface):
         self.recv_bm_mt_act_prof_delete_group()
 
     def send_bm_mt_act_prof_delete_group(self, cxt_id, act_prof_name, grp_handle):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_delete_group', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_delete_group", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_delete_group_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1168,7 +1259,9 @@ class Client(Iface):
             raise result.ouch
         return
 
-    def bm_mt_act_prof_add_member_to_group(self, cxt_id, act_prof_name, mbr_handle, grp_handle):
+    def bm_mt_act_prof_add_member_to_group(
+        self, cxt_id, act_prof_name, mbr_handle, grp_handle
+    ):
         """
         Parameters:
          - cxt_id
@@ -1177,11 +1270,17 @@ class Client(Iface):
          - grp_handle
 
         """
-        self.send_bm_mt_act_prof_add_member_to_group(cxt_id, act_prof_name, mbr_handle, grp_handle)
+        self.send_bm_mt_act_prof_add_member_to_group(
+            cxt_id, act_prof_name, mbr_handle, grp_handle
+        )
         self.recv_bm_mt_act_prof_add_member_to_group()
 
-    def send_bm_mt_act_prof_add_member_to_group(self, cxt_id, act_prof_name, mbr_handle, grp_handle):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_add_member_to_group', TMessageType.CALL, self._seqid)
+    def send_bm_mt_act_prof_add_member_to_group(
+        self, cxt_id, act_prof_name, mbr_handle, grp_handle
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_add_member_to_group", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_add_member_to_group_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1206,7 +1305,9 @@ class Client(Iface):
             raise result.ouch
         return
 
-    def bm_mt_act_prof_remove_member_from_group(self, cxt_id, act_prof_name, mbr_handle, grp_handle):
+    def bm_mt_act_prof_remove_member_from_group(
+        self, cxt_id, act_prof_name, mbr_handle, grp_handle
+    ):
         """
         Parameters:
          - cxt_id
@@ -1215,11 +1316,17 @@ class Client(Iface):
          - grp_handle
 
         """
-        self.send_bm_mt_act_prof_remove_member_from_group(cxt_id, act_prof_name, mbr_handle, grp_handle)
+        self.send_bm_mt_act_prof_remove_member_from_group(
+            cxt_id, act_prof_name, mbr_handle, grp_handle
+        )
         self.recv_bm_mt_act_prof_remove_member_from_group()
 
-    def send_bm_mt_act_prof_remove_member_from_group(self, cxt_id, act_prof_name, mbr_handle, grp_handle):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_remove_member_from_group', TMessageType.CALL, self._seqid)
+    def send_bm_mt_act_prof_remove_member_from_group(
+        self, cxt_id, act_prof_name, mbr_handle, grp_handle
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_remove_member_from_group", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_remove_member_from_group_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1255,7 +1362,9 @@ class Client(Iface):
         return self.recv_bm_mt_act_prof_get_members()
 
     def send_bm_mt_act_prof_get_members(self, cxt_id, act_prof_name):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_get_members', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_get_members", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_get_members_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1278,7 +1387,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_act_prof_get_members failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_act_prof_get_members failed: unknown result",
+        )
 
     def bm_mt_act_prof_get_member(self, cxt_id, act_prof_name, mbr_handle):
         """
@@ -1292,7 +1404,9 @@ class Client(Iface):
         return self.recv_bm_mt_act_prof_get_member()
 
     def send_bm_mt_act_prof_get_member(self, cxt_id, act_prof_name, mbr_handle):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_get_member', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_get_member", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_get_member_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1316,7 +1430,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_act_prof_get_member failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_act_prof_get_member failed: unknown result",
+        )
 
     def bm_mt_act_prof_get_groups(self, cxt_id, act_prof_name):
         """
@@ -1329,7 +1446,9 @@ class Client(Iface):
         return self.recv_bm_mt_act_prof_get_groups()
 
     def send_bm_mt_act_prof_get_groups(self, cxt_id, act_prof_name):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_get_groups', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_get_groups", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_get_groups_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1352,7 +1471,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_act_prof_get_groups failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_act_prof_get_groups failed: unknown result",
+        )
 
     def bm_mt_act_prof_get_group(self, cxt_id, act_prof_name, grp_handle):
         """
@@ -1366,7 +1488,9 @@ class Client(Iface):
         return self.recv_bm_mt_act_prof_get_group()
 
     def send_bm_mt_act_prof_get_group(self, cxt_id, act_prof_name, grp_handle):
-        self._oprot.writeMessageBegin('bm_mt_act_prof_get_group', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_act_prof_get_group", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_act_prof_get_group_args()
         args.cxt_id = cxt_id
         args.act_prof_name = act_prof_name
@@ -1390,9 +1514,14 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_act_prof_get_group failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_act_prof_get_group failed: unknown result",
+        )
 
-    def bm_mt_indirect_add_entry(self, cxt_id, table_name, match_key, mbr_handle, options):
+    def bm_mt_indirect_add_entry(
+        self, cxt_id, table_name, match_key, mbr_handle, options
+    ):
         """
         Parameters:
          - cxt_id
@@ -1402,11 +1531,17 @@ class Client(Iface):
          - options
 
         """
-        self.send_bm_mt_indirect_add_entry(cxt_id, table_name, match_key, mbr_handle, options)
+        self.send_bm_mt_indirect_add_entry(
+            cxt_id, table_name, match_key, mbr_handle, options
+        )
         return self.recv_bm_mt_indirect_add_entry()
 
-    def send_bm_mt_indirect_add_entry(self, cxt_id, table_name, match_key, mbr_handle, options):
-        self._oprot.writeMessageBegin('bm_mt_indirect_add_entry', TMessageType.CALL, self._seqid)
+    def send_bm_mt_indirect_add_entry(
+        self, cxt_id, table_name, match_key, mbr_handle, options
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_indirect_add_entry", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_indirect_add_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1432,7 +1567,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_indirect_add_entry failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_indirect_add_entry failed: unknown result",
+        )
 
     def bm_mt_indirect_modify_entry(self, cxt_id, table_name, entry_handle, mbr_handle):
         """
@@ -1443,11 +1581,17 @@ class Client(Iface):
          - mbr_handle
 
         """
-        self.send_bm_mt_indirect_modify_entry(cxt_id, table_name, entry_handle, mbr_handle)
+        self.send_bm_mt_indirect_modify_entry(
+            cxt_id, table_name, entry_handle, mbr_handle
+        )
         self.recv_bm_mt_indirect_modify_entry()
 
-    def send_bm_mt_indirect_modify_entry(self, cxt_id, table_name, entry_handle, mbr_handle):
-        self._oprot.writeMessageBegin('bm_mt_indirect_modify_entry', TMessageType.CALL, self._seqid)
+    def send_bm_mt_indirect_modify_entry(
+        self, cxt_id, table_name, entry_handle, mbr_handle
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_indirect_modify_entry", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_indirect_modify_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1484,7 +1628,9 @@ class Client(Iface):
         self.recv_bm_mt_indirect_delete_entry()
 
     def send_bm_mt_indirect_delete_entry(self, cxt_id, table_name, entry_handle):
-        self._oprot.writeMessageBegin('bm_mt_indirect_delete_entry', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_indirect_delete_entry", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_indirect_delete_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1508,7 +1654,9 @@ class Client(Iface):
             raise result.ouch
         return
 
-    def bm_mt_indirect_set_entry_ttl(self, cxt_id, table_name, entry_handle, timeout_ms):
+    def bm_mt_indirect_set_entry_ttl(
+        self, cxt_id, table_name, entry_handle, timeout_ms
+    ):
         """
         Parameters:
          - cxt_id
@@ -1517,11 +1665,17 @@ class Client(Iface):
          - timeout_ms
 
         """
-        self.send_bm_mt_indirect_set_entry_ttl(cxt_id, table_name, entry_handle, timeout_ms)
+        self.send_bm_mt_indirect_set_entry_ttl(
+            cxt_id, table_name, entry_handle, timeout_ms
+        )
         self.recv_bm_mt_indirect_set_entry_ttl()
 
-    def send_bm_mt_indirect_set_entry_ttl(self, cxt_id, table_name, entry_handle, timeout_ms):
-        self._oprot.writeMessageBegin('bm_mt_indirect_set_entry_ttl', TMessageType.CALL, self._seqid)
+    def send_bm_mt_indirect_set_entry_ttl(
+        self, cxt_id, table_name, entry_handle, timeout_ms
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_indirect_set_entry_ttl", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_indirect_set_entry_ttl_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1558,7 +1712,9 @@ class Client(Iface):
         self.recv_bm_mt_indirect_set_default_member()
 
     def send_bm_mt_indirect_set_default_member(self, cxt_id, table_name, mbr_handle):
-        self._oprot.writeMessageBegin('bm_mt_indirect_set_default_member', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_indirect_set_default_member", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_indirect_set_default_member_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1593,7 +1749,9 @@ class Client(Iface):
         self.recv_bm_mt_indirect_reset_default_entry()
 
     def send_bm_mt_indirect_reset_default_entry(self, cxt_id, table_name):
-        self._oprot.writeMessageBegin('bm_mt_indirect_reset_default_entry', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_indirect_reset_default_entry", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_indirect_reset_default_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1616,7 +1774,9 @@ class Client(Iface):
             raise result.ouch
         return
 
-    def bm_mt_indirect_ws_add_entry(self, cxt_id, table_name, match_key, grp_handle, options):
+    def bm_mt_indirect_ws_add_entry(
+        self, cxt_id, table_name, match_key, grp_handle, options
+    ):
         """
         Parameters:
          - cxt_id
@@ -1626,11 +1786,17 @@ class Client(Iface):
          - options
 
         """
-        self.send_bm_mt_indirect_ws_add_entry(cxt_id, table_name, match_key, grp_handle, options)
+        self.send_bm_mt_indirect_ws_add_entry(
+            cxt_id, table_name, match_key, grp_handle, options
+        )
         return self.recv_bm_mt_indirect_ws_add_entry()
 
-    def send_bm_mt_indirect_ws_add_entry(self, cxt_id, table_name, match_key, grp_handle, options):
-        self._oprot.writeMessageBegin('bm_mt_indirect_ws_add_entry', TMessageType.CALL, self._seqid)
+    def send_bm_mt_indirect_ws_add_entry(
+        self, cxt_id, table_name, match_key, grp_handle, options
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_indirect_ws_add_entry", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_indirect_ws_add_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1656,9 +1822,14 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_indirect_ws_add_entry failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_indirect_ws_add_entry failed: unknown result",
+        )
 
-    def bm_mt_indirect_ws_modify_entry(self, cxt_id, table_name, entry_handle, grp_handle):
+    def bm_mt_indirect_ws_modify_entry(
+        self, cxt_id, table_name, entry_handle, grp_handle
+    ):
         """
         Parameters:
          - cxt_id
@@ -1667,11 +1838,17 @@ class Client(Iface):
          - grp_handle
 
         """
-        self.send_bm_mt_indirect_ws_modify_entry(cxt_id, table_name, entry_handle, grp_handle)
+        self.send_bm_mt_indirect_ws_modify_entry(
+            cxt_id, table_name, entry_handle, grp_handle
+        )
         self.recv_bm_mt_indirect_ws_modify_entry()
 
-    def send_bm_mt_indirect_ws_modify_entry(self, cxt_id, table_name, entry_handle, grp_handle):
-        self._oprot.writeMessageBegin('bm_mt_indirect_ws_modify_entry', TMessageType.CALL, self._seqid)
+    def send_bm_mt_indirect_ws_modify_entry(
+        self, cxt_id, table_name, entry_handle, grp_handle
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_mt_indirect_ws_modify_entry", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_indirect_ws_modify_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1708,7 +1885,9 @@ class Client(Iface):
         self.recv_bm_mt_indirect_ws_set_default_group()
 
     def send_bm_mt_indirect_ws_set_default_group(self, cxt_id, table_name, grp_handle):
-        self._oprot.writeMessageBegin('bm_mt_indirect_ws_set_default_group', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_indirect_ws_set_default_group", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_indirect_ws_set_default_group_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1744,7 +1923,9 @@ class Client(Iface):
         return self.recv_bm_mt_read_counter()
 
     def send_bm_mt_read_counter(self, cxt_id, table_name, entry_handle):
-        self._oprot.writeMessageBegin('bm_mt_read_counter', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_read_counter", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_read_counter_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1768,7 +1949,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_read_counter failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_read_counter failed: unknown result",
+        )
 
     def bm_mt_reset_counters(self, cxt_id, table_name):
         """
@@ -1781,7 +1965,9 @@ class Client(Iface):
         self.recv_bm_mt_reset_counters()
 
     def send_bm_mt_reset_counters(self, cxt_id, table_name):
-        self._oprot.writeMessageBegin('bm_mt_reset_counters', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_reset_counters", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_reset_counters_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1817,7 +2003,9 @@ class Client(Iface):
         self.recv_bm_mt_write_counter()
 
     def send_bm_mt_write_counter(self, cxt_id, table_name, entry_handle, value):
-        self._oprot.writeMessageBegin('bm_mt_write_counter', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_write_counter", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_write_counter_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1855,7 +2043,9 @@ class Client(Iface):
         self.recv_bm_mt_set_meter_rates()
 
     def send_bm_mt_set_meter_rates(self, cxt_id, table_name, entry_handle, rates):
-        self._oprot.writeMessageBegin('bm_mt_set_meter_rates', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_set_meter_rates", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_set_meter_rates_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1892,7 +2082,9 @@ class Client(Iface):
         return self.recv_bm_mt_get_meter_rates()
 
     def send_bm_mt_get_meter_rates(self, cxt_id, table_name, entry_handle):
-        self._oprot.writeMessageBegin('bm_mt_get_meter_rates', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_get_meter_rates", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_get_meter_rates_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1916,7 +2108,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_get_meter_rates failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_get_meter_rates failed: unknown result",
+        )
 
     def bm_mt_get_entries(self, cxt_id, table_name):
         """
@@ -1929,7 +2124,9 @@ class Client(Iface):
         return self.recv_bm_mt_get_entries()
 
     def send_bm_mt_get_entries(self, cxt_id, table_name):
-        self._oprot.writeMessageBegin('bm_mt_get_entries', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_get_entries", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_get_entries_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1952,7 +2149,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_get_entries failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_get_entries failed: unknown result",
+        )
 
     def bm_mt_get_entry(self, cxt_id, table_name, entry_handle):
         """
@@ -1966,7 +2166,7 @@ class Client(Iface):
         return self.recv_bm_mt_get_entry()
 
     def send_bm_mt_get_entry(self, cxt_id, table_name, entry_handle):
-        self._oprot.writeMessageBegin('bm_mt_get_entry', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin("bm_mt_get_entry", TMessageType.CALL, self._seqid)
         args = bm_mt_get_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -1990,7 +2190,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_get_entry failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_get_entry failed: unknown result",
+        )
 
     def bm_mt_get_default_entry(self, cxt_id, table_name):
         """
@@ -2003,7 +2206,9 @@ class Client(Iface):
         return self.recv_bm_mt_get_default_entry()
 
     def send_bm_mt_get_default_entry(self, cxt_id, table_name):
-        self._oprot.writeMessageBegin('bm_mt_get_default_entry', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_get_default_entry", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_get_default_entry_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -2026,7 +2231,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_get_default_entry failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_get_default_entry failed: unknown result",
+        )
 
     def bm_mt_get_entry_from_key(self, cxt_id, table_name, match_key, options):
         """
@@ -2041,7 +2249,9 @@ class Client(Iface):
         return self.recv_bm_mt_get_entry_from_key()
 
     def send_bm_mt_get_entry_from_key(self, cxt_id, table_name, match_key, options):
-        self._oprot.writeMessageBegin('bm_mt_get_entry_from_key', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mt_get_entry_from_key", TMessageType.CALL, self._seqid
+        )
         args = bm_mt_get_entry_from_key_args()
         args.cxt_id = cxt_id
         args.table_name = table_name
@@ -2066,7 +2276,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mt_get_entry_from_key failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mt_get_entry_from_key failed: unknown result",
+        )
 
     def bm_counter_read(self, cxt_id, counter_name, index):
         """
@@ -2080,7 +2293,7 @@ class Client(Iface):
         return self.recv_bm_counter_read()
 
     def send_bm_counter_read(self, cxt_id, counter_name, index):
-        self._oprot.writeMessageBegin('bm_counter_read', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin("bm_counter_read", TMessageType.CALL, self._seqid)
         args = bm_counter_read_args()
         args.cxt_id = cxt_id
         args.counter_name = counter_name
@@ -2104,7 +2317,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_counter_read failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_counter_read failed: unknown result",
+        )
 
     def bm_counter_reset_all(self, cxt_id, counter_name):
         """
@@ -2117,7 +2333,9 @@ class Client(Iface):
         self.recv_bm_counter_reset_all()
 
     def send_bm_counter_reset_all(self, cxt_id, counter_name):
-        self._oprot.writeMessageBegin('bm_counter_reset_all', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_counter_reset_all", TMessageType.CALL, self._seqid
+        )
         args = bm_counter_reset_all_args()
         args.cxt_id = cxt_id
         args.counter_name = counter_name
@@ -2153,7 +2371,9 @@ class Client(Iface):
         self.recv_bm_counter_write()
 
     def send_bm_counter_write(self, cxt_id, counter_name, index, value):
-        self._oprot.writeMessageBegin('bm_counter_write', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_counter_write", TMessageType.CALL, self._seqid
+        )
         args = bm_counter_write_args()
         args.cxt_id = cxt_id
         args.counter_name = counter_name
@@ -2191,7 +2411,7 @@ class Client(Iface):
         self.recv_bm_learning_ack()
 
     def send_bm_learning_ack(self, cxt_id, list_id, buffer_id, sample_ids):
-        self._oprot.writeMessageBegin('bm_learning_ack', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin("bm_learning_ack", TMessageType.CALL, self._seqid)
         args = bm_learning_ack_args()
         args.cxt_id = cxt_id
         args.list_id = list_id
@@ -2228,7 +2448,9 @@ class Client(Iface):
         self.recv_bm_learning_ack_buffer()
 
     def send_bm_learning_ack_buffer(self, cxt_id, list_id, buffer_id):
-        self._oprot.writeMessageBegin('bm_learning_ack_buffer', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_learning_ack_buffer", TMessageType.CALL, self._seqid
+        )
         args = bm_learning_ack_buffer_args()
         args.cxt_id = cxt_id
         args.list_id = list_id
@@ -2264,7 +2486,9 @@ class Client(Iface):
         self.recv_bm_learning_set_timeout()
 
     def send_bm_learning_set_timeout(self, cxt_id, list_id, timeout_ms):
-        self._oprot.writeMessageBegin('bm_learning_set_timeout', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_learning_set_timeout", TMessageType.CALL, self._seqid
+        )
         args = bm_learning_set_timeout_args()
         args.cxt_id = cxt_id
         args.list_id = list_id
@@ -2300,7 +2524,9 @@ class Client(Iface):
         self.recv_bm_learning_set_buffer_size()
 
     def send_bm_learning_set_buffer_size(self, cxt_id, list_id, nb_samples):
-        self._oprot.writeMessageBegin('bm_learning_set_buffer_size', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_learning_set_buffer_size", TMessageType.CALL, self._seqid
+        )
         args = bm_learning_set_buffer_size_args()
         args.cxt_id = cxt_id
         args.list_id = list_id
@@ -2334,7 +2560,9 @@ class Client(Iface):
         self.recv_bm_load_new_config()
 
     def send_bm_load_new_config(self, config_str):
-        self._oprot.writeMessageBegin('bm_load_new_config', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_load_new_config", TMessageType.CALL, self._seqid
+        )
         args = bm_load_new_config_args()
         args.config_str = config_str
         args.write(self._oprot)
@@ -2361,7 +2589,7 @@ class Client(Iface):
         self.recv_bm_swap_configs()
 
     def send_bm_swap_configs(self):
-        self._oprot.writeMessageBegin('bm_swap_configs', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin("bm_swap_configs", TMessageType.CALL, self._seqid)
         args = bm_swap_configs_args()
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -2394,7 +2622,9 @@ class Client(Iface):
         self.recv_bm_meter_array_set_rates()
 
     def send_bm_meter_array_set_rates(self, cxt_id, meter_array_name, rates):
-        self._oprot.writeMessageBegin('bm_meter_array_set_rates', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_meter_array_set_rates", TMessageType.CALL, self._seqid
+        )
         args = bm_meter_array_set_rates_args()
         args.cxt_id = cxt_id
         args.meter_array_name = meter_array_name
@@ -2431,7 +2661,9 @@ class Client(Iface):
         self.recv_bm_meter_set_rates()
 
     def send_bm_meter_set_rates(self, cxt_id, meter_array_name, index, rates):
-        self._oprot.writeMessageBegin('bm_meter_set_rates', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_meter_set_rates", TMessageType.CALL, self._seqid
+        )
         args = bm_meter_set_rates_args()
         args.cxt_id = cxt_id
         args.meter_array_name = meter_array_name
@@ -2468,7 +2700,9 @@ class Client(Iface):
         return self.recv_bm_meter_get_rates()
 
     def send_bm_meter_get_rates(self, cxt_id, meter_array_name, index):
-        self._oprot.writeMessageBegin('bm_meter_get_rates', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_meter_get_rates", TMessageType.CALL, self._seqid
+        )
         args = bm_meter_get_rates_args()
         args.cxt_id = cxt_id
         args.meter_array_name = meter_array_name
@@ -2492,7 +2726,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_meter_get_rates failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_meter_get_rates failed: unknown result",
+        )
 
     def bm_register_read(self, cxt_id, register_array_name, idx):
         """
@@ -2506,7 +2743,9 @@ class Client(Iface):
         return self.recv_bm_register_read()
 
     def send_bm_register_read(self, cxt_id, register_array_name, idx):
-        self._oprot.writeMessageBegin('bm_register_read', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_register_read", TMessageType.CALL, self._seqid
+        )
         args = bm_register_read_args()
         args.cxt_id = cxt_id
         args.register_array_name = register_array_name
@@ -2530,7 +2769,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_register_read failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_register_read failed: unknown result",
+        )
 
     def bm_register_read_all(self, cxt_id, register_array_name):
         """
@@ -2543,7 +2785,9 @@ class Client(Iface):
         return self.recv_bm_register_read_all()
 
     def send_bm_register_read_all(self, cxt_id, register_array_name):
-        self._oprot.writeMessageBegin('bm_register_read_all', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_register_read_all", TMessageType.CALL, self._seqid
+        )
         args = bm_register_read_all_args()
         args.cxt_id = cxt_id
         args.register_array_name = register_array_name
@@ -2566,7 +2810,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_register_read_all failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_register_read_all failed: unknown result",
+        )
 
     def bm_register_write(self, cxt_id, register_array_name, index, value):
         """
@@ -2581,7 +2828,9 @@ class Client(Iface):
         self.recv_bm_register_write()
 
     def send_bm_register_write(self, cxt_id, register_array_name, index, value):
-        self._oprot.writeMessageBegin('bm_register_write', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_register_write", TMessageType.CALL, self._seqid
+        )
         args = bm_register_write_args()
         args.cxt_id = cxt_id
         args.register_array_name = register_array_name
@@ -2606,7 +2855,9 @@ class Client(Iface):
             raise result.ouch
         return
 
-    def bm_register_write_range(self, cxt_id, register_array_name, start_index, end_index, value):
+    def bm_register_write_range(
+        self, cxt_id, register_array_name, start_index, end_index, value
+    ):
         """
         Parameters:
          - cxt_id
@@ -2616,11 +2867,17 @@ class Client(Iface):
          - value
 
         """
-        self.send_bm_register_write_range(cxt_id, register_array_name, start_index, end_index, value)
+        self.send_bm_register_write_range(
+            cxt_id, register_array_name, start_index, end_index, value
+        )
         self.recv_bm_register_write_range()
 
-    def send_bm_register_write_range(self, cxt_id, register_array_name, start_index, end_index, value):
-        self._oprot.writeMessageBegin('bm_register_write_range', TMessageType.CALL, self._seqid)
+    def send_bm_register_write_range(
+        self, cxt_id, register_array_name, start_index, end_index, value
+    ):
+        self._oprot.writeMessageBegin(
+            "bm_register_write_range", TMessageType.CALL, self._seqid
+        )
         args = bm_register_write_range_args()
         args.cxt_id = cxt_id
         args.register_array_name = register_array_name
@@ -2657,7 +2914,9 @@ class Client(Iface):
         self.recv_bm_register_reset()
 
     def send_bm_register_reset(self, cxt_id, register_array_name):
-        self._oprot.writeMessageBegin('bm_register_reset', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_register_reset", TMessageType.CALL, self._seqid
+        )
         args = bm_register_reset_args()
         args.cxt_id = cxt_id
         args.register_array_name = register_array_name
@@ -2692,7 +2951,9 @@ class Client(Iface):
         self.recv_bm_parse_vset_add()
 
     def send_bm_parse_vset_add(self, cxt_id, parse_vset_name, value):
-        self._oprot.writeMessageBegin('bm_parse_vset_add', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_parse_vset_add", TMessageType.CALL, self._seqid
+        )
         args = bm_parse_vset_add_args()
         args.cxt_id = cxt_id
         args.parse_vset_name = parse_vset_name
@@ -2728,7 +2989,9 @@ class Client(Iface):
         self.recv_bm_parse_vset_remove()
 
     def send_bm_parse_vset_remove(self, cxt_id, parse_vset_name, value):
-        self._oprot.writeMessageBegin('bm_parse_vset_remove', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_parse_vset_remove", TMessageType.CALL, self._seqid
+        )
         args = bm_parse_vset_remove_args()
         args.cxt_id = cxt_id
         args.parse_vset_name = parse_vset_name
@@ -2763,7 +3026,9 @@ class Client(Iface):
         return self.recv_bm_parse_vset_get()
 
     def send_bm_parse_vset_get(self, cxt_id, parse_vset_name):
-        self._oprot.writeMessageBegin('bm_parse_vset_get', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_parse_vset_get", TMessageType.CALL, self._seqid
+        )
         args = bm_parse_vset_get_args()
         args.cxt_id = cxt_id
         args.parse_vset_name = parse_vset_name
@@ -2786,7 +3051,10 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_parse_vset_get failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_parse_vset_get failed: unknown result",
+        )
 
     def bm_parse_vset_clear(self, cxt_id, parse_vset_name):
         """
@@ -2799,7 +3067,9 @@ class Client(Iface):
         self.recv_bm_parse_vset_clear()
 
     def send_bm_parse_vset_clear(self, cxt_id, parse_vset_name):
-        self._oprot.writeMessageBegin('bm_parse_vset_clear', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_parse_vset_clear", TMessageType.CALL, self._seqid
+        )
         args = bm_parse_vset_clear_args()
         args.cxt_id = cxt_id
         args.parse_vset_name = parse_vset_name
@@ -2834,7 +3104,9 @@ class Client(Iface):
         self.recv_bm_dev_mgr_add_port()
 
     def send_bm_dev_mgr_add_port(self, iface_name, port_num, pcap_path):
-        self._oprot.writeMessageBegin('bm_dev_mgr_add_port', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_dev_mgr_add_port", TMessageType.CALL, self._seqid
+        )
         args = bm_dev_mgr_add_port_args()
         args.iface_name = iface_name
         args.port_num = port_num
@@ -2868,7 +3140,9 @@ class Client(Iface):
         self.recv_bm_dev_mgr_remove_port()
 
     def send_bm_dev_mgr_remove_port(self, port_num):
-        self._oprot.writeMessageBegin('bm_dev_mgr_remove_port', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_dev_mgr_remove_port", TMessageType.CALL, self._seqid
+        )
         args = bm_dev_mgr_remove_port_args()
         args.port_num = port_num
         args.write(self._oprot)
@@ -2895,7 +3169,9 @@ class Client(Iface):
         return self.recv_bm_dev_mgr_show_ports()
 
     def send_bm_dev_mgr_show_ports(self):
-        self._oprot.writeMessageBegin('bm_dev_mgr_show_ports', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_dev_mgr_show_ports", TMessageType.CALL, self._seqid
+        )
         args = bm_dev_mgr_show_ports_args()
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -2916,14 +3192,19 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_dev_mgr_show_ports failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_dev_mgr_show_ports failed: unknown result",
+        )
 
     def bm_mgmt_get_info(self):
         self.send_bm_mgmt_get_info()
         return self.recv_bm_mgmt_get_info()
 
     def send_bm_mgmt_get_info(self):
-        self._oprot.writeMessageBegin('bm_mgmt_get_info', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_mgmt_get_info", TMessageType.CALL, self._seqid
+        )
         args = bm_mgmt_get_info_args()
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -2942,7 +3223,10 @@ class Client(Iface):
         iprot.readMessageEnd()
         if result.success is not None:
             return result.success
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_mgmt_get_info failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_mgmt_get_info failed: unknown result",
+        )
 
     def bm_set_crc16_custom_parameters(self, cxt_id, calc_name, crc16_config):
         """
@@ -2956,7 +3240,9 @@ class Client(Iface):
         self.recv_bm_set_crc16_custom_parameters()
 
     def send_bm_set_crc16_custom_parameters(self, cxt_id, calc_name, crc16_config):
-        self._oprot.writeMessageBegin('bm_set_crc16_custom_parameters', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_set_crc16_custom_parameters", TMessageType.CALL, self._seqid
+        )
         args = bm_set_crc16_custom_parameters_args()
         args.cxt_id = cxt_id
         args.calc_name = calc_name
@@ -2992,7 +3278,9 @@ class Client(Iface):
         self.recv_bm_set_crc32_custom_parameters()
 
     def send_bm_set_crc32_custom_parameters(self, cxt_id, calc_name, crc32_config):
-        self._oprot.writeMessageBegin('bm_set_crc32_custom_parameters', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_set_crc32_custom_parameters", TMessageType.CALL, self._seqid
+        )
         args = bm_set_crc32_custom_parameters_args()
         args.cxt_id = cxt_id
         args.calc_name = calc_name
@@ -3021,7 +3309,7 @@ class Client(Iface):
         self.recv_bm_reset_state()
 
     def send_bm_reset_state(self):
-        self._oprot.writeMessageBegin('bm_reset_state', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin("bm_reset_state", TMessageType.CALL, self._seqid)
         args = bm_reset_state_args()
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -3045,7 +3333,7 @@ class Client(Iface):
         return self.recv_bm_get_config()
 
     def send_bm_get_config(self):
-        self._oprot.writeMessageBegin('bm_get_config', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin("bm_get_config", TMessageType.CALL, self._seqid)
         args = bm_get_config_args()
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -3064,14 +3352,18 @@ class Client(Iface):
         iprot.readMessageEnd()
         if result.success is not None:
             return result.success
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_get_config failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT, "bm_get_config failed: unknown result"
+        )
 
     def bm_get_config_md5(self):
         self.send_bm_get_config_md5()
         return self.recv_bm_get_config_md5()
 
     def send_bm_get_config_md5(self):
-        self._oprot.writeMessageBegin('bm_get_config_md5', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_get_config_md5", TMessageType.CALL, self._seqid
+        )
         args = bm_get_config_md5_args()
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -3090,7 +3382,10 @@ class Client(Iface):
         iprot.readMessageEnd()
         if result.success is not None:
             return result.success
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_get_config_md5 failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_get_config_md5 failed: unknown result",
+        )
 
     def bm_get_id_from_name(self, cxt_id, resource_type, resource_name):
         """
@@ -3104,7 +3399,9 @@ class Client(Iface):
         return self.recv_bm_get_id_from_name()
 
     def send_bm_get_id_from_name(self, cxt_id, resource_type, resource_name):
-        self._oprot.writeMessageBegin('bm_get_id_from_name', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_get_id_from_name", TMessageType.CALL, self._seqid
+        )
         args = bm_get_id_from_name_args()
         args.cxt_id = cxt_id
         args.resource_type = resource_type
@@ -3128,14 +3425,19 @@ class Client(Iface):
             return result.success
         if result.ouch is not None:
             raise result.ouch
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_get_id_from_name failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_get_id_from_name failed: unknown result",
+        )
 
     def bm_serialize_state(self):
         self.send_bm_serialize_state()
         return self.recv_bm_serialize_state()
 
     def send_bm_serialize_state(self):
-        self._oprot.writeMessageBegin('bm_serialize_state', TMessageType.CALL, self._seqid)
+        self._oprot.writeMessageBegin(
+            "bm_serialize_state", TMessageType.CALL, self._seqid
+        )
         args = bm_serialize_state_args()
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -3154,77 +3456,160 @@ class Client(Iface):
         iprot.readMessageEnd()
         if result.success is not None:
             return result.success
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "bm_serialize_state failed: unknown result")
+        raise TApplicationException(
+            TApplicationException.MISSING_RESULT,
+            "bm_serialize_state failed: unknown result",
+        )
 
 
 class Processor(Iface, TProcessor):
     def __init__(self, handler):
         self._handler = handler
         self._processMap = {}
-        self._processMap["bm_mt_get_num_entries"] = Processor.process_bm_mt_get_num_entries
+        self._processMap["bm_mt_get_num_entries"] = (
+            Processor.process_bm_mt_get_num_entries
+        )
         self._processMap["bm_mt_clear_entries"] = Processor.process_bm_mt_clear_entries
         self._processMap["bm_mt_add_entry"] = Processor.process_bm_mt_add_entry
-        self._processMap["bm_mt_set_default_action"] = Processor.process_bm_mt_set_default_action
-        self._processMap["bm_mt_reset_default_entry"] = Processor.process_bm_mt_reset_default_entry
+        self._processMap["bm_mt_set_default_action"] = (
+            Processor.process_bm_mt_set_default_action
+        )
+        self._processMap["bm_mt_reset_default_entry"] = (
+            Processor.process_bm_mt_reset_default_entry
+        )
         self._processMap["bm_mt_delete_entry"] = Processor.process_bm_mt_delete_entry
         self._processMap["bm_mt_modify_entry"] = Processor.process_bm_mt_modify_entry
         self._processMap["bm_mt_set_entry_ttl"] = Processor.process_bm_mt_set_entry_ttl
-        self._processMap["bm_mt_act_prof_add_member"] = Processor.process_bm_mt_act_prof_add_member
-        self._processMap["bm_mt_act_prof_delete_member"] = Processor.process_bm_mt_act_prof_delete_member
-        self._processMap["bm_mt_act_prof_modify_member"] = Processor.process_bm_mt_act_prof_modify_member
-        self._processMap["bm_mt_act_prof_create_group"] = Processor.process_bm_mt_act_prof_create_group
-        self._processMap["bm_mt_act_prof_delete_group"] = Processor.process_bm_mt_act_prof_delete_group
-        self._processMap["bm_mt_act_prof_add_member_to_group"] = Processor.process_bm_mt_act_prof_add_member_to_group
-        self._processMap["bm_mt_act_prof_remove_member_from_group"] = Processor.process_bm_mt_act_prof_remove_member_from_group
-        self._processMap["bm_mt_act_prof_get_members"] = Processor.process_bm_mt_act_prof_get_members
-        self._processMap["bm_mt_act_prof_get_member"] = Processor.process_bm_mt_act_prof_get_member
-        self._processMap["bm_mt_act_prof_get_groups"] = Processor.process_bm_mt_act_prof_get_groups
-        self._processMap["bm_mt_act_prof_get_group"] = Processor.process_bm_mt_act_prof_get_group
-        self._processMap["bm_mt_indirect_add_entry"] = Processor.process_bm_mt_indirect_add_entry
-        self._processMap["bm_mt_indirect_modify_entry"] = Processor.process_bm_mt_indirect_modify_entry
-        self._processMap["bm_mt_indirect_delete_entry"] = Processor.process_bm_mt_indirect_delete_entry
-        self._processMap["bm_mt_indirect_set_entry_ttl"] = Processor.process_bm_mt_indirect_set_entry_ttl
-        self._processMap["bm_mt_indirect_set_default_member"] = Processor.process_bm_mt_indirect_set_default_member
-        self._processMap["bm_mt_indirect_reset_default_entry"] = Processor.process_bm_mt_indirect_reset_default_entry
-        self._processMap["bm_mt_indirect_ws_add_entry"] = Processor.process_bm_mt_indirect_ws_add_entry
-        self._processMap["bm_mt_indirect_ws_modify_entry"] = Processor.process_bm_mt_indirect_ws_modify_entry
-        self._processMap["bm_mt_indirect_ws_set_default_group"] = Processor.process_bm_mt_indirect_ws_set_default_group
+        self._processMap["bm_mt_act_prof_add_member"] = (
+            Processor.process_bm_mt_act_prof_add_member
+        )
+        self._processMap["bm_mt_act_prof_delete_member"] = (
+            Processor.process_bm_mt_act_prof_delete_member
+        )
+        self._processMap["bm_mt_act_prof_modify_member"] = (
+            Processor.process_bm_mt_act_prof_modify_member
+        )
+        self._processMap["bm_mt_act_prof_create_group"] = (
+            Processor.process_bm_mt_act_prof_create_group
+        )
+        self._processMap["bm_mt_act_prof_delete_group"] = (
+            Processor.process_bm_mt_act_prof_delete_group
+        )
+        self._processMap["bm_mt_act_prof_add_member_to_group"] = (
+            Processor.process_bm_mt_act_prof_add_member_to_group
+        )
+        self._processMap["bm_mt_act_prof_remove_member_from_group"] = (
+            Processor.process_bm_mt_act_prof_remove_member_from_group
+        )
+        self._processMap["bm_mt_act_prof_get_members"] = (
+            Processor.process_bm_mt_act_prof_get_members
+        )
+        self._processMap["bm_mt_act_prof_get_member"] = (
+            Processor.process_bm_mt_act_prof_get_member
+        )
+        self._processMap["bm_mt_act_prof_get_groups"] = (
+            Processor.process_bm_mt_act_prof_get_groups
+        )
+        self._processMap["bm_mt_act_prof_get_group"] = (
+            Processor.process_bm_mt_act_prof_get_group
+        )
+        self._processMap["bm_mt_indirect_add_entry"] = (
+            Processor.process_bm_mt_indirect_add_entry
+        )
+        self._processMap["bm_mt_indirect_modify_entry"] = (
+            Processor.process_bm_mt_indirect_modify_entry
+        )
+        self._processMap["bm_mt_indirect_delete_entry"] = (
+            Processor.process_bm_mt_indirect_delete_entry
+        )
+        self._processMap["bm_mt_indirect_set_entry_ttl"] = (
+            Processor.process_bm_mt_indirect_set_entry_ttl
+        )
+        self._processMap["bm_mt_indirect_set_default_member"] = (
+            Processor.process_bm_mt_indirect_set_default_member
+        )
+        self._processMap["bm_mt_indirect_reset_default_entry"] = (
+            Processor.process_bm_mt_indirect_reset_default_entry
+        )
+        self._processMap["bm_mt_indirect_ws_add_entry"] = (
+            Processor.process_bm_mt_indirect_ws_add_entry
+        )
+        self._processMap["bm_mt_indirect_ws_modify_entry"] = (
+            Processor.process_bm_mt_indirect_ws_modify_entry
+        )
+        self._processMap["bm_mt_indirect_ws_set_default_group"] = (
+            Processor.process_bm_mt_indirect_ws_set_default_group
+        )
         self._processMap["bm_mt_read_counter"] = Processor.process_bm_mt_read_counter
-        self._processMap["bm_mt_reset_counters"] = Processor.process_bm_mt_reset_counters
+        self._processMap["bm_mt_reset_counters"] = (
+            Processor.process_bm_mt_reset_counters
+        )
         self._processMap["bm_mt_write_counter"] = Processor.process_bm_mt_write_counter
-        self._processMap["bm_mt_set_meter_rates"] = Processor.process_bm_mt_set_meter_rates
-        self._processMap["bm_mt_get_meter_rates"] = Processor.process_bm_mt_get_meter_rates
+        self._processMap["bm_mt_set_meter_rates"] = (
+            Processor.process_bm_mt_set_meter_rates
+        )
+        self._processMap["bm_mt_get_meter_rates"] = (
+            Processor.process_bm_mt_get_meter_rates
+        )
         self._processMap["bm_mt_get_entries"] = Processor.process_bm_mt_get_entries
         self._processMap["bm_mt_get_entry"] = Processor.process_bm_mt_get_entry
-        self._processMap["bm_mt_get_default_entry"] = Processor.process_bm_mt_get_default_entry
-        self._processMap["bm_mt_get_entry_from_key"] = Processor.process_bm_mt_get_entry_from_key
+        self._processMap["bm_mt_get_default_entry"] = (
+            Processor.process_bm_mt_get_default_entry
+        )
+        self._processMap["bm_mt_get_entry_from_key"] = (
+            Processor.process_bm_mt_get_entry_from_key
+        )
         self._processMap["bm_counter_read"] = Processor.process_bm_counter_read
-        self._processMap["bm_counter_reset_all"] = Processor.process_bm_counter_reset_all
+        self._processMap["bm_counter_reset_all"] = (
+            Processor.process_bm_counter_reset_all
+        )
         self._processMap["bm_counter_write"] = Processor.process_bm_counter_write
         self._processMap["bm_learning_ack"] = Processor.process_bm_learning_ack
-        self._processMap["bm_learning_ack_buffer"] = Processor.process_bm_learning_ack_buffer
-        self._processMap["bm_learning_set_timeout"] = Processor.process_bm_learning_set_timeout
-        self._processMap["bm_learning_set_buffer_size"] = Processor.process_bm_learning_set_buffer_size
+        self._processMap["bm_learning_ack_buffer"] = (
+            Processor.process_bm_learning_ack_buffer
+        )
+        self._processMap["bm_learning_set_timeout"] = (
+            Processor.process_bm_learning_set_timeout
+        )
+        self._processMap["bm_learning_set_buffer_size"] = (
+            Processor.process_bm_learning_set_buffer_size
+        )
         self._processMap["bm_load_new_config"] = Processor.process_bm_load_new_config
         self._processMap["bm_swap_configs"] = Processor.process_bm_swap_configs
-        self._processMap["bm_meter_array_set_rates"] = Processor.process_bm_meter_array_set_rates
+        self._processMap["bm_meter_array_set_rates"] = (
+            Processor.process_bm_meter_array_set_rates
+        )
         self._processMap["bm_meter_set_rates"] = Processor.process_bm_meter_set_rates
         self._processMap["bm_meter_get_rates"] = Processor.process_bm_meter_get_rates
         self._processMap["bm_register_read"] = Processor.process_bm_register_read
-        self._processMap["bm_register_read_all"] = Processor.process_bm_register_read_all
+        self._processMap["bm_register_read_all"] = (
+            Processor.process_bm_register_read_all
+        )
         self._processMap["bm_register_write"] = Processor.process_bm_register_write
-        self._processMap["bm_register_write_range"] = Processor.process_bm_register_write_range
+        self._processMap["bm_register_write_range"] = (
+            Processor.process_bm_register_write_range
+        )
         self._processMap["bm_register_reset"] = Processor.process_bm_register_reset
         self._processMap["bm_parse_vset_add"] = Processor.process_bm_parse_vset_add
-        self._processMap["bm_parse_vset_remove"] = Processor.process_bm_parse_vset_remove
+        self._processMap["bm_parse_vset_remove"] = (
+            Processor.process_bm_parse_vset_remove
+        )
         self._processMap["bm_parse_vset_get"] = Processor.process_bm_parse_vset_get
         self._processMap["bm_parse_vset_clear"] = Processor.process_bm_parse_vset_clear
         self._processMap["bm_dev_mgr_add_port"] = Processor.process_bm_dev_mgr_add_port
-        self._processMap["bm_dev_mgr_remove_port"] = Processor.process_bm_dev_mgr_remove_port
-        self._processMap["bm_dev_mgr_show_ports"] = Processor.process_bm_dev_mgr_show_ports
+        self._processMap["bm_dev_mgr_remove_port"] = (
+            Processor.process_bm_dev_mgr_remove_port
+        )
+        self._processMap["bm_dev_mgr_show_ports"] = (
+            Processor.process_bm_dev_mgr_show_ports
+        )
         self._processMap["bm_mgmt_get_info"] = Processor.process_bm_mgmt_get_info
-        self._processMap["bm_set_crc16_custom_parameters"] = Processor.process_bm_set_crc16_custom_parameters
-        self._processMap["bm_set_crc32_custom_parameters"] = Processor.process_bm_set_crc32_custom_parameters
+        self._processMap["bm_set_crc16_custom_parameters"] = (
+            Processor.process_bm_set_crc16_custom_parameters
+        )
+        self._processMap["bm_set_crc32_custom_parameters"] = (
+            Processor.process_bm_set_crc32_custom_parameters
+        )
         self._processMap["bm_reset_state"] = Processor.process_bm_reset_state
         self._processMap["bm_get_config"] = Processor.process_bm_get_config
         self._processMap["bm_get_config_md5"] = Processor.process_bm_get_config_md5
@@ -3236,7 +3621,9 @@ class Processor(Iface, TProcessor):
         if name not in self._processMap:
             iprot.skip(TType.STRUCT)
             iprot.readMessageEnd()
-            x = TApplicationException(TApplicationException.UNKNOWN_METHOD, 'Unknown function %s' % (name))
+            x = TApplicationException(
+                TApplicationException.UNKNOWN_METHOD, "Unknown function %s" % (name)
+            )
             oprot.writeMessageBegin(name, TMessageType.EXCEPTION, seqid)
             x.write(oprot)
             oprot.writeMessageEnd()
@@ -3252,7 +3639,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_get_num_entries_result()
         try:
-            result.success = self._handler.bm_mt_get_num_entries(args.cxt_id, args.table_name)
+            result.success = self._handler.bm_mt_get_num_entries(
+                args.cxt_id, args.table_name
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3260,13 +3649,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_get_num_entries", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3278,7 +3669,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_clear_entries_result()
         try:
-            self._handler.bm_mt_clear_entries(args.cxt_id, args.table_name, args.reset_default_entry)
+            self._handler.bm_mt_clear_entries(
+                args.cxt_id, args.table_name, args.reset_default_entry
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3286,13 +3679,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_clear_entries", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3304,7 +3699,14 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_add_entry_result()
         try:
-            result.success = self._handler.bm_mt_add_entry(args.cxt_id, args.table_name, args.match_key, args.action_name, args.action_data, args.options)
+            result.success = self._handler.bm_mt_add_entry(
+                args.cxt_id,
+                args.table_name,
+                args.match_key,
+                args.action_name,
+                args.action_data,
+                args.options,
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3312,13 +3714,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_add_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3330,7 +3734,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_set_default_action_result()
         try:
-            self._handler.bm_mt_set_default_action(args.cxt_id, args.table_name, args.action_name, args.action_data)
+            self._handler.bm_mt_set_default_action(
+                args.cxt_id, args.table_name, args.action_name, args.action_data
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3338,13 +3744,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_set_default_action", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3364,13 +3772,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_reset_default_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3382,7 +3792,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_delete_entry_result()
         try:
-            self._handler.bm_mt_delete_entry(args.cxt_id, args.table_name, args.entry_handle)
+            self._handler.bm_mt_delete_entry(
+                args.cxt_id, args.table_name, args.entry_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3390,13 +3802,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_delete_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3408,7 +3822,13 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_modify_entry_result()
         try:
-            self._handler.bm_mt_modify_entry(args.cxt_id, args.table_name, args.entry_handle, args.action_name, args.action_data)
+            self._handler.bm_mt_modify_entry(
+                args.cxt_id,
+                args.table_name,
+                args.entry_handle,
+                args.action_name,
+                args.action_data,
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3416,13 +3836,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_modify_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3434,7 +3856,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_set_entry_ttl_result()
         try:
-            self._handler.bm_mt_set_entry_ttl(args.cxt_id, args.table_name, args.entry_handle, args.timeout_ms)
+            self._handler.bm_mt_set_entry_ttl(
+                args.cxt_id, args.table_name, args.entry_handle, args.timeout_ms
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3442,13 +3866,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_set_entry_ttl", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3460,7 +3886,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_add_member_result()
         try:
-            result.success = self._handler.bm_mt_act_prof_add_member(args.cxt_id, args.act_prof_name, args.action_name, args.action_data)
+            result.success = self._handler.bm_mt_act_prof_add_member(
+                args.cxt_id, args.act_prof_name, args.action_name, args.action_data
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3468,13 +3896,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_act_prof_add_member", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3486,7 +3916,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_delete_member_result()
         try:
-            self._handler.bm_mt_act_prof_delete_member(args.cxt_id, args.act_prof_name, args.mbr_handle)
+            self._handler.bm_mt_act_prof_delete_member(
+                args.cxt_id, args.act_prof_name, args.mbr_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3494,13 +3926,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_act_prof_delete_member", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3512,7 +3946,13 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_modify_member_result()
         try:
-            self._handler.bm_mt_act_prof_modify_member(args.cxt_id, args.act_prof_name, args.mbr_handle, args.action_name, args.action_data)
+            self._handler.bm_mt_act_prof_modify_member(
+                args.cxt_id,
+                args.act_prof_name,
+                args.mbr_handle,
+                args.action_name,
+                args.action_data,
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3520,13 +3960,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_act_prof_modify_member", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3538,7 +3980,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_create_group_result()
         try:
-            result.success = self._handler.bm_mt_act_prof_create_group(args.cxt_id, args.act_prof_name)
+            result.success = self._handler.bm_mt_act_prof_create_group(
+                args.cxt_id, args.act_prof_name
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3546,13 +3990,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_act_prof_create_group", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3564,7 +4010,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_delete_group_result()
         try:
-            self._handler.bm_mt_act_prof_delete_group(args.cxt_id, args.act_prof_name, args.grp_handle)
+            self._handler.bm_mt_act_prof_delete_group(
+                args.cxt_id, args.act_prof_name, args.grp_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3572,13 +4020,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_act_prof_delete_group", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3590,7 +4040,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_add_member_to_group_result()
         try:
-            self._handler.bm_mt_act_prof_add_member_to_group(args.cxt_id, args.act_prof_name, args.mbr_handle, args.grp_handle)
+            self._handler.bm_mt_act_prof_add_member_to_group(
+                args.cxt_id, args.act_prof_name, args.mbr_handle, args.grp_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3598,13 +4050,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_act_prof_add_member_to_group", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3616,7 +4070,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_remove_member_from_group_result()
         try:
-            self._handler.bm_mt_act_prof_remove_member_from_group(args.cxt_id, args.act_prof_name, args.mbr_handle, args.grp_handle)
+            self._handler.bm_mt_act_prof_remove_member_from_group(
+                args.cxt_id, args.act_prof_name, args.mbr_handle, args.grp_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3624,14 +4080,18 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
-        oprot.writeMessageBegin("bm_mt_act_prof_remove_member_from_group", msg_type, seqid)
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
+        oprot.writeMessageBegin(
+            "bm_mt_act_prof_remove_member_from_group", msg_type, seqid
+        )
         result.write(oprot)
         oprot.writeMessageEnd()
         oprot.trans.flush()
@@ -3642,7 +4102,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_get_members_result()
         try:
-            result.success = self._handler.bm_mt_act_prof_get_members(args.cxt_id, args.act_prof_name)
+            result.success = self._handler.bm_mt_act_prof_get_members(
+                args.cxt_id, args.act_prof_name
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3650,13 +4112,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_act_prof_get_members", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3668,7 +4132,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_get_member_result()
         try:
-            result.success = self._handler.bm_mt_act_prof_get_member(args.cxt_id, args.act_prof_name, args.mbr_handle)
+            result.success = self._handler.bm_mt_act_prof_get_member(
+                args.cxt_id, args.act_prof_name, args.mbr_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3676,13 +4142,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_act_prof_get_member", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3694,7 +4162,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_get_groups_result()
         try:
-            result.success = self._handler.bm_mt_act_prof_get_groups(args.cxt_id, args.act_prof_name)
+            result.success = self._handler.bm_mt_act_prof_get_groups(
+                args.cxt_id, args.act_prof_name
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3702,13 +4172,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_act_prof_get_groups", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3720,7 +4192,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_act_prof_get_group_result()
         try:
-            result.success = self._handler.bm_mt_act_prof_get_group(args.cxt_id, args.act_prof_name, args.grp_handle)
+            result.success = self._handler.bm_mt_act_prof_get_group(
+                args.cxt_id, args.act_prof_name, args.grp_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3728,13 +4202,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_act_prof_get_group", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3746,7 +4222,13 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_indirect_add_entry_result()
         try:
-            result.success = self._handler.bm_mt_indirect_add_entry(args.cxt_id, args.table_name, args.match_key, args.mbr_handle, args.options)
+            result.success = self._handler.bm_mt_indirect_add_entry(
+                args.cxt_id,
+                args.table_name,
+                args.match_key,
+                args.mbr_handle,
+                args.options,
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3754,13 +4236,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_indirect_add_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3772,7 +4256,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_indirect_modify_entry_result()
         try:
-            self._handler.bm_mt_indirect_modify_entry(args.cxt_id, args.table_name, args.entry_handle, args.mbr_handle)
+            self._handler.bm_mt_indirect_modify_entry(
+                args.cxt_id, args.table_name, args.entry_handle, args.mbr_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3780,13 +4266,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_indirect_modify_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3798,7 +4286,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_indirect_delete_entry_result()
         try:
-            self._handler.bm_mt_indirect_delete_entry(args.cxt_id, args.table_name, args.entry_handle)
+            self._handler.bm_mt_indirect_delete_entry(
+                args.cxt_id, args.table_name, args.entry_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3806,13 +4296,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_indirect_delete_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3824,7 +4316,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_indirect_set_entry_ttl_result()
         try:
-            self._handler.bm_mt_indirect_set_entry_ttl(args.cxt_id, args.table_name, args.entry_handle, args.timeout_ms)
+            self._handler.bm_mt_indirect_set_entry_ttl(
+                args.cxt_id, args.table_name, args.entry_handle, args.timeout_ms
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3832,13 +4326,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_indirect_set_entry_ttl", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3850,7 +4346,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_indirect_set_default_member_result()
         try:
-            self._handler.bm_mt_indirect_set_default_member(args.cxt_id, args.table_name, args.mbr_handle)
+            self._handler.bm_mt_indirect_set_default_member(
+                args.cxt_id, args.table_name, args.mbr_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3858,13 +4356,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_indirect_set_default_member", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3876,7 +4376,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_indirect_reset_default_entry_result()
         try:
-            self._handler.bm_mt_indirect_reset_default_entry(args.cxt_id, args.table_name)
+            self._handler.bm_mt_indirect_reset_default_entry(
+                args.cxt_id, args.table_name
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3884,13 +4386,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_indirect_reset_default_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3902,7 +4406,13 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_indirect_ws_add_entry_result()
         try:
-            result.success = self._handler.bm_mt_indirect_ws_add_entry(args.cxt_id, args.table_name, args.match_key, args.grp_handle, args.options)
+            result.success = self._handler.bm_mt_indirect_ws_add_entry(
+                args.cxt_id,
+                args.table_name,
+                args.match_key,
+                args.grp_handle,
+                args.options,
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3910,13 +4420,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_indirect_ws_add_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3928,7 +4440,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_indirect_ws_modify_entry_result()
         try:
-            self._handler.bm_mt_indirect_ws_modify_entry(args.cxt_id, args.table_name, args.entry_handle, args.grp_handle)
+            self._handler.bm_mt_indirect_ws_modify_entry(
+                args.cxt_id, args.table_name, args.entry_handle, args.grp_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3936,13 +4450,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_indirect_ws_modify_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3954,7 +4470,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_indirect_ws_set_default_group_result()
         try:
-            self._handler.bm_mt_indirect_ws_set_default_group(args.cxt_id, args.table_name, args.grp_handle)
+            self._handler.bm_mt_indirect_ws_set_default_group(
+                args.cxt_id, args.table_name, args.grp_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3962,13 +4480,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_indirect_ws_set_default_group", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -3980,7 +4500,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_read_counter_result()
         try:
-            result.success = self._handler.bm_mt_read_counter(args.cxt_id, args.table_name, args.entry_handle)
+            result.success = self._handler.bm_mt_read_counter(
+                args.cxt_id, args.table_name, args.entry_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -3988,13 +4510,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_read_counter", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4014,13 +4538,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_reset_counters", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4032,7 +4558,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_write_counter_result()
         try:
-            self._handler.bm_mt_write_counter(args.cxt_id, args.table_name, args.entry_handle, args.value)
+            self._handler.bm_mt_write_counter(
+                args.cxt_id, args.table_name, args.entry_handle, args.value
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4040,13 +4568,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_write_counter", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4058,7 +4588,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_set_meter_rates_result()
         try:
-            self._handler.bm_mt_set_meter_rates(args.cxt_id, args.table_name, args.entry_handle, args.rates)
+            self._handler.bm_mt_set_meter_rates(
+                args.cxt_id, args.table_name, args.entry_handle, args.rates
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4066,13 +4598,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_set_meter_rates", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4084,7 +4618,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_get_meter_rates_result()
         try:
-            result.success = self._handler.bm_mt_get_meter_rates(args.cxt_id, args.table_name, args.entry_handle)
+            result.success = self._handler.bm_mt_get_meter_rates(
+                args.cxt_id, args.table_name, args.entry_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4092,13 +4628,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_get_meter_rates", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4110,7 +4648,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_get_entries_result()
         try:
-            result.success = self._handler.bm_mt_get_entries(args.cxt_id, args.table_name)
+            result.success = self._handler.bm_mt_get_entries(
+                args.cxt_id, args.table_name
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4118,13 +4658,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_get_entries", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4136,7 +4678,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_get_entry_result()
         try:
-            result.success = self._handler.bm_mt_get_entry(args.cxt_id, args.table_name, args.entry_handle)
+            result.success = self._handler.bm_mt_get_entry(
+                args.cxt_id, args.table_name, args.entry_handle
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4144,13 +4688,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_get_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4162,7 +4708,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_get_default_entry_result()
         try:
-            result.success = self._handler.bm_mt_get_default_entry(args.cxt_id, args.table_name)
+            result.success = self._handler.bm_mt_get_default_entry(
+                args.cxt_id, args.table_name
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4170,13 +4718,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_get_default_entry", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4188,7 +4738,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_mt_get_entry_from_key_result()
         try:
-            result.success = self._handler.bm_mt_get_entry_from_key(args.cxt_id, args.table_name, args.match_key, args.options)
+            result.success = self._handler.bm_mt_get_entry_from_key(
+                args.cxt_id, args.table_name, args.match_key, args.options
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4196,13 +4748,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mt_get_entry_from_key", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4214,7 +4768,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_counter_read_result()
         try:
-            result.success = self._handler.bm_counter_read(args.cxt_id, args.counter_name, args.index)
+            result.success = self._handler.bm_counter_read(
+                args.cxt_id, args.counter_name, args.index
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4222,13 +4778,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_counter_read", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4248,13 +4806,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_counter_reset_all", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4266,7 +4826,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_counter_write_result()
         try:
-            self._handler.bm_counter_write(args.cxt_id, args.counter_name, args.index, args.value)
+            self._handler.bm_counter_write(
+                args.cxt_id, args.counter_name, args.index, args.value
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4274,13 +4836,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_counter_write", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4292,7 +4856,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_learning_ack_result()
         try:
-            self._handler.bm_learning_ack(args.cxt_id, args.list_id, args.buffer_id, args.sample_ids)
+            self._handler.bm_learning_ack(
+                args.cxt_id, args.list_id, args.buffer_id, args.sample_ids
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4300,13 +4866,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_learning_ack", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4318,7 +4886,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_learning_ack_buffer_result()
         try:
-            self._handler.bm_learning_ack_buffer(args.cxt_id, args.list_id, args.buffer_id)
+            self._handler.bm_learning_ack_buffer(
+                args.cxt_id, args.list_id, args.buffer_id
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4326,13 +4896,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_learning_ack_buffer", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4344,7 +4916,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_learning_set_timeout_result()
         try:
-            self._handler.bm_learning_set_timeout(args.cxt_id, args.list_id, args.timeout_ms)
+            self._handler.bm_learning_set_timeout(
+                args.cxt_id, args.list_id, args.timeout_ms
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4352,13 +4926,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_learning_set_timeout", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4370,7 +4946,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_learning_set_buffer_size_result()
         try:
-            self._handler.bm_learning_set_buffer_size(args.cxt_id, args.list_id, args.nb_samples)
+            self._handler.bm_learning_set_buffer_size(
+                args.cxt_id, args.list_id, args.nb_samples
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4378,13 +4956,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_learning_set_buffer_size", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4404,13 +4984,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_load_new_config", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4430,13 +5012,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_swap_configs", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4448,7 +5032,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_meter_array_set_rates_result()
         try:
-            self._handler.bm_meter_array_set_rates(args.cxt_id, args.meter_array_name, args.rates)
+            self._handler.bm_meter_array_set_rates(
+                args.cxt_id, args.meter_array_name, args.rates
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4456,13 +5042,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_meter_array_set_rates", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4474,7 +5062,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_meter_set_rates_result()
         try:
-            self._handler.bm_meter_set_rates(args.cxt_id, args.meter_array_name, args.index, args.rates)
+            self._handler.bm_meter_set_rates(
+                args.cxt_id, args.meter_array_name, args.index, args.rates
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4482,13 +5072,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_meter_set_rates", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4500,7 +5092,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_meter_get_rates_result()
         try:
-            result.success = self._handler.bm_meter_get_rates(args.cxt_id, args.meter_array_name, args.index)
+            result.success = self._handler.bm_meter_get_rates(
+                args.cxt_id, args.meter_array_name, args.index
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4508,13 +5102,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_meter_get_rates", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4526,7 +5122,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_register_read_result()
         try:
-            result.success = self._handler.bm_register_read(args.cxt_id, args.register_array_name, args.idx)
+            result.success = self._handler.bm_register_read(
+                args.cxt_id, args.register_array_name, args.idx
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4534,13 +5132,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_register_read", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4552,7 +5152,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_register_read_all_result()
         try:
-            result.success = self._handler.bm_register_read_all(args.cxt_id, args.register_array_name)
+            result.success = self._handler.bm_register_read_all(
+                args.cxt_id, args.register_array_name
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4560,13 +5162,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_register_read_all", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4578,7 +5182,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_register_write_result()
         try:
-            self._handler.bm_register_write(args.cxt_id, args.register_array_name, args.index, args.value)
+            self._handler.bm_register_write(
+                args.cxt_id, args.register_array_name, args.index, args.value
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4586,13 +5192,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_register_write", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4604,7 +5212,13 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_register_write_range_result()
         try:
-            self._handler.bm_register_write_range(args.cxt_id, args.register_array_name, args.start_index, args.end_index, args.value)
+            self._handler.bm_register_write_range(
+                args.cxt_id,
+                args.register_array_name,
+                args.start_index,
+                args.end_index,
+                args.value,
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4612,13 +5226,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_register_write_range", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4638,13 +5254,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_register_reset", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4656,7 +5274,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_parse_vset_add_result()
         try:
-            self._handler.bm_parse_vset_add(args.cxt_id, args.parse_vset_name, args.value)
+            self._handler.bm_parse_vset_add(
+                args.cxt_id, args.parse_vset_name, args.value
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4664,13 +5284,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_parse_vset_add", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4682,7 +5304,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_parse_vset_remove_result()
         try:
-            self._handler.bm_parse_vset_remove(args.cxt_id, args.parse_vset_name, args.value)
+            self._handler.bm_parse_vset_remove(
+                args.cxt_id, args.parse_vset_name, args.value
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4690,13 +5314,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_parse_vset_remove", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4708,7 +5334,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_parse_vset_get_result()
         try:
-            result.success = self._handler.bm_parse_vset_get(args.cxt_id, args.parse_vset_name)
+            result.success = self._handler.bm_parse_vset_get(
+                args.cxt_id, args.parse_vset_name
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4716,13 +5344,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_parse_vset_get", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4742,13 +5372,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_parse_vset_clear", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4760,7 +5392,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_dev_mgr_add_port_result()
         try:
-            self._handler.bm_dev_mgr_add_port(args.iface_name, args.port_num, args.pcap_path)
+            self._handler.bm_dev_mgr_add_port(
+                args.iface_name, args.port_num, args.pcap_path
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4768,13 +5402,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_dev_mgr_add_port", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4794,13 +5430,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_dev_mgr_remove_port", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4820,13 +5458,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_dev_mgr_show_ports", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4843,13 +5483,15 @@ class Processor(Iface, TProcessor):
         except TTransport.TTransportException:
             raise
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_mgmt_get_info", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4861,7 +5503,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_set_crc16_custom_parameters_result()
         try:
-            self._handler.bm_set_crc16_custom_parameters(args.cxt_id, args.calc_name, args.crc16_config)
+            self._handler.bm_set_crc16_custom_parameters(
+                args.cxt_id, args.calc_name, args.crc16_config
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4869,13 +5513,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_set_crc16_custom_parameters", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4887,7 +5533,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_set_crc32_custom_parameters_result()
         try:
-            self._handler.bm_set_crc32_custom_parameters(args.cxt_id, args.calc_name, args.crc32_config)
+            self._handler.bm_set_crc32_custom_parameters(
+                args.cxt_id, args.calc_name, args.crc32_config
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4895,13 +5543,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_set_crc32_custom_parameters", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4918,13 +5568,15 @@ class Processor(Iface, TProcessor):
         except TTransport.TTransportException:
             raise
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_reset_state", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4941,13 +5593,15 @@ class Processor(Iface, TProcessor):
         except TTransport.TTransportException:
             raise
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_get_config", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4964,13 +5618,15 @@ class Processor(Iface, TProcessor):
         except TTransport.TTransportException:
             raise
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_get_config_md5", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -4982,7 +5638,9 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = bm_get_id_from_name_result()
         try:
-            result.success = self._handler.bm_get_id_from_name(args.cxt_id, args.resource_type, args.resource_name)
+            result.success = self._handler.bm_get_id_from_name(
+                args.cxt_id, args.resource_type, args.resource_name
+            )
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -4990,13 +5648,15 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.REPLY
             result.ouch = ouch
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_get_id_from_name", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
@@ -5013,17 +5673,20 @@ class Processor(Iface, TProcessor):
         except TTransport.TTransportException:
             raise
         except TApplicationException as ex:
-            logging.exception('TApplication exception in handler')
+            logging.exception("TApplication exception in handler")
             msg_type = TMessageType.EXCEPTION
             result = ex
         except Exception:
-            logging.exception('Unexpected exception in handler')
+            logging.exception("Unexpected exception in handler")
             msg_type = TMessageType.EXCEPTION
-            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+            result = TApplicationException(
+                TApplicationException.INTERNAL_ERROR, "Internal error"
+            )
         oprot.writeMessageBegin("bm_serialize_state", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
         oprot.trans.flush()
+
 
 # HELPER FUNCTIONS AND STRUCTURES
 
@@ -5036,13 +5699,20 @@ class bm_mt_get_num_entries_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5057,7 +5727,11 @@ class bm_mt_get_num_entries_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -5067,16 +5741,22 @@ class bm_mt_get_num_entries_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_num_entries_args')
+        oprot.writeStructBegin("bm_mt_get_num_entries_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -5085,20 +5765,33 @@ class bm_mt_get_num_entries_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_num_entries_args)
 bm_mt_get_num_entries_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -5110,13 +5803,20 @@ class bm_mt_get_num_entries_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5142,15 +5842,17 @@ class bm_mt_get_num_entries_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_num_entries_result')
+        oprot.writeStructBegin("bm_mt_get_num_entries_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.I64, 0)
+            oprot.writeFieldBegin("success", TType.I64, 0)
             oprot.writeI64(self.success)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -5160,19 +5862,32 @@ class bm_mt_get_num_entries_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_num_entries_result)
 bm_mt_get_num_entries_result.thrift_spec = (
-    (0, TType.I64, 'success', None, None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.I64,
+        "success",
+        None,
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -5185,14 +5900,22 @@ class bm_mt_clear_entries_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, reset_default_entry=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        reset_default_entry=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.reset_default_entry = reset_default_entry
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5207,7 +5930,11 @@ class bm_mt_clear_entries_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -5222,19 +5949,25 @@ class bm_mt_clear_entries_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_clear_entries_args')
+        oprot.writeStructBegin("bm_mt_clear_entries_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.reset_default_entry is not None:
-            oprot.writeFieldBegin('reset_default_entry', TType.BOOL, 3)
+            oprot.writeFieldBegin("reset_default_entry", TType.BOOL, 3)
             oprot.writeBool(self.reset_default_entry)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -5244,21 +5977,40 @@ class bm_mt_clear_entries_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_clear_entries_args)
 bm_mt_clear_entries_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.BOOL, 'reset_default_entry', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.BOOL,
+        "reset_default_entry",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -5269,12 +6021,18 @@ class bm_mt_clear_entries_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5295,11 +6053,13 @@ class bm_mt_clear_entries_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_clear_entries_result')
+        oprot.writeStructBegin("bm_mt_clear_entries_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -5309,19 +6069,26 @@ class bm_mt_clear_entries_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_clear_entries_result)
 bm_mt_clear_entries_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -5337,8 +6104,15 @@ class bm_mt_add_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, match_key=None, action_name=None, action_data=None, options=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        match_key=None,
+        action_name=None,
+        action_data=None,
+        options=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.match_key = match_key
@@ -5347,7 +6121,11 @@ class bm_mt_add_entry_args(object):
         self.options = options
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5362,7 +6140,11 @@ class bm_mt_add_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -5378,7 +6160,11 @@ class bm_mt_add_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRING:
-                    self.action_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.action_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 5:
@@ -5404,37 +6190,47 @@ class bm_mt_add_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_add_entry_args')
+        oprot.writeStructBegin("bm_mt_add_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.match_key is not None:
-            oprot.writeFieldBegin('match_key', TType.LIST, 3)
+            oprot.writeFieldBegin("match_key", TType.LIST, 3)
             oprot.writeListBegin(TType.STRUCT, len(self.match_key))
             for iter49 in self.match_key:
                 iter49.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.action_name is not None:
-            oprot.writeFieldBegin('action_name', TType.STRING, 4)
-            oprot.writeString(self.action_name.encode('utf-8') if sys.version_info[0] == 2 else self.action_name)
+            oprot.writeFieldBegin("action_name", TType.STRING, 4)
+            oprot.writeString(
+                self.action_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.action_name
+            )
             oprot.writeFieldEnd()
         if self.action_data is not None:
-            oprot.writeFieldBegin('action_data', TType.LIST, 5)
+            oprot.writeFieldBegin("action_data", TType.LIST, 5)
             oprot.writeListBegin(TType.STRING, len(self.action_data))
             for iter50 in self.action_data:
                 oprot.writeBinary(iter50)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.options is not None:
-            oprot.writeFieldBegin('options', TType.STRUCT, 6)
+            oprot.writeFieldBegin("options", TType.STRUCT, 6)
             self.options.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -5444,24 +6240,61 @@ class bm_mt_add_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_add_entry_args)
 bm_mt_add_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.LIST, 'match_key', (TType.STRUCT, [BmMatchParam, None], False), None, ),  # 3
-    (4, TType.STRING, 'action_name', 'UTF8', None, ),  # 4
-    (5, TType.LIST, 'action_data', (TType.STRING, 'BINARY', False), None, ),  # 5
-    (6, TType.STRUCT, 'options', [BmAddEntryOptions, None], None, ),  # 6
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.LIST,
+        "match_key",
+        (TType.STRUCT, [BmMatchParam, None], False),
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRING,
+        "action_name",
+        "UTF8",
+        None,
+    ),  # 4
+    (
+        5,
+        TType.LIST,
+        "action_data",
+        (TType.STRING, "BINARY", False),
+        None,
+    ),  # 5
+    (
+        6,
+        TType.STRUCT,
+        "options",
+        [BmAddEntryOptions, None],
+        None,
+    ),  # 6
 )
 
 
@@ -5473,13 +6306,20 @@ class bm_mt_add_entry_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5505,15 +6345,17 @@ class bm_mt_add_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_add_entry_result')
+        oprot.writeStructBegin("bm_mt_add_entry_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.I32, 0)
+            oprot.writeFieldBegin("success", TType.I32, 0)
             oprot.writeI32(self.success)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -5523,19 +6365,32 @@ class bm_mt_add_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_add_entry_result)
 bm_mt_add_entry_result.thrift_spec = (
-    (0, TType.I32, 'success', None, None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.I32,
+        "success",
+        None,
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -5549,15 +6404,24 @@ class bm_mt_set_default_action_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, action_name=None, action_data=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        action_name=None,
+        action_data=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.action_name = action_name
         self.action_data = action_data
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5572,12 +6436,20 @@ class bm_mt_set_default_action_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRING:
-                    self.action_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.action_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
@@ -5597,23 +6469,33 @@ class bm_mt_set_default_action_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_set_default_action_args')
+        oprot.writeStructBegin("bm_mt_set_default_action_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.action_name is not None:
-            oprot.writeFieldBegin('action_name', TType.STRING, 3)
-            oprot.writeString(self.action_name.encode('utf-8') if sys.version_info[0] == 2 else self.action_name)
+            oprot.writeFieldBegin("action_name", TType.STRING, 3)
+            oprot.writeString(
+                self.action_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.action_name
+            )
             oprot.writeFieldEnd()
         if self.action_data is not None:
-            oprot.writeFieldBegin('action_data', TType.LIST, 4)
+            oprot.writeFieldBegin("action_data", TType.LIST, 4)
             oprot.writeListBegin(TType.STRING, len(self.action_data))
             for iter57 in self.action_data:
                 oprot.writeBinary(iter57)
@@ -5626,22 +6508,47 @@ class bm_mt_set_default_action_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_set_default_action_args)
 bm_mt_set_default_action_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.STRING, 'action_name', 'UTF8', None, ),  # 3
-    (4, TType.LIST, 'action_data', (TType.STRING, 'BINARY', False), None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRING,
+        "action_name",
+        "UTF8",
+        None,
+    ),  # 3
+    (
+        4,
+        TType.LIST,
+        "action_data",
+        (TType.STRING, "BINARY", False),
+        None,
+    ),  # 4
 )
 
 
@@ -5652,12 +6559,18 @@ class bm_mt_set_default_action_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5678,11 +6591,13 @@ class bm_mt_set_default_action_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_set_default_action_result')
+        oprot.writeStructBegin("bm_mt_set_default_action_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -5692,19 +6607,26 @@ class bm_mt_set_default_action_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_set_default_action_result)
 bm_mt_set_default_action_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -5716,13 +6638,20 @@ class bm_mt_reset_default_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5737,7 +6666,11 @@ class bm_mt_reset_default_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -5747,16 +6680,22 @@ class bm_mt_reset_default_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_reset_default_entry_args')
+        oprot.writeStructBegin("bm_mt_reset_default_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -5765,20 +6704,33 @@ class bm_mt_reset_default_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_reset_default_entry_args)
 bm_mt_reset_default_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -5789,12 +6741,18 @@ class bm_mt_reset_default_entry_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5815,11 +6773,13 @@ class bm_mt_reset_default_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_reset_default_entry_result')
+        oprot.writeStructBegin("bm_mt_reset_default_entry_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -5829,19 +6789,26 @@ class bm_mt_reset_default_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_reset_default_entry_result)
 bm_mt_reset_default_entry_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -5854,14 +6821,22 @@ class bm_mt_delete_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5876,7 +6851,11 @@ class bm_mt_delete_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -5891,19 +6870,25 @@ class bm_mt_delete_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_delete_entry_args')
+        oprot.writeStructBegin("bm_mt_delete_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -5913,21 +6898,40 @@ class bm_mt_delete_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_delete_entry_args)
 bm_mt_delete_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -5938,12 +6942,18 @@ class bm_mt_delete_entry_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -5964,11 +6974,13 @@ class bm_mt_delete_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_delete_entry_result')
+        oprot.writeStructBegin("bm_mt_delete_entry_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -5978,19 +6990,26 @@ class bm_mt_delete_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_delete_entry_result)
 bm_mt_delete_entry_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -6005,8 +7024,14 @@ class bm_mt_modify_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None, action_name=None, action_data=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+        action_name=None,
+        action_data=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
@@ -6014,7 +7039,11 @@ class bm_mt_modify_entry_args(object):
         self.action_data = action_data
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6029,7 +7058,11 @@ class bm_mt_modify_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -6039,7 +7072,11 @@ class bm_mt_modify_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRING:
-                    self.action_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.action_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 5:
@@ -6059,27 +7096,37 @@ class bm_mt_modify_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_modify_entry_args')
+        oprot.writeStructBegin("bm_mt_modify_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         if self.action_name is not None:
-            oprot.writeFieldBegin('action_name', TType.STRING, 4)
-            oprot.writeString(self.action_name.encode('utf-8') if sys.version_info[0] == 2 else self.action_name)
+            oprot.writeFieldBegin("action_name", TType.STRING, 4)
+            oprot.writeString(
+                self.action_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.action_name
+            )
             oprot.writeFieldEnd()
         if self.action_data is not None:
-            oprot.writeFieldBegin('action_data', TType.LIST, 5)
+            oprot.writeFieldBegin("action_data", TType.LIST, 5)
             oprot.writeListBegin(TType.STRING, len(self.action_data))
             for iter64 in self.action_data:
                 oprot.writeBinary(iter64)
@@ -6092,23 +7139,54 @@ class bm_mt_modify_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_modify_entry_args)
 bm_mt_modify_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
-    (4, TType.STRING, 'action_name', 'UTF8', None, ),  # 4
-    (5, TType.LIST, 'action_data', (TType.STRING, 'BINARY', False), None, ),  # 5
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRING,
+        "action_name",
+        "UTF8",
+        None,
+    ),  # 4
+    (
+        5,
+        TType.LIST,
+        "action_data",
+        (TType.STRING, "BINARY", False),
+        None,
+    ),  # 5
 )
 
 
@@ -6119,12 +7197,18 @@ class bm_mt_modify_entry_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6145,11 +7229,13 @@ class bm_mt_modify_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_modify_entry_result')
+        oprot.writeStructBegin("bm_mt_modify_entry_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -6159,19 +7245,26 @@ class bm_mt_modify_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_modify_entry_result)
 bm_mt_modify_entry_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -6185,15 +7278,24 @@ class bm_mt_set_entry_ttl_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None, timeout_ms=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+        timeout_ms=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
         self.timeout_ms = timeout_ms
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6208,7 +7310,11 @@ class bm_mt_set_entry_ttl_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -6228,23 +7334,29 @@ class bm_mt_set_entry_ttl_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_set_entry_ttl_args')
+        oprot.writeStructBegin("bm_mt_set_entry_ttl_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         if self.timeout_ms is not None:
-            oprot.writeFieldBegin('timeout_ms', TType.I32, 4)
+            oprot.writeFieldBegin("timeout_ms", TType.I32, 4)
             oprot.writeI32(self.timeout_ms)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -6254,22 +7366,47 @@ class bm_mt_set_entry_ttl_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_set_entry_ttl_args)
 bm_mt_set_entry_ttl_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
-    (4, TType.I32, 'timeout_ms', None, None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I32,
+        "timeout_ms",
+        None,
+        None,
+    ),  # 4
 )
 
 
@@ -6280,12 +7417,18 @@ class bm_mt_set_entry_ttl_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6306,11 +7449,13 @@ class bm_mt_set_entry_ttl_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_set_entry_ttl_result')
+        oprot.writeStructBegin("bm_mt_set_entry_ttl_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -6320,19 +7465,26 @@ class bm_mt_set_entry_ttl_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_set_entry_ttl_result)
 bm_mt_set_entry_ttl_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -6346,15 +7498,24 @@ class bm_mt_act_prof_add_member_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None, action_name=None, action_data=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+        action_name=None,
+        action_data=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
         self.action_name = action_name
         self.action_data = action_data
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6369,12 +7530,20 @@ class bm_mt_act_prof_add_member_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRING:
-                    self.action_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.action_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
@@ -6394,23 +7563,33 @@ class bm_mt_act_prof_add_member_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_add_member_args')
+        oprot.writeStructBegin("bm_mt_act_prof_add_member_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         if self.action_name is not None:
-            oprot.writeFieldBegin('action_name', TType.STRING, 3)
-            oprot.writeString(self.action_name.encode('utf-8') if sys.version_info[0] == 2 else self.action_name)
+            oprot.writeFieldBegin("action_name", TType.STRING, 3)
+            oprot.writeString(
+                self.action_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.action_name
+            )
             oprot.writeFieldEnd()
         if self.action_data is not None:
-            oprot.writeFieldBegin('action_data', TType.LIST, 4)
+            oprot.writeFieldBegin("action_data", TType.LIST, 4)
             oprot.writeListBegin(TType.STRING, len(self.action_data))
             for iter71 in self.action_data:
                 oprot.writeBinary(iter71)
@@ -6423,22 +7602,47 @@ class bm_mt_act_prof_add_member_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_add_member_args)
 bm_mt_act_prof_add_member_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
-    (3, TType.STRING, 'action_name', 'UTF8', None, ),  # 3
-    (4, TType.LIST, 'action_data', (TType.STRING, 'BINARY', False), None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRING,
+        "action_name",
+        "UTF8",
+        None,
+    ),  # 3
+    (
+        4,
+        TType.LIST,
+        "action_data",
+        (TType.STRING, "BINARY", False),
+        None,
+    ),  # 4
 )
 
 
@@ -6450,13 +7654,20 @@ class bm_mt_act_prof_add_member_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6482,15 +7693,17 @@ class bm_mt_act_prof_add_member_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_add_member_result')
+        oprot.writeStructBegin("bm_mt_act_prof_add_member_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.I32, 0)
+            oprot.writeFieldBegin("success", TType.I32, 0)
             oprot.writeI32(self.success)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -6500,19 +7713,32 @@ class bm_mt_act_prof_add_member_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_add_member_result)
 bm_mt_act_prof_add_member_result.thrift_spec = (
-    (0, TType.I32, 'success', None, None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.I32,
+        "success",
+        None,
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -6525,14 +7751,22 @@ class bm_mt_act_prof_delete_member_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None, mbr_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+        mbr_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
         self.mbr_handle = mbr_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6547,7 +7781,11 @@ class bm_mt_act_prof_delete_member_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -6562,19 +7800,25 @@ class bm_mt_act_prof_delete_member_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_delete_member_args')
+        oprot.writeStructBegin("bm_mt_act_prof_delete_member_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         if self.mbr_handle is not None:
-            oprot.writeFieldBegin('mbr_handle', TType.I32, 3)
+            oprot.writeFieldBegin("mbr_handle", TType.I32, 3)
             oprot.writeI32(self.mbr_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -6584,21 +7828,40 @@ class bm_mt_act_prof_delete_member_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_delete_member_args)
 bm_mt_act_prof_delete_member_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'mbr_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "mbr_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -6609,12 +7872,18 @@ class bm_mt_act_prof_delete_member_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6635,11 +7904,13 @@ class bm_mt_act_prof_delete_member_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_delete_member_result')
+        oprot.writeStructBegin("bm_mt_act_prof_delete_member_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -6649,19 +7920,26 @@ class bm_mt_act_prof_delete_member_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_delete_member_result)
 bm_mt_act_prof_delete_member_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -6676,8 +7954,14 @@ class bm_mt_act_prof_modify_member_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None, mbr_handle=None, action_name=None, action_data=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+        mbr_handle=None,
+        action_name=None,
+        action_data=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
         self.mbr_handle = mbr_handle
@@ -6685,7 +7969,11 @@ class bm_mt_act_prof_modify_member_args(object):
         self.action_data = action_data
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6700,7 +7988,11 @@ class bm_mt_act_prof_modify_member_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -6710,7 +8002,11 @@ class bm_mt_act_prof_modify_member_args(object):
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRING:
-                    self.action_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.action_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 5:
@@ -6730,27 +8026,37 @@ class bm_mt_act_prof_modify_member_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_modify_member_args')
+        oprot.writeStructBegin("bm_mt_act_prof_modify_member_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         if self.mbr_handle is not None:
-            oprot.writeFieldBegin('mbr_handle', TType.I32, 3)
+            oprot.writeFieldBegin("mbr_handle", TType.I32, 3)
             oprot.writeI32(self.mbr_handle)
             oprot.writeFieldEnd()
         if self.action_name is not None:
-            oprot.writeFieldBegin('action_name', TType.STRING, 4)
-            oprot.writeString(self.action_name.encode('utf-8') if sys.version_info[0] == 2 else self.action_name)
+            oprot.writeFieldBegin("action_name", TType.STRING, 4)
+            oprot.writeString(
+                self.action_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.action_name
+            )
             oprot.writeFieldEnd()
         if self.action_data is not None:
-            oprot.writeFieldBegin('action_data', TType.LIST, 5)
+            oprot.writeFieldBegin("action_data", TType.LIST, 5)
             oprot.writeListBegin(TType.STRING, len(self.action_data))
             for iter78 in self.action_data:
                 oprot.writeBinary(iter78)
@@ -6763,23 +8069,54 @@ class bm_mt_act_prof_modify_member_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_modify_member_args)
 bm_mt_act_prof_modify_member_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'mbr_handle', None, None, ),  # 3
-    (4, TType.STRING, 'action_name', 'UTF8', None, ),  # 4
-    (5, TType.LIST, 'action_data', (TType.STRING, 'BINARY', False), None, ),  # 5
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "mbr_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRING,
+        "action_name",
+        "UTF8",
+        None,
+    ),  # 4
+    (
+        5,
+        TType.LIST,
+        "action_data",
+        (TType.STRING, "BINARY", False),
+        None,
+    ),  # 5
 )
 
 
@@ -6790,12 +8127,18 @@ class bm_mt_act_prof_modify_member_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6816,11 +8159,13 @@ class bm_mt_act_prof_modify_member_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_modify_member_result')
+        oprot.writeStructBegin("bm_mt_act_prof_modify_member_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -6830,19 +8175,26 @@ class bm_mt_act_prof_modify_member_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_modify_member_result)
 bm_mt_act_prof_modify_member_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -6854,13 +8206,20 @@ class bm_mt_act_prof_create_group_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6875,7 +8234,11 @@ class bm_mt_act_prof_create_group_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -6885,16 +8248,22 @@ class bm_mt_act_prof_create_group_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_create_group_args')
+        oprot.writeStructBegin("bm_mt_act_prof_create_group_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -6903,20 +8272,33 @@ class bm_mt_act_prof_create_group_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_create_group_args)
 bm_mt_act_prof_create_group_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -6928,13 +8310,20 @@ class bm_mt_act_prof_create_group_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -6960,15 +8349,17 @@ class bm_mt_act_prof_create_group_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_create_group_result')
+        oprot.writeStructBegin("bm_mt_act_prof_create_group_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.I32, 0)
+            oprot.writeFieldBegin("success", TType.I32, 0)
             oprot.writeI32(self.success)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -6978,19 +8369,32 @@ class bm_mt_act_prof_create_group_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_create_group_result)
 bm_mt_act_prof_create_group_result.thrift_spec = (
-    (0, TType.I32, 'success', None, None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.I32,
+        "success",
+        None,
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -7003,14 +8407,22 @@ class bm_mt_act_prof_delete_group_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None, grp_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+        grp_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
         self.grp_handle = grp_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7025,7 +8437,11 @@ class bm_mt_act_prof_delete_group_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -7040,19 +8456,25 @@ class bm_mt_act_prof_delete_group_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_delete_group_args')
+        oprot.writeStructBegin("bm_mt_act_prof_delete_group_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         if self.grp_handle is not None:
-            oprot.writeFieldBegin('grp_handle', TType.I32, 3)
+            oprot.writeFieldBegin("grp_handle", TType.I32, 3)
             oprot.writeI32(self.grp_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -7062,21 +8484,40 @@ class bm_mt_act_prof_delete_group_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_delete_group_args)
 bm_mt_act_prof_delete_group_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'grp_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "grp_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -7087,12 +8528,18 @@ class bm_mt_act_prof_delete_group_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7113,11 +8560,13 @@ class bm_mt_act_prof_delete_group_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_delete_group_result')
+        oprot.writeStructBegin("bm_mt_act_prof_delete_group_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -7127,19 +8576,26 @@ class bm_mt_act_prof_delete_group_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_delete_group_result)
 bm_mt_act_prof_delete_group_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -7153,15 +8609,24 @@ class bm_mt_act_prof_add_member_to_group_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None, mbr_handle=None, grp_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+        mbr_handle=None,
+        grp_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
         self.mbr_handle = mbr_handle
         self.grp_handle = grp_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7176,7 +8641,11 @@ class bm_mt_act_prof_add_member_to_group_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -7196,23 +8665,29 @@ class bm_mt_act_prof_add_member_to_group_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_add_member_to_group_args')
+        oprot.writeStructBegin("bm_mt_act_prof_add_member_to_group_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         if self.mbr_handle is not None:
-            oprot.writeFieldBegin('mbr_handle', TType.I32, 3)
+            oprot.writeFieldBegin("mbr_handle", TType.I32, 3)
             oprot.writeI32(self.mbr_handle)
             oprot.writeFieldEnd()
         if self.grp_handle is not None:
-            oprot.writeFieldBegin('grp_handle', TType.I32, 4)
+            oprot.writeFieldBegin("grp_handle", TType.I32, 4)
             oprot.writeI32(self.grp_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -7222,22 +8697,47 @@ class bm_mt_act_prof_add_member_to_group_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_add_member_to_group_args)
 bm_mt_act_prof_add_member_to_group_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'mbr_handle', None, None, ),  # 3
-    (4, TType.I32, 'grp_handle', None, None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "mbr_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I32,
+        "grp_handle",
+        None,
+        None,
+    ),  # 4
 )
 
 
@@ -7248,12 +8748,18 @@ class bm_mt_act_prof_add_member_to_group_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7274,11 +8780,13 @@ class bm_mt_act_prof_add_member_to_group_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_add_member_to_group_result')
+        oprot.writeStructBegin("bm_mt_act_prof_add_member_to_group_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -7288,19 +8796,26 @@ class bm_mt_act_prof_add_member_to_group_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_add_member_to_group_result)
 bm_mt_act_prof_add_member_to_group_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -7314,15 +8829,24 @@ class bm_mt_act_prof_remove_member_from_group_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None, mbr_handle=None, grp_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+        mbr_handle=None,
+        grp_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
         self.mbr_handle = mbr_handle
         self.grp_handle = grp_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7337,7 +8861,11 @@ class bm_mt_act_prof_remove_member_from_group_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -7357,23 +8885,29 @@ class bm_mt_act_prof_remove_member_from_group_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_remove_member_from_group_args')
+        oprot.writeStructBegin("bm_mt_act_prof_remove_member_from_group_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         if self.mbr_handle is not None:
-            oprot.writeFieldBegin('mbr_handle', TType.I32, 3)
+            oprot.writeFieldBegin("mbr_handle", TType.I32, 3)
             oprot.writeI32(self.mbr_handle)
             oprot.writeFieldEnd()
         if self.grp_handle is not None:
-            oprot.writeFieldBegin('grp_handle', TType.I32, 4)
+            oprot.writeFieldBegin("grp_handle", TType.I32, 4)
             oprot.writeI32(self.grp_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -7383,22 +8917,47 @@ class bm_mt_act_prof_remove_member_from_group_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_remove_member_from_group_args)
 bm_mt_act_prof_remove_member_from_group_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'mbr_handle', None, None, ),  # 3
-    (4, TType.I32, 'grp_handle', None, None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "mbr_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I32,
+        "grp_handle",
+        None,
+        None,
+    ),  # 4
 )
 
 
@@ -7409,12 +8968,18 @@ class bm_mt_act_prof_remove_member_from_group_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7435,11 +9000,13 @@ class bm_mt_act_prof_remove_member_from_group_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_remove_member_from_group_result')
+        oprot.writeStructBegin("bm_mt_act_prof_remove_member_from_group_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -7449,19 +9016,26 @@ class bm_mt_act_prof_remove_member_from_group_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_remove_member_from_group_result)
 bm_mt_act_prof_remove_member_from_group_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -7473,13 +9047,20 @@ class bm_mt_act_prof_get_members_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7494,7 +9075,11 @@ class bm_mt_act_prof_get_members_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -7504,16 +9089,22 @@ class bm_mt_act_prof_get_members_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_get_members_args')
+        oprot.writeStructBegin("bm_mt_act_prof_get_members_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -7522,20 +9113,33 @@ class bm_mt_act_prof_get_members_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_get_members_args)
 bm_mt_act_prof_get_members_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -7547,13 +9151,20 @@ class bm_mt_act_prof_get_members_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7585,18 +9196,20 @@ class bm_mt_act_prof_get_members_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_get_members_result')
+        oprot.writeStructBegin("bm_mt_act_prof_get_members_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.LIST, 0)
+            oprot.writeFieldBegin("success", TType.LIST, 0)
             oprot.writeListBegin(TType.STRUCT, len(self.success))
             for iter85 in self.success:
                 iter85.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -7606,19 +9219,32 @@ class bm_mt_act_prof_get_members_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_get_members_result)
 bm_mt_act_prof_get_members_result.thrift_spec = (
-    (0, TType.LIST, 'success', (TType.STRUCT, [BmMtActProfMember, None], False), None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.LIST,
+        "success",
+        (TType.STRUCT, [BmMtActProfMember, None], False),
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -7631,14 +9257,22 @@ class bm_mt_act_prof_get_member_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None, mbr_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+        mbr_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
         self.mbr_handle = mbr_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7653,7 +9287,11 @@ class bm_mt_act_prof_get_member_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -7668,19 +9306,25 @@ class bm_mt_act_prof_get_member_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_get_member_args')
+        oprot.writeStructBegin("bm_mt_act_prof_get_member_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         if self.mbr_handle is not None:
-            oprot.writeFieldBegin('mbr_handle', TType.I32, 3)
+            oprot.writeFieldBegin("mbr_handle", TType.I32, 3)
             oprot.writeI32(self.mbr_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -7690,21 +9334,40 @@ class bm_mt_act_prof_get_member_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_get_member_args)
 bm_mt_act_prof_get_member_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'mbr_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "mbr_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -7716,13 +9379,20 @@ class bm_mt_act_prof_get_member_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7749,15 +9419,17 @@ class bm_mt_act_prof_get_member_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_get_member_result')
+        oprot.writeStructBegin("bm_mt_act_prof_get_member_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            oprot.writeFieldBegin("success", TType.STRUCT, 0)
             self.success.write(oprot)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -7767,19 +9439,32 @@ class bm_mt_act_prof_get_member_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_get_member_result)
 bm_mt_act_prof_get_member_result.thrift_spec = (
-    (0, TType.STRUCT, 'success', [BmMtActProfMember, None], None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.STRUCT,
+        "success",
+        [BmMtActProfMember, None],
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -7791,13 +9476,20 @@ class bm_mt_act_prof_get_groups_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7812,7 +9504,11 @@ class bm_mt_act_prof_get_groups_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -7822,16 +9518,22 @@ class bm_mt_act_prof_get_groups_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_get_groups_args')
+        oprot.writeStructBegin("bm_mt_act_prof_get_groups_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -7840,20 +9542,33 @@ class bm_mt_act_prof_get_groups_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_get_groups_args)
 bm_mt_act_prof_get_groups_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -7865,13 +9580,20 @@ class bm_mt_act_prof_get_groups_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7903,18 +9625,20 @@ class bm_mt_act_prof_get_groups_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_get_groups_result')
+        oprot.writeStructBegin("bm_mt_act_prof_get_groups_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.LIST, 0)
+            oprot.writeFieldBegin("success", TType.LIST, 0)
             oprot.writeListBegin(TType.STRUCT, len(self.success))
             for iter92 in self.success:
                 iter92.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -7924,19 +9648,32 @@ class bm_mt_act_prof_get_groups_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_get_groups_result)
 bm_mt_act_prof_get_groups_result.thrift_spec = (
-    (0, TType.LIST, 'success', (TType.STRUCT, [BmMtActProfGroup, None], False), None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.LIST,
+        "success",
+        (TType.STRUCT, [BmMtActProfGroup, None], False),
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -7949,14 +9686,22 @@ class bm_mt_act_prof_get_group_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, act_prof_name=None, grp_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        act_prof_name=None,
+        grp_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.act_prof_name = act_prof_name
         self.grp_handle = grp_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -7971,7 +9716,11 @@ class bm_mt_act_prof_get_group_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.act_prof_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.act_prof_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -7986,19 +9735,25 @@ class bm_mt_act_prof_get_group_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_get_group_args')
+        oprot.writeStructBegin("bm_mt_act_prof_get_group_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.act_prof_name is not None:
-            oprot.writeFieldBegin('act_prof_name', TType.STRING, 2)
-            oprot.writeString(self.act_prof_name.encode('utf-8') if sys.version_info[0] == 2 else self.act_prof_name)
+            oprot.writeFieldBegin("act_prof_name", TType.STRING, 2)
+            oprot.writeString(
+                self.act_prof_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.act_prof_name
+            )
             oprot.writeFieldEnd()
         if self.grp_handle is not None:
-            oprot.writeFieldBegin('grp_handle', TType.I32, 3)
+            oprot.writeFieldBegin("grp_handle", TType.I32, 3)
             oprot.writeI32(self.grp_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8008,21 +9763,40 @@ class bm_mt_act_prof_get_group_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_get_group_args)
 bm_mt_act_prof_get_group_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'act_prof_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'grp_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "act_prof_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "grp_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -8034,13 +9808,20 @@ class bm_mt_act_prof_get_group_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8067,15 +9848,17 @@ class bm_mt_act_prof_get_group_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_act_prof_get_group_result')
+        oprot.writeStructBegin("bm_mt_act_prof_get_group_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            oprot.writeFieldBegin("success", TType.STRUCT, 0)
             self.success.write(oprot)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8085,19 +9868,32 @@ class bm_mt_act_prof_get_group_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_act_prof_get_group_result)
 bm_mt_act_prof_get_group_result.thrift_spec = (
-    (0, TType.STRUCT, 'success', [BmMtActProfGroup, None], None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.STRUCT,
+        "success",
+        [BmMtActProfGroup, None],
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -8112,8 +9908,14 @@ class bm_mt_indirect_add_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, match_key=None, mbr_handle=None, options=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        match_key=None,
+        mbr_handle=None,
+        options=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.match_key = match_key
@@ -8121,7 +9923,11 @@ class bm_mt_indirect_add_entry_args(object):
         self.options = options
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8136,7 +9942,11 @@ class bm_mt_indirect_add_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -8168,30 +9978,36 @@ class bm_mt_indirect_add_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_add_entry_args')
+        oprot.writeStructBegin("bm_mt_indirect_add_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.match_key is not None:
-            oprot.writeFieldBegin('match_key', TType.LIST, 3)
+            oprot.writeFieldBegin("match_key", TType.LIST, 3)
             oprot.writeListBegin(TType.STRUCT, len(self.match_key))
             for iter99 in self.match_key:
                 iter99.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.mbr_handle is not None:
-            oprot.writeFieldBegin('mbr_handle', TType.I32, 4)
+            oprot.writeFieldBegin("mbr_handle", TType.I32, 4)
             oprot.writeI32(self.mbr_handle)
             oprot.writeFieldEnd()
         if self.options is not None:
-            oprot.writeFieldBegin('options', TType.STRUCT, 5)
+            oprot.writeFieldBegin("options", TType.STRUCT, 5)
             self.options.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8201,23 +10017,54 @@ class bm_mt_indirect_add_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_add_entry_args)
 bm_mt_indirect_add_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.LIST, 'match_key', (TType.STRUCT, [BmMatchParam, None], False), None, ),  # 3
-    (4, TType.I32, 'mbr_handle', None, None, ),  # 4
-    (5, TType.STRUCT, 'options', [BmAddEntryOptions, None], None, ),  # 5
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.LIST,
+        "match_key",
+        (TType.STRUCT, [BmMatchParam, None], False),
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I32,
+        "mbr_handle",
+        None,
+        None,
+    ),  # 4
+    (
+        5,
+        TType.STRUCT,
+        "options",
+        [BmAddEntryOptions, None],
+        None,
+    ),  # 5
 )
 
 
@@ -8229,13 +10076,20 @@ class bm_mt_indirect_add_entry_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8261,15 +10115,17 @@ class bm_mt_indirect_add_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_add_entry_result')
+        oprot.writeStructBegin("bm_mt_indirect_add_entry_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.I32, 0)
+            oprot.writeFieldBegin("success", TType.I32, 0)
             oprot.writeI32(self.success)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8279,19 +10135,32 @@ class bm_mt_indirect_add_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_add_entry_result)
 bm_mt_indirect_add_entry_result.thrift_spec = (
-    (0, TType.I32, 'success', None, None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.I32,
+        "success",
+        None,
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -8305,15 +10174,24 @@ class bm_mt_indirect_modify_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None, mbr_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+        mbr_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
         self.mbr_handle = mbr_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8328,7 +10206,11 @@ class bm_mt_indirect_modify_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -8348,23 +10230,29 @@ class bm_mt_indirect_modify_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_modify_entry_args')
+        oprot.writeStructBegin("bm_mt_indirect_modify_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         if self.mbr_handle is not None:
-            oprot.writeFieldBegin('mbr_handle', TType.I32, 4)
+            oprot.writeFieldBegin("mbr_handle", TType.I32, 4)
             oprot.writeI32(self.mbr_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8374,22 +10262,47 @@ class bm_mt_indirect_modify_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_modify_entry_args)
 bm_mt_indirect_modify_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
-    (4, TType.I32, 'mbr_handle', None, None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I32,
+        "mbr_handle",
+        None,
+        None,
+    ),  # 4
 )
 
 
@@ -8400,12 +10313,18 @@ class bm_mt_indirect_modify_entry_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8426,11 +10345,13 @@ class bm_mt_indirect_modify_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_modify_entry_result')
+        oprot.writeStructBegin("bm_mt_indirect_modify_entry_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8440,19 +10361,26 @@ class bm_mt_indirect_modify_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_modify_entry_result)
 bm_mt_indirect_modify_entry_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -8465,14 +10393,22 @@ class bm_mt_indirect_delete_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8487,7 +10423,11 @@ class bm_mt_indirect_delete_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -8502,19 +10442,25 @@ class bm_mt_indirect_delete_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_delete_entry_args')
+        oprot.writeStructBegin("bm_mt_indirect_delete_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8524,21 +10470,40 @@ class bm_mt_indirect_delete_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_delete_entry_args)
 bm_mt_indirect_delete_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -8549,12 +10514,18 @@ class bm_mt_indirect_delete_entry_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8575,11 +10546,13 @@ class bm_mt_indirect_delete_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_delete_entry_result')
+        oprot.writeStructBegin("bm_mt_indirect_delete_entry_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8589,19 +10562,26 @@ class bm_mt_indirect_delete_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_delete_entry_result)
 bm_mt_indirect_delete_entry_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -8615,15 +10595,24 @@ class bm_mt_indirect_set_entry_ttl_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None, timeout_ms=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+        timeout_ms=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
         self.timeout_ms = timeout_ms
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8638,7 +10627,11 @@ class bm_mt_indirect_set_entry_ttl_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -8658,23 +10651,29 @@ class bm_mt_indirect_set_entry_ttl_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_set_entry_ttl_args')
+        oprot.writeStructBegin("bm_mt_indirect_set_entry_ttl_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         if self.timeout_ms is not None:
-            oprot.writeFieldBegin('timeout_ms', TType.I32, 4)
+            oprot.writeFieldBegin("timeout_ms", TType.I32, 4)
             oprot.writeI32(self.timeout_ms)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8684,22 +10683,47 @@ class bm_mt_indirect_set_entry_ttl_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_set_entry_ttl_args)
 bm_mt_indirect_set_entry_ttl_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
-    (4, TType.I32, 'timeout_ms', None, None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I32,
+        "timeout_ms",
+        None,
+        None,
+    ),  # 4
 )
 
 
@@ -8710,12 +10734,18 @@ class bm_mt_indirect_set_entry_ttl_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8736,11 +10766,13 @@ class bm_mt_indirect_set_entry_ttl_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_set_entry_ttl_result')
+        oprot.writeStructBegin("bm_mt_indirect_set_entry_ttl_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8750,19 +10782,26 @@ class bm_mt_indirect_set_entry_ttl_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_set_entry_ttl_result)
 bm_mt_indirect_set_entry_ttl_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -8775,14 +10814,22 @@ class bm_mt_indirect_set_default_member_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, mbr_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        mbr_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.mbr_handle = mbr_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8797,7 +10844,11 @@ class bm_mt_indirect_set_default_member_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -8812,19 +10863,25 @@ class bm_mt_indirect_set_default_member_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_set_default_member_args')
+        oprot.writeStructBegin("bm_mt_indirect_set_default_member_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.mbr_handle is not None:
-            oprot.writeFieldBegin('mbr_handle', TType.I32, 3)
+            oprot.writeFieldBegin("mbr_handle", TType.I32, 3)
             oprot.writeI32(self.mbr_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8834,21 +10891,40 @@ class bm_mt_indirect_set_default_member_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_set_default_member_args)
 bm_mt_indirect_set_default_member_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'mbr_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "mbr_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -8859,12 +10935,18 @@ class bm_mt_indirect_set_default_member_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8885,11 +10967,13 @@ class bm_mt_indirect_set_default_member_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_set_default_member_result')
+        oprot.writeStructBegin("bm_mt_indirect_set_default_member_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -8899,19 +10983,26 @@ class bm_mt_indirect_set_default_member_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_set_default_member_result)
 bm_mt_indirect_set_default_member_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -8923,13 +11014,20 @@ class bm_mt_indirect_reset_default_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -8944,7 +11042,11 @@ class bm_mt_indirect_reset_default_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -8954,16 +11056,22 @@ class bm_mt_indirect_reset_default_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_reset_default_entry_args')
+        oprot.writeStructBegin("bm_mt_indirect_reset_default_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -8972,20 +11080,33 @@ class bm_mt_indirect_reset_default_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_reset_default_entry_args)
 bm_mt_indirect_reset_default_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -8996,12 +11117,18 @@ class bm_mt_indirect_reset_default_entry_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9022,11 +11149,13 @@ class bm_mt_indirect_reset_default_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_reset_default_entry_result')
+        oprot.writeStructBegin("bm_mt_indirect_reset_default_entry_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9036,19 +11165,26 @@ class bm_mt_indirect_reset_default_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_reset_default_entry_result)
 bm_mt_indirect_reset_default_entry_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -9063,8 +11199,14 @@ class bm_mt_indirect_ws_add_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, match_key=None, grp_handle=None, options=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        match_key=None,
+        grp_handle=None,
+        options=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.match_key = match_key
@@ -9072,7 +11214,11 @@ class bm_mt_indirect_ws_add_entry_args(object):
         self.options = options
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9087,7 +11233,11 @@ class bm_mt_indirect_ws_add_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -9119,30 +11269,36 @@ class bm_mt_indirect_ws_add_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_ws_add_entry_args')
+        oprot.writeStructBegin("bm_mt_indirect_ws_add_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.match_key is not None:
-            oprot.writeFieldBegin('match_key', TType.LIST, 3)
+            oprot.writeFieldBegin("match_key", TType.LIST, 3)
             oprot.writeListBegin(TType.STRUCT, len(self.match_key))
             for iter106 in self.match_key:
                 iter106.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.grp_handle is not None:
-            oprot.writeFieldBegin('grp_handle', TType.I32, 4)
+            oprot.writeFieldBegin("grp_handle", TType.I32, 4)
             oprot.writeI32(self.grp_handle)
             oprot.writeFieldEnd()
         if self.options is not None:
-            oprot.writeFieldBegin('options', TType.STRUCT, 5)
+            oprot.writeFieldBegin("options", TType.STRUCT, 5)
             self.options.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9152,23 +11308,54 @@ class bm_mt_indirect_ws_add_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_ws_add_entry_args)
 bm_mt_indirect_ws_add_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.LIST, 'match_key', (TType.STRUCT, [BmMatchParam, None], False), None, ),  # 3
-    (4, TType.I32, 'grp_handle', None, None, ),  # 4
-    (5, TType.STRUCT, 'options', [BmAddEntryOptions, None], None, ),  # 5
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.LIST,
+        "match_key",
+        (TType.STRUCT, [BmMatchParam, None], False),
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I32,
+        "grp_handle",
+        None,
+        None,
+    ),  # 4
+    (
+        5,
+        TType.STRUCT,
+        "options",
+        [BmAddEntryOptions, None],
+        None,
+    ),  # 5
 )
 
 
@@ -9180,13 +11367,20 @@ class bm_mt_indirect_ws_add_entry_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9212,15 +11406,17 @@ class bm_mt_indirect_ws_add_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_ws_add_entry_result')
+        oprot.writeStructBegin("bm_mt_indirect_ws_add_entry_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.I32, 0)
+            oprot.writeFieldBegin("success", TType.I32, 0)
             oprot.writeI32(self.success)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9230,19 +11426,32 @@ class bm_mt_indirect_ws_add_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_ws_add_entry_result)
 bm_mt_indirect_ws_add_entry_result.thrift_spec = (
-    (0, TType.I32, 'success', None, None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.I32,
+        "success",
+        None,
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -9256,15 +11465,24 @@ class bm_mt_indirect_ws_modify_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None, grp_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+        grp_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
         self.grp_handle = grp_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9279,7 +11497,11 @@ class bm_mt_indirect_ws_modify_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -9299,23 +11521,29 @@ class bm_mt_indirect_ws_modify_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_ws_modify_entry_args')
+        oprot.writeStructBegin("bm_mt_indirect_ws_modify_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         if self.grp_handle is not None:
-            oprot.writeFieldBegin('grp_handle', TType.I32, 4)
+            oprot.writeFieldBegin("grp_handle", TType.I32, 4)
             oprot.writeI32(self.grp_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9325,22 +11553,47 @@ class bm_mt_indirect_ws_modify_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_ws_modify_entry_args)
 bm_mt_indirect_ws_modify_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
-    (4, TType.I32, 'grp_handle', None, None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I32,
+        "grp_handle",
+        None,
+        None,
+    ),  # 4
 )
 
 
@@ -9351,12 +11604,18 @@ class bm_mt_indirect_ws_modify_entry_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9377,11 +11636,13 @@ class bm_mt_indirect_ws_modify_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_ws_modify_entry_result')
+        oprot.writeStructBegin("bm_mt_indirect_ws_modify_entry_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9391,19 +11652,26 @@ class bm_mt_indirect_ws_modify_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_ws_modify_entry_result)
 bm_mt_indirect_ws_modify_entry_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -9416,14 +11684,22 @@ class bm_mt_indirect_ws_set_default_group_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, grp_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        grp_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.grp_handle = grp_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9438,7 +11714,11 @@ class bm_mt_indirect_ws_set_default_group_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -9453,19 +11733,25 @@ class bm_mt_indirect_ws_set_default_group_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_ws_set_default_group_args')
+        oprot.writeStructBegin("bm_mt_indirect_ws_set_default_group_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.grp_handle is not None:
-            oprot.writeFieldBegin('grp_handle', TType.I32, 3)
+            oprot.writeFieldBegin("grp_handle", TType.I32, 3)
             oprot.writeI32(self.grp_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9475,21 +11761,40 @@ class bm_mt_indirect_ws_set_default_group_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_ws_set_default_group_args)
 bm_mt_indirect_ws_set_default_group_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'grp_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "grp_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -9500,12 +11805,18 @@ class bm_mt_indirect_ws_set_default_group_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9526,11 +11837,13 @@ class bm_mt_indirect_ws_set_default_group_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_indirect_ws_set_default_group_result')
+        oprot.writeStructBegin("bm_mt_indirect_ws_set_default_group_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9540,19 +11853,26 @@ class bm_mt_indirect_ws_set_default_group_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_indirect_ws_set_default_group_result)
 bm_mt_indirect_ws_set_default_group_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -9565,14 +11885,22 @@ class bm_mt_read_counter_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9587,7 +11915,11 @@ class bm_mt_read_counter_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -9602,19 +11934,25 @@ class bm_mt_read_counter_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_read_counter_args')
+        oprot.writeStructBegin("bm_mt_read_counter_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9624,21 +11962,40 @@ class bm_mt_read_counter_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_read_counter_args)
 bm_mt_read_counter_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -9650,13 +12007,20 @@ class bm_mt_read_counter_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9683,15 +12047,17 @@ class bm_mt_read_counter_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_read_counter_result')
+        oprot.writeStructBegin("bm_mt_read_counter_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            oprot.writeFieldBegin("success", TType.STRUCT, 0)
             self.success.write(oprot)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9701,19 +12067,32 @@ class bm_mt_read_counter_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_read_counter_result)
 bm_mt_read_counter_result.thrift_spec = (
-    (0, TType.STRUCT, 'success', [BmCounterValue, None], None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.STRUCT,
+        "success",
+        [BmCounterValue, None],
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -9725,13 +12104,20 @@ class bm_mt_reset_counters_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9746,7 +12132,11 @@ class bm_mt_reset_counters_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -9756,16 +12146,22 @@ class bm_mt_reset_counters_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_reset_counters_args')
+        oprot.writeStructBegin("bm_mt_reset_counters_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -9774,20 +12170,33 @@ class bm_mt_reset_counters_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_reset_counters_args)
 bm_mt_reset_counters_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -9798,12 +12207,18 @@ class bm_mt_reset_counters_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9824,11 +12239,13 @@ class bm_mt_reset_counters_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_reset_counters_result')
+        oprot.writeStructBegin("bm_mt_reset_counters_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9838,19 +12255,26 @@ class bm_mt_reset_counters_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_reset_counters_result)
 bm_mt_reset_counters_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -9864,15 +12288,24 @@ class bm_mt_write_counter_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None, value=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+        value=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
         self.value = value
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9887,7 +12320,11 @@ class bm_mt_write_counter_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -9908,23 +12345,29 @@ class bm_mt_write_counter_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_write_counter_args')
+        oprot.writeStructBegin("bm_mt_write_counter_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         if self.value is not None:
-            oprot.writeFieldBegin('value', TType.STRUCT, 4)
+            oprot.writeFieldBegin("value", TType.STRUCT, 4)
             self.value.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -9934,22 +12377,47 @@ class bm_mt_write_counter_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_write_counter_args)
 bm_mt_write_counter_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
-    (4, TType.STRUCT, 'value', [BmCounterValue, None], None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRUCT,
+        "value",
+        [BmCounterValue, None],
+        None,
+    ),  # 4
 )
 
 
@@ -9960,12 +12428,18 @@ class bm_mt_write_counter_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -9986,11 +12460,13 @@ class bm_mt_write_counter_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_write_counter_result')
+        oprot.writeStructBegin("bm_mt_write_counter_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -10000,19 +12476,26 @@ class bm_mt_write_counter_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_write_counter_result)
 bm_mt_write_counter_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -10026,15 +12509,24 @@ class bm_mt_set_meter_rates_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None, rates=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+        rates=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
         self.rates = rates
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10049,7 +12541,11 @@ class bm_mt_set_meter_rates_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -10075,23 +12571,29 @@ class bm_mt_set_meter_rates_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_set_meter_rates_args')
+        oprot.writeStructBegin("bm_mt_set_meter_rates_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         if self.rates is not None:
-            oprot.writeFieldBegin('rates', TType.LIST, 4)
+            oprot.writeFieldBegin("rates", TType.LIST, 4)
             oprot.writeListBegin(TType.STRUCT, len(self.rates))
             for iter113 in self.rates:
                 iter113.write(oprot)
@@ -10104,22 +12606,47 @@ class bm_mt_set_meter_rates_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_set_meter_rates_args)
 bm_mt_set_meter_rates_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
-    (4, TType.LIST, 'rates', (TType.STRUCT, [BmMeterRateConfig, None], False), None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.LIST,
+        "rates",
+        (TType.STRUCT, [BmMeterRateConfig, None], False),
+        None,
+    ),  # 4
 )
 
 
@@ -10130,12 +12657,18 @@ class bm_mt_set_meter_rates_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10156,11 +12689,13 @@ class bm_mt_set_meter_rates_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_set_meter_rates_result')
+        oprot.writeStructBegin("bm_mt_set_meter_rates_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -10170,19 +12705,26 @@ class bm_mt_set_meter_rates_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_set_meter_rates_result)
 bm_mt_set_meter_rates_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -10195,14 +12737,22 @@ class bm_mt_get_meter_rates_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10217,7 +12767,11 @@ class bm_mt_get_meter_rates_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -10232,19 +12786,25 @@ class bm_mt_get_meter_rates_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_meter_rates_args')
+        oprot.writeStructBegin("bm_mt_get_meter_rates_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -10254,21 +12814,40 @@ class bm_mt_get_meter_rates_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_meter_rates_args)
 bm_mt_get_meter_rates_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -10280,13 +12859,20 @@ class bm_mt_get_meter_rates_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10318,18 +12904,20 @@ class bm_mt_get_meter_rates_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_meter_rates_result')
+        oprot.writeStructBegin("bm_mt_get_meter_rates_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.LIST, 0)
+            oprot.writeFieldBegin("success", TType.LIST, 0)
             oprot.writeListBegin(TType.STRUCT, len(self.success))
             for iter120 in self.success:
                 iter120.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -10339,19 +12927,32 @@ class bm_mt_get_meter_rates_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_meter_rates_result)
 bm_mt_get_meter_rates_result.thrift_spec = (
-    (0, TType.LIST, 'success', (TType.STRUCT, [BmMeterRateConfig, None], False), None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.LIST,
+        "success",
+        (TType.STRUCT, [BmMeterRateConfig, None], False),
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -10363,13 +12964,20 @@ class bm_mt_get_entries_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10384,7 +12992,11 @@ class bm_mt_get_entries_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -10394,16 +13006,22 @@ class bm_mt_get_entries_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_entries_args')
+        oprot.writeStructBegin("bm_mt_get_entries_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -10412,20 +13030,33 @@ class bm_mt_get_entries_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_entries_args)
 bm_mt_get_entries_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -10437,13 +13068,20 @@ class bm_mt_get_entries_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10475,18 +13113,20 @@ class bm_mt_get_entries_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_entries_result')
+        oprot.writeStructBegin("bm_mt_get_entries_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.LIST, 0)
+            oprot.writeFieldBegin("success", TType.LIST, 0)
             oprot.writeListBegin(TType.STRUCT, len(self.success))
             for iter127 in self.success:
                 iter127.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -10496,19 +13136,32 @@ class bm_mt_get_entries_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_entries_result)
 bm_mt_get_entries_result.thrift_spec = (
-    (0, TType.LIST, 'success', (TType.STRUCT, [BmMtEntry, None], False), None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.LIST,
+        "success",
+        (TType.STRUCT, [BmMtEntry, None], False),
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -10521,14 +13174,22 @@ class bm_mt_get_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, entry_handle=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        entry_handle=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.entry_handle = entry_handle
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10543,7 +13204,11 @@ class bm_mt_get_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -10558,19 +13223,25 @@ class bm_mt_get_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_entry_args')
+        oprot.writeStructBegin("bm_mt_get_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.entry_handle is not None:
-            oprot.writeFieldBegin('entry_handle', TType.I32, 3)
+            oprot.writeFieldBegin("entry_handle", TType.I32, 3)
             oprot.writeI32(self.entry_handle)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -10580,21 +13251,40 @@ class bm_mt_get_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_entry_args)
 bm_mt_get_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'entry_handle', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "entry_handle",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -10606,13 +13296,20 @@ class bm_mt_get_entry_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10639,15 +13336,17 @@ class bm_mt_get_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_entry_result')
+        oprot.writeStructBegin("bm_mt_get_entry_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            oprot.writeFieldBegin("success", TType.STRUCT, 0)
             self.success.write(oprot)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -10657,19 +13356,32 @@ class bm_mt_get_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_entry_result)
 bm_mt_get_entry_result.thrift_spec = (
-    (0, TType.STRUCT, 'success', [BmMtEntry, None], None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.STRUCT,
+        "success",
+        [BmMtEntry, None],
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -10681,13 +13393,20 @@ class bm_mt_get_default_entry_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10702,7 +13421,11 @@ class bm_mt_get_default_entry_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -10712,16 +13435,22 @@ class bm_mt_get_default_entry_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_default_entry_args')
+        oprot.writeStructBegin("bm_mt_get_default_entry_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -10730,20 +13459,33 @@ class bm_mt_get_default_entry_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_default_entry_args)
 bm_mt_get_default_entry_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -10755,13 +13497,20 @@ class bm_mt_get_default_entry_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10788,15 +13537,17 @@ class bm_mt_get_default_entry_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_default_entry_result')
+        oprot.writeStructBegin("bm_mt_get_default_entry_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            oprot.writeFieldBegin("success", TType.STRUCT, 0)
             self.success.write(oprot)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -10806,19 +13557,32 @@ class bm_mt_get_default_entry_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_default_entry_result)
 bm_mt_get_default_entry_result.thrift_spec = (
-    (0, TType.STRUCT, 'success', [BmActionEntry, None], None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.STRUCT,
+        "success",
+        [BmActionEntry, None],
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -10832,15 +13596,24 @@ class bm_mt_get_entry_from_key_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, table_name=None, match_key=None, options=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        table_name=None,
+        match_key=None,
+        options=None,
+    ):
         self.cxt_id = cxt_id
         self.table_name = table_name
         self.match_key = match_key
         self.options = options
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10855,7 +13628,11 @@ class bm_mt_get_entry_from_key_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.table_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.table_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -10882,26 +13659,32 @@ class bm_mt_get_entry_from_key_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_entry_from_key_args')
+        oprot.writeStructBegin("bm_mt_get_entry_from_key_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.table_name is not None:
-            oprot.writeFieldBegin('table_name', TType.STRING, 2)
-            oprot.writeString(self.table_name.encode('utf-8') if sys.version_info[0] == 2 else self.table_name)
+            oprot.writeFieldBegin("table_name", TType.STRING, 2)
+            oprot.writeString(
+                self.table_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.table_name
+            )
             oprot.writeFieldEnd()
         if self.match_key is not None:
-            oprot.writeFieldBegin('match_key', TType.LIST, 3)
+            oprot.writeFieldBegin("match_key", TType.LIST, 3)
             oprot.writeListBegin(TType.STRUCT, len(self.match_key))
             for iter134 in self.match_key:
                 iter134.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.options is not None:
-            oprot.writeFieldBegin('options', TType.STRUCT, 4)
+            oprot.writeFieldBegin("options", TType.STRUCT, 4)
             self.options.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -10911,22 +13694,47 @@ class bm_mt_get_entry_from_key_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_entry_from_key_args)
 bm_mt_get_entry_from_key_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'table_name', 'UTF8', None, ),  # 2
-    (3, TType.LIST, 'match_key', (TType.STRUCT, [BmMatchParam, None], False), None, ),  # 3
-    (4, TType.STRUCT, 'options', [BmAddEntryOptions, None], None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "table_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.LIST,
+        "match_key",
+        (TType.STRUCT, [BmMatchParam, None], False),
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRUCT,
+        "options",
+        [BmAddEntryOptions, None],
+        None,
+    ),  # 4
 )
 
 
@@ -10938,13 +13746,20 @@ class bm_mt_get_entry_from_key_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -10971,15 +13786,17 @@ class bm_mt_get_entry_from_key_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mt_get_entry_from_key_result')
+        oprot.writeStructBegin("bm_mt_get_entry_from_key_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            oprot.writeFieldBegin("success", TType.STRUCT, 0)
             self.success.write(oprot)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -10989,19 +13806,32 @@ class bm_mt_get_entry_from_key_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mt_get_entry_from_key_result)
 bm_mt_get_entry_from_key_result.thrift_spec = (
-    (0, TType.STRUCT, 'success', [BmMtEntry, None], None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidTableOperation, None], None, ),  # 1
+    (
+        0,
+        TType.STRUCT,
+        "success",
+        [BmMtEntry, None],
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidTableOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -11014,14 +13844,22 @@ class bm_counter_read_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, counter_name=None, index=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        counter_name=None,
+        index=None,
+    ):
         self.cxt_id = cxt_id
         self.counter_name = counter_name
         self.index = index
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11036,7 +13874,11 @@ class bm_counter_read_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.counter_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.counter_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -11051,19 +13893,25 @@ class bm_counter_read_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_counter_read_args')
+        oprot.writeStructBegin("bm_counter_read_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.counter_name is not None:
-            oprot.writeFieldBegin('counter_name', TType.STRING, 2)
-            oprot.writeString(self.counter_name.encode('utf-8') if sys.version_info[0] == 2 else self.counter_name)
+            oprot.writeFieldBegin("counter_name", TType.STRING, 2)
+            oprot.writeString(
+                self.counter_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.counter_name
+            )
             oprot.writeFieldEnd()
         if self.index is not None:
-            oprot.writeFieldBegin('index', TType.I32, 3)
+            oprot.writeFieldBegin("index", TType.I32, 3)
             oprot.writeI32(self.index)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -11073,21 +13921,40 @@ class bm_counter_read_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_counter_read_args)
 bm_counter_read_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'counter_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'index', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "counter_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "index",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -11099,13 +13966,20 @@ class bm_counter_read_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11132,15 +14006,17 @@ class bm_counter_read_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_counter_read_result')
+        oprot.writeStructBegin("bm_counter_read_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            oprot.writeFieldBegin("success", TType.STRUCT, 0)
             self.success.write(oprot)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -11150,19 +14026,32 @@ class bm_counter_read_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_counter_read_result)
 bm_counter_read_result.thrift_spec = (
-    (0, TType.STRUCT, 'success', [BmCounterValue, None], None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidCounterOperation, None], None, ),  # 1
+    (
+        0,
+        TType.STRUCT,
+        "success",
+        [BmCounterValue, None],
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidCounterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -11174,13 +14063,20 @@ class bm_counter_reset_all_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, counter_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        counter_name=None,
+    ):
         self.cxt_id = cxt_id
         self.counter_name = counter_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11195,7 +14091,11 @@ class bm_counter_reset_all_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.counter_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.counter_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -11205,16 +14105,22 @@ class bm_counter_reset_all_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_counter_reset_all_args')
+        oprot.writeStructBegin("bm_counter_reset_all_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.counter_name is not None:
-            oprot.writeFieldBegin('counter_name', TType.STRING, 2)
-            oprot.writeString(self.counter_name.encode('utf-8') if sys.version_info[0] == 2 else self.counter_name)
+            oprot.writeFieldBegin("counter_name", TType.STRING, 2)
+            oprot.writeString(
+                self.counter_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.counter_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -11223,20 +14129,33 @@ class bm_counter_reset_all_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_counter_reset_all_args)
 bm_counter_reset_all_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'counter_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "counter_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -11247,12 +14166,18 @@ class bm_counter_reset_all_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11273,11 +14198,13 @@ class bm_counter_reset_all_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_counter_reset_all_result')
+        oprot.writeStructBegin("bm_counter_reset_all_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -11287,19 +14214,26 @@ class bm_counter_reset_all_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_counter_reset_all_result)
 bm_counter_reset_all_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidCounterOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidCounterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -11313,15 +14247,24 @@ class bm_counter_write_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, counter_name=None, index=None, value=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        counter_name=None,
+        index=None,
+        value=None,
+    ):
         self.cxt_id = cxt_id
         self.counter_name = counter_name
         self.index = index
         self.value = value
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11336,7 +14279,11 @@ class bm_counter_write_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.counter_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.counter_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -11357,23 +14304,29 @@ class bm_counter_write_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_counter_write_args')
+        oprot.writeStructBegin("bm_counter_write_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.counter_name is not None:
-            oprot.writeFieldBegin('counter_name', TType.STRING, 2)
-            oprot.writeString(self.counter_name.encode('utf-8') if sys.version_info[0] == 2 else self.counter_name)
+            oprot.writeFieldBegin("counter_name", TType.STRING, 2)
+            oprot.writeString(
+                self.counter_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.counter_name
+            )
             oprot.writeFieldEnd()
         if self.index is not None:
-            oprot.writeFieldBegin('index', TType.I32, 3)
+            oprot.writeFieldBegin("index", TType.I32, 3)
             oprot.writeI32(self.index)
             oprot.writeFieldEnd()
         if self.value is not None:
-            oprot.writeFieldBegin('value', TType.STRUCT, 4)
+            oprot.writeFieldBegin("value", TType.STRUCT, 4)
             self.value.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -11383,22 +14336,47 @@ class bm_counter_write_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_counter_write_args)
 bm_counter_write_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'counter_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'index', None, None, ),  # 3
-    (4, TType.STRUCT, 'value', [BmCounterValue, None], None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "counter_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "index",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.STRUCT,
+        "value",
+        [BmCounterValue, None],
+        None,
+    ),  # 4
 )
 
 
@@ -11409,12 +14387,18 @@ class bm_counter_write_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11435,11 +14419,13 @@ class bm_counter_write_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_counter_write_result')
+        oprot.writeStructBegin("bm_counter_write_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -11449,19 +14435,26 @@ class bm_counter_write_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_counter_write_result)
 bm_counter_write_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidCounterOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidCounterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -11475,15 +14468,24 @@ class bm_learning_ack_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, list_id=None, buffer_id=None, sample_ids=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        list_id=None,
+        buffer_id=None,
+        sample_ids=None,
+    ):
         self.cxt_id = cxt_id
         self.list_id = list_id
         self.buffer_id = buffer_id
         self.sample_ids = sample_ids
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11523,23 +14525,25 @@ class bm_learning_ack_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_learning_ack_args')
+        oprot.writeStructBegin("bm_learning_ack_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.list_id is not None:
-            oprot.writeFieldBegin('list_id', TType.I32, 2)
+            oprot.writeFieldBegin("list_id", TType.I32, 2)
             oprot.writeI32(self.list_id)
             oprot.writeFieldEnd()
         if self.buffer_id is not None:
-            oprot.writeFieldBegin('buffer_id', TType.I64, 3)
+            oprot.writeFieldBegin("buffer_id", TType.I64, 3)
             oprot.writeI64(self.buffer_id)
             oprot.writeFieldEnd()
         if self.sample_ids is not None:
-            oprot.writeFieldBegin('sample_ids', TType.LIST, 4)
+            oprot.writeFieldBegin("sample_ids", TType.LIST, 4)
             oprot.writeListBegin(TType.I32, len(self.sample_ids))
             for iter141 in self.sample_ids:
                 oprot.writeI32(iter141)
@@ -11552,22 +14556,47 @@ class bm_learning_ack_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_learning_ack_args)
 bm_learning_ack_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'list_id', None, None, ),  # 2
-    (3, TType.I64, 'buffer_id', None, None, ),  # 3
-    (4, TType.LIST, 'sample_ids', (TType.I32, None, False), None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "list_id",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I64,
+        "buffer_id",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.LIST,
+        "sample_ids",
+        (TType.I32, None, False),
+        None,
+    ),  # 4
 )
 
 
@@ -11578,12 +14607,18 @@ class bm_learning_ack_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11604,11 +14639,13 @@ class bm_learning_ack_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_learning_ack_result')
+        oprot.writeStructBegin("bm_learning_ack_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -11618,19 +14655,26 @@ class bm_learning_ack_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_learning_ack_result)
 bm_learning_ack_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidLearnOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidLearnOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -11643,14 +14687,22 @@ class bm_learning_ack_buffer_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, list_id=None, buffer_id=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        list_id=None,
+        buffer_id=None,
+    ):
         self.cxt_id = cxt_id
         self.list_id = list_id
         self.buffer_id = buffer_id
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11680,19 +14732,21 @@ class bm_learning_ack_buffer_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_learning_ack_buffer_args')
+        oprot.writeStructBegin("bm_learning_ack_buffer_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.list_id is not None:
-            oprot.writeFieldBegin('list_id', TType.I32, 2)
+            oprot.writeFieldBegin("list_id", TType.I32, 2)
             oprot.writeI32(self.list_id)
             oprot.writeFieldEnd()
         if self.buffer_id is not None:
-            oprot.writeFieldBegin('buffer_id', TType.I64, 3)
+            oprot.writeFieldBegin("buffer_id", TType.I64, 3)
             oprot.writeI64(self.buffer_id)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -11702,21 +14756,40 @@ class bm_learning_ack_buffer_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_learning_ack_buffer_args)
 bm_learning_ack_buffer_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'list_id', None, None, ),  # 2
-    (3, TType.I64, 'buffer_id', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "list_id",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I64,
+        "buffer_id",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -11727,12 +14800,18 @@ class bm_learning_ack_buffer_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11753,11 +14832,13 @@ class bm_learning_ack_buffer_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_learning_ack_buffer_result')
+        oprot.writeStructBegin("bm_learning_ack_buffer_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -11767,19 +14848,26 @@ class bm_learning_ack_buffer_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_learning_ack_buffer_result)
 bm_learning_ack_buffer_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidLearnOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidLearnOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -11792,14 +14880,22 @@ class bm_learning_set_timeout_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, list_id=None, timeout_ms=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        list_id=None,
+        timeout_ms=None,
+    ):
         self.cxt_id = cxt_id
         self.list_id = list_id
         self.timeout_ms = timeout_ms
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11829,19 +14925,21 @@ class bm_learning_set_timeout_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_learning_set_timeout_args')
+        oprot.writeStructBegin("bm_learning_set_timeout_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.list_id is not None:
-            oprot.writeFieldBegin('list_id', TType.I32, 2)
+            oprot.writeFieldBegin("list_id", TType.I32, 2)
             oprot.writeI32(self.list_id)
             oprot.writeFieldEnd()
         if self.timeout_ms is not None:
-            oprot.writeFieldBegin('timeout_ms', TType.I32, 3)
+            oprot.writeFieldBegin("timeout_ms", TType.I32, 3)
             oprot.writeI32(self.timeout_ms)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -11851,21 +14949,40 @@ class bm_learning_set_timeout_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_learning_set_timeout_args)
 bm_learning_set_timeout_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'list_id', None, None, ),  # 2
-    (3, TType.I32, 'timeout_ms', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "list_id",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "timeout_ms",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -11876,12 +14993,18 @@ class bm_learning_set_timeout_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11902,11 +15025,13 @@ class bm_learning_set_timeout_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_learning_set_timeout_result')
+        oprot.writeStructBegin("bm_learning_set_timeout_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -11916,19 +15041,26 @@ class bm_learning_set_timeout_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_learning_set_timeout_result)
 bm_learning_set_timeout_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidLearnOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidLearnOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -11941,14 +15073,22 @@ class bm_learning_set_buffer_size_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, list_id=None, nb_samples=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        list_id=None,
+        nb_samples=None,
+    ):
         self.cxt_id = cxt_id
         self.list_id = list_id
         self.nb_samples = nb_samples
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -11978,19 +15118,21 @@ class bm_learning_set_buffer_size_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_learning_set_buffer_size_args')
+        oprot.writeStructBegin("bm_learning_set_buffer_size_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.list_id is not None:
-            oprot.writeFieldBegin('list_id', TType.I32, 2)
+            oprot.writeFieldBegin("list_id", TType.I32, 2)
             oprot.writeI32(self.list_id)
             oprot.writeFieldEnd()
         if self.nb_samples is not None:
-            oprot.writeFieldBegin('nb_samples', TType.I32, 3)
+            oprot.writeFieldBegin("nb_samples", TType.I32, 3)
             oprot.writeI32(self.nb_samples)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -12000,21 +15142,40 @@ class bm_learning_set_buffer_size_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_learning_set_buffer_size_args)
 bm_learning_set_buffer_size_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'list_id', None, None, ),  # 2
-    (3, TType.I32, 'nb_samples', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "list_id",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "nb_samples",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -12025,12 +15186,18 @@ class bm_learning_set_buffer_size_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12051,11 +15218,13 @@ class bm_learning_set_buffer_size_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_learning_set_buffer_size_result')
+        oprot.writeStructBegin("bm_learning_set_buffer_size_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -12065,19 +15234,26 @@ class bm_learning_set_buffer_size_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_learning_set_buffer_size_result)
 bm_learning_set_buffer_size_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidLearnOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidLearnOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -12088,12 +15264,18 @@ class bm_load_new_config_args(object):
 
     """
 
-
-    def __init__(self, config_str=None,):
+    def __init__(
+        self,
+        config_str=None,
+    ):
         self.config_str = config_str
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12103,7 +15285,11 @@ class bm_load_new_config_args(object):
                 break
             if fid == 1:
                 if ftype == TType.STRING:
-                    self.config_str = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.config_str = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -12113,12 +15299,18 @@ class bm_load_new_config_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_load_new_config_args')
+        oprot.writeStructBegin("bm_load_new_config_args")
         if self.config_str is not None:
-            oprot.writeFieldBegin('config_str', TType.STRING, 1)
-            oprot.writeString(self.config_str.encode('utf-8') if sys.version_info[0] == 2 else self.config_str)
+            oprot.writeFieldBegin("config_str", TType.STRING, 1)
+            oprot.writeString(
+                self.config_str.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.config_str
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -12127,19 +15319,26 @@ class bm_load_new_config_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_load_new_config_args)
 bm_load_new_config_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRING, 'config_str', 'UTF8', None, ),  # 1
+    (
+        1,
+        TType.STRING,
+        "config_str",
+        "UTF8",
+        None,
+    ),  # 1
 )
 
 
@@ -12150,12 +15349,18 @@ class bm_load_new_config_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12176,11 +15381,13 @@ class bm_load_new_config_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_load_new_config_result')
+        oprot.writeStructBegin("bm_load_new_config_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -12190,27 +15397,36 @@ class bm_load_new_config_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_load_new_config_result)
 bm_load_new_config_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidSwapOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidSwapOperation, None],
+        None,
+    ),  # 1
 )
 
 
 class bm_swap_configs_args(object):
-
-
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12225,9 +15441,11 @@ class bm_swap_configs_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_swap_configs_args')
+        oprot.writeStructBegin("bm_swap_configs_args")
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -12235,18 +15453,18 @@ class bm_swap_configs_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_swap_configs_args)
-bm_swap_configs_args.thrift_spec = (
-)
+bm_swap_configs_args.thrift_spec = ()
 
 
 class bm_swap_configs_result(object):
@@ -12256,12 +15474,18 @@ class bm_swap_configs_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12282,11 +15506,13 @@ class bm_swap_configs_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_swap_configs_result')
+        oprot.writeStructBegin("bm_swap_configs_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -12296,19 +15522,26 @@ class bm_swap_configs_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_swap_configs_result)
 bm_swap_configs_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidSwapOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidSwapOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -12321,14 +15554,22 @@ class bm_meter_array_set_rates_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, meter_array_name=None, rates=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        meter_array_name=None,
+        rates=None,
+    ):
         self.cxt_id = cxt_id
         self.meter_array_name = meter_array_name
         self.rates = rates
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12343,7 +15584,11 @@ class bm_meter_array_set_rates_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.meter_array_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.meter_array_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -12364,19 +15609,25 @@ class bm_meter_array_set_rates_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_meter_array_set_rates_args')
+        oprot.writeStructBegin("bm_meter_array_set_rates_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.meter_array_name is not None:
-            oprot.writeFieldBegin('meter_array_name', TType.STRING, 2)
-            oprot.writeString(self.meter_array_name.encode('utf-8') if sys.version_info[0] == 2 else self.meter_array_name)
+            oprot.writeFieldBegin("meter_array_name", TType.STRING, 2)
+            oprot.writeString(
+                self.meter_array_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.meter_array_name
+            )
             oprot.writeFieldEnd()
         if self.rates is not None:
-            oprot.writeFieldBegin('rates', TType.LIST, 3)
+            oprot.writeFieldBegin("rates", TType.LIST, 3)
             oprot.writeListBegin(TType.STRUCT, len(self.rates))
             for iter148 in self.rates:
                 iter148.write(oprot)
@@ -12389,21 +15640,40 @@ class bm_meter_array_set_rates_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_meter_array_set_rates_args)
 bm_meter_array_set_rates_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'meter_array_name', 'UTF8', None, ),  # 2
-    (3, TType.LIST, 'rates', (TType.STRUCT, [BmMeterRateConfig, None], False), None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "meter_array_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.LIST,
+        "rates",
+        (TType.STRUCT, [BmMeterRateConfig, None], False),
+        None,
+    ),  # 3
 )
 
 
@@ -12414,12 +15684,18 @@ class bm_meter_array_set_rates_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12440,11 +15716,13 @@ class bm_meter_array_set_rates_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_meter_array_set_rates_result')
+        oprot.writeStructBegin("bm_meter_array_set_rates_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -12454,19 +15732,26 @@ class bm_meter_array_set_rates_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_meter_array_set_rates_result)
 bm_meter_array_set_rates_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMeterOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMeterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -12480,15 +15765,24 @@ class bm_meter_set_rates_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, meter_array_name=None, index=None, rates=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        meter_array_name=None,
+        index=None,
+        rates=None,
+    ):
         self.cxt_id = cxt_id
         self.meter_array_name = meter_array_name
         self.index = index
         self.rates = rates
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12503,7 +15797,11 @@ class bm_meter_set_rates_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.meter_array_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.meter_array_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -12529,23 +15827,29 @@ class bm_meter_set_rates_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_meter_set_rates_args')
+        oprot.writeStructBegin("bm_meter_set_rates_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.meter_array_name is not None:
-            oprot.writeFieldBegin('meter_array_name', TType.STRING, 2)
-            oprot.writeString(self.meter_array_name.encode('utf-8') if sys.version_info[0] == 2 else self.meter_array_name)
+            oprot.writeFieldBegin("meter_array_name", TType.STRING, 2)
+            oprot.writeString(
+                self.meter_array_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.meter_array_name
+            )
             oprot.writeFieldEnd()
         if self.index is not None:
-            oprot.writeFieldBegin('index', TType.I32, 3)
+            oprot.writeFieldBegin("index", TType.I32, 3)
             oprot.writeI32(self.index)
             oprot.writeFieldEnd()
         if self.rates is not None:
-            oprot.writeFieldBegin('rates', TType.LIST, 4)
+            oprot.writeFieldBegin("rates", TType.LIST, 4)
             oprot.writeListBegin(TType.STRUCT, len(self.rates))
             for iter155 in self.rates:
                 iter155.write(oprot)
@@ -12558,22 +15862,47 @@ class bm_meter_set_rates_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_meter_set_rates_args)
 bm_meter_set_rates_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'meter_array_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'index', None, None, ),  # 3
-    (4, TType.LIST, 'rates', (TType.STRUCT, [BmMeterRateConfig, None], False), None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "meter_array_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "index",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.LIST,
+        "rates",
+        (TType.STRUCT, [BmMeterRateConfig, None], False),
+        None,
+    ),  # 4
 )
 
 
@@ -12584,12 +15913,18 @@ class bm_meter_set_rates_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12610,11 +15945,13 @@ class bm_meter_set_rates_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_meter_set_rates_result')
+        oprot.writeStructBegin("bm_meter_set_rates_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -12624,19 +15961,26 @@ class bm_meter_set_rates_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_meter_set_rates_result)
 bm_meter_set_rates_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMeterOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMeterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -12649,14 +15993,22 @@ class bm_meter_get_rates_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, meter_array_name=None, index=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        meter_array_name=None,
+        index=None,
+    ):
         self.cxt_id = cxt_id
         self.meter_array_name = meter_array_name
         self.index = index
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12671,7 +16023,11 @@ class bm_meter_get_rates_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.meter_array_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.meter_array_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -12686,19 +16042,25 @@ class bm_meter_get_rates_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_meter_get_rates_args')
+        oprot.writeStructBegin("bm_meter_get_rates_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.meter_array_name is not None:
-            oprot.writeFieldBegin('meter_array_name', TType.STRING, 2)
-            oprot.writeString(self.meter_array_name.encode('utf-8') if sys.version_info[0] == 2 else self.meter_array_name)
+            oprot.writeFieldBegin("meter_array_name", TType.STRING, 2)
+            oprot.writeString(
+                self.meter_array_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.meter_array_name
+            )
             oprot.writeFieldEnd()
         if self.index is not None:
-            oprot.writeFieldBegin('index', TType.I32, 3)
+            oprot.writeFieldBegin("index", TType.I32, 3)
             oprot.writeI32(self.index)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -12708,21 +16070,40 @@ class bm_meter_get_rates_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_meter_get_rates_args)
 bm_meter_get_rates_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'meter_array_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'index', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "meter_array_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "index",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -12734,13 +16115,20 @@ class bm_meter_get_rates_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12772,18 +16160,20 @@ class bm_meter_get_rates_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_meter_get_rates_result')
+        oprot.writeStructBegin("bm_meter_get_rates_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.LIST, 0)
+            oprot.writeFieldBegin("success", TType.LIST, 0)
             oprot.writeListBegin(TType.STRUCT, len(self.success))
             for iter162 in self.success:
                 iter162.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -12793,19 +16183,32 @@ class bm_meter_get_rates_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_meter_get_rates_result)
 bm_meter_get_rates_result.thrift_spec = (
-    (0, TType.LIST, 'success', (TType.STRUCT, [BmMeterRateConfig, None], False), None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidMeterOperation, None], None, ),  # 1
+    (
+        0,
+        TType.LIST,
+        "success",
+        (TType.STRUCT, [BmMeterRateConfig, None], False),
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidMeterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -12818,14 +16221,22 @@ class bm_register_read_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, register_array_name=None, idx=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        register_array_name=None,
+        idx=None,
+    ):
         self.cxt_id = cxt_id
         self.register_array_name = register_array_name
         self.idx = idx
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12840,7 +16251,11 @@ class bm_register_read_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.register_array_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.register_array_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -12855,19 +16270,25 @@ class bm_register_read_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_register_read_args')
+        oprot.writeStructBegin("bm_register_read_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.register_array_name is not None:
-            oprot.writeFieldBegin('register_array_name', TType.STRING, 2)
-            oprot.writeString(self.register_array_name.encode('utf-8') if sys.version_info[0] == 2 else self.register_array_name)
+            oprot.writeFieldBegin("register_array_name", TType.STRING, 2)
+            oprot.writeString(
+                self.register_array_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.register_array_name
+            )
             oprot.writeFieldEnd()
         if self.idx is not None:
-            oprot.writeFieldBegin('idx', TType.I32, 3)
+            oprot.writeFieldBegin("idx", TType.I32, 3)
             oprot.writeI32(self.idx)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -12877,21 +16298,40 @@ class bm_register_read_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_register_read_args)
 bm_register_read_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'register_array_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'idx', None, None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "register_array_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "idx",
+        None,
+        None,
+    ),  # 3
 )
 
 
@@ -12903,13 +16343,20 @@ class bm_register_read_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12935,15 +16382,17 @@ class bm_register_read_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_register_read_result')
+        oprot.writeStructBegin("bm_register_read_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.I64, 0)
+            oprot.writeFieldBegin("success", TType.I64, 0)
             oprot.writeI64(self.success)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -12953,19 +16402,32 @@ class bm_register_read_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_register_read_result)
 bm_register_read_result.thrift_spec = (
-    (0, TType.I64, 'success', None, None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidRegisterOperation, None], None, ),  # 1
+    (
+        0,
+        TType.I64,
+        "success",
+        None,
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidRegisterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -12977,13 +16439,20 @@ class bm_register_read_all_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, register_array_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        register_array_name=None,
+    ):
         self.cxt_id = cxt_id
         self.register_array_name = register_array_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -12998,7 +16467,11 @@ class bm_register_read_all_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.register_array_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.register_array_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -13008,16 +16481,22 @@ class bm_register_read_all_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_register_read_all_args')
+        oprot.writeStructBegin("bm_register_read_all_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.register_array_name is not None:
-            oprot.writeFieldBegin('register_array_name', TType.STRING, 2)
-            oprot.writeString(self.register_array_name.encode('utf-8') if sys.version_info[0] == 2 else self.register_array_name)
+            oprot.writeFieldBegin("register_array_name", TType.STRING, 2)
+            oprot.writeString(
+                self.register_array_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.register_array_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -13026,20 +16505,33 @@ class bm_register_read_all_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_register_read_all_args)
 bm_register_read_all_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'register_array_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "register_array_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -13051,13 +16543,20 @@ class bm_register_read_all_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13088,18 +16587,20 @@ class bm_register_read_all_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_register_read_all_result')
+        oprot.writeStructBegin("bm_register_read_all_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.LIST, 0)
+            oprot.writeFieldBegin("success", TType.LIST, 0)
             oprot.writeListBegin(TType.I64, len(self.success))
             for iter169 in self.success:
                 oprot.writeI64(iter169)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -13109,19 +16610,32 @@ class bm_register_read_all_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_register_read_all_result)
 bm_register_read_all_result.thrift_spec = (
-    (0, TType.LIST, 'success', (TType.I64, None, False), None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidRegisterOperation, None], None, ),  # 1
+    (
+        0,
+        TType.LIST,
+        "success",
+        (TType.I64, None, False),
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidRegisterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -13135,15 +16649,24 @@ class bm_register_write_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, register_array_name=None, index=None, value=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        register_array_name=None,
+        index=None,
+        value=None,
+    ):
         self.cxt_id = cxt_id
         self.register_array_name = register_array_name
         self.index = index
         self.value = value
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13158,7 +16681,11 @@ class bm_register_write_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.register_array_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.register_array_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -13178,23 +16705,29 @@ class bm_register_write_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_register_write_args')
+        oprot.writeStructBegin("bm_register_write_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.register_array_name is not None:
-            oprot.writeFieldBegin('register_array_name', TType.STRING, 2)
-            oprot.writeString(self.register_array_name.encode('utf-8') if sys.version_info[0] == 2 else self.register_array_name)
+            oprot.writeFieldBegin("register_array_name", TType.STRING, 2)
+            oprot.writeString(
+                self.register_array_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.register_array_name
+            )
             oprot.writeFieldEnd()
         if self.index is not None:
-            oprot.writeFieldBegin('index', TType.I32, 3)
+            oprot.writeFieldBegin("index", TType.I32, 3)
             oprot.writeI32(self.index)
             oprot.writeFieldEnd()
         if self.value is not None:
-            oprot.writeFieldBegin('value', TType.I64, 4)
+            oprot.writeFieldBegin("value", TType.I64, 4)
             oprot.writeI64(self.value)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -13204,22 +16737,47 @@ class bm_register_write_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_register_write_args)
 bm_register_write_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'register_array_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'index', None, None, ),  # 3
-    (4, TType.I64, 'value', None, None, ),  # 4
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "register_array_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "index",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I64,
+        "value",
+        None,
+        None,
+    ),  # 4
 )
 
 
@@ -13230,12 +16788,18 @@ class bm_register_write_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13256,11 +16820,13 @@ class bm_register_write_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_register_write_result')
+        oprot.writeStructBegin("bm_register_write_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -13270,19 +16836,26 @@ class bm_register_write_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_register_write_result)
 bm_register_write_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidRegisterOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidRegisterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -13297,8 +16870,14 @@ class bm_register_write_range_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, register_array_name=None, start_index=None, end_index=None, value=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        register_array_name=None,
+        start_index=None,
+        end_index=None,
+        value=None,
+    ):
         self.cxt_id = cxt_id
         self.register_array_name = register_array_name
         self.start_index = start_index
@@ -13306,7 +16885,11 @@ class bm_register_write_range_args(object):
         self.value = value
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13321,7 +16904,11 @@ class bm_register_write_range_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.register_array_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.register_array_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -13346,27 +16933,33 @@ class bm_register_write_range_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_register_write_range_args')
+        oprot.writeStructBegin("bm_register_write_range_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.register_array_name is not None:
-            oprot.writeFieldBegin('register_array_name', TType.STRING, 2)
-            oprot.writeString(self.register_array_name.encode('utf-8') if sys.version_info[0] == 2 else self.register_array_name)
+            oprot.writeFieldBegin("register_array_name", TType.STRING, 2)
+            oprot.writeString(
+                self.register_array_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.register_array_name
+            )
             oprot.writeFieldEnd()
         if self.start_index is not None:
-            oprot.writeFieldBegin('start_index', TType.I32, 3)
+            oprot.writeFieldBegin("start_index", TType.I32, 3)
             oprot.writeI32(self.start_index)
             oprot.writeFieldEnd()
         if self.end_index is not None:
-            oprot.writeFieldBegin('end_index', TType.I32, 4)
+            oprot.writeFieldBegin("end_index", TType.I32, 4)
             oprot.writeI32(self.end_index)
             oprot.writeFieldEnd()
         if self.value is not None:
-            oprot.writeFieldBegin('value', TType.I64, 5)
+            oprot.writeFieldBegin("value", TType.I64, 5)
             oprot.writeI64(self.value)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -13376,23 +16969,54 @@ class bm_register_write_range_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_register_write_range_args)
 bm_register_write_range_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'register_array_name', 'UTF8', None, ),  # 2
-    (3, TType.I32, 'start_index', None, None, ),  # 3
-    (4, TType.I32, 'end_index', None, None, ),  # 4
-    (5, TType.I64, 'value', None, None, ),  # 5
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "register_array_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.I32,
+        "start_index",
+        None,
+        None,
+    ),  # 3
+    (
+        4,
+        TType.I32,
+        "end_index",
+        None,
+        None,
+    ),  # 4
+    (
+        5,
+        TType.I64,
+        "value",
+        None,
+        None,
+    ),  # 5
 )
 
 
@@ -13403,12 +17027,18 @@ class bm_register_write_range_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13429,11 +17059,13 @@ class bm_register_write_range_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_register_write_range_result')
+        oprot.writeStructBegin("bm_register_write_range_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -13443,19 +17075,26 @@ class bm_register_write_range_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_register_write_range_result)
 bm_register_write_range_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidRegisterOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidRegisterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -13467,13 +17106,20 @@ class bm_register_reset_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, register_array_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        register_array_name=None,
+    ):
         self.cxt_id = cxt_id
         self.register_array_name = register_array_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13488,7 +17134,11 @@ class bm_register_reset_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.register_array_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.register_array_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -13498,16 +17148,22 @@ class bm_register_reset_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_register_reset_args')
+        oprot.writeStructBegin("bm_register_reset_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.register_array_name is not None:
-            oprot.writeFieldBegin('register_array_name', TType.STRING, 2)
-            oprot.writeString(self.register_array_name.encode('utf-8') if sys.version_info[0] == 2 else self.register_array_name)
+            oprot.writeFieldBegin("register_array_name", TType.STRING, 2)
+            oprot.writeString(
+                self.register_array_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.register_array_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -13516,20 +17172,33 @@ class bm_register_reset_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_register_reset_args)
 bm_register_reset_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'register_array_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "register_array_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -13540,12 +17209,18 @@ class bm_register_reset_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13566,11 +17241,13 @@ class bm_register_reset_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_register_reset_result')
+        oprot.writeStructBegin("bm_register_reset_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -13580,19 +17257,26 @@ class bm_register_reset_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_register_reset_result)
 bm_register_reset_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidRegisterOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidRegisterOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -13605,14 +17289,22 @@ class bm_parse_vset_add_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, parse_vset_name=None, value=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        parse_vset_name=None,
+        value=None,
+    ):
         self.cxt_id = cxt_id
         self.parse_vset_name = parse_vset_name
         self.value = value
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13627,7 +17319,11 @@ class bm_parse_vset_add_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.parse_vset_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.parse_vset_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -13642,19 +17338,25 @@ class bm_parse_vset_add_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_parse_vset_add_args')
+        oprot.writeStructBegin("bm_parse_vset_add_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.parse_vset_name is not None:
-            oprot.writeFieldBegin('parse_vset_name', TType.STRING, 2)
-            oprot.writeString(self.parse_vset_name.encode('utf-8') if sys.version_info[0] == 2 else self.parse_vset_name)
+            oprot.writeFieldBegin("parse_vset_name", TType.STRING, 2)
+            oprot.writeString(
+                self.parse_vset_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.parse_vset_name
+            )
             oprot.writeFieldEnd()
         if self.value is not None:
-            oprot.writeFieldBegin('value', TType.STRING, 3)
+            oprot.writeFieldBegin("value", TType.STRING, 3)
             oprot.writeBinary(self.value)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -13664,21 +17366,40 @@ class bm_parse_vset_add_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_parse_vset_add_args)
 bm_parse_vset_add_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'parse_vset_name', 'UTF8', None, ),  # 2
-    (3, TType.STRING, 'value', 'BINARY', None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "parse_vset_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRING,
+        "value",
+        "BINARY",
+        None,
+    ),  # 3
 )
 
 
@@ -13689,12 +17410,18 @@ class bm_parse_vset_add_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13715,11 +17442,13 @@ class bm_parse_vset_add_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_parse_vset_add_result')
+        oprot.writeStructBegin("bm_parse_vset_add_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -13729,19 +17458,26 @@ class bm_parse_vset_add_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_parse_vset_add_result)
 bm_parse_vset_add_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidParseVSetOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidParseVSetOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -13754,14 +17490,22 @@ class bm_parse_vset_remove_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, parse_vset_name=None, value=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        parse_vset_name=None,
+        value=None,
+    ):
         self.cxt_id = cxt_id
         self.parse_vset_name = parse_vset_name
         self.value = value
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13776,7 +17520,11 @@ class bm_parse_vset_remove_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.parse_vset_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.parse_vset_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -13791,19 +17539,25 @@ class bm_parse_vset_remove_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_parse_vset_remove_args')
+        oprot.writeStructBegin("bm_parse_vset_remove_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.parse_vset_name is not None:
-            oprot.writeFieldBegin('parse_vset_name', TType.STRING, 2)
-            oprot.writeString(self.parse_vset_name.encode('utf-8') if sys.version_info[0] == 2 else self.parse_vset_name)
+            oprot.writeFieldBegin("parse_vset_name", TType.STRING, 2)
+            oprot.writeString(
+                self.parse_vset_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.parse_vset_name
+            )
             oprot.writeFieldEnd()
         if self.value is not None:
-            oprot.writeFieldBegin('value', TType.STRING, 3)
+            oprot.writeFieldBegin("value", TType.STRING, 3)
             oprot.writeBinary(self.value)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -13813,21 +17567,40 @@ class bm_parse_vset_remove_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_parse_vset_remove_args)
 bm_parse_vset_remove_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'parse_vset_name', 'UTF8', None, ),  # 2
-    (3, TType.STRING, 'value', 'BINARY', None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "parse_vset_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRING,
+        "value",
+        "BINARY",
+        None,
+    ),  # 3
 )
 
 
@@ -13838,12 +17611,18 @@ class bm_parse_vset_remove_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13864,11 +17643,13 @@ class bm_parse_vset_remove_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_parse_vset_remove_result')
+        oprot.writeStructBegin("bm_parse_vset_remove_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -13878,19 +17659,26 @@ class bm_parse_vset_remove_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_parse_vset_remove_result)
 bm_parse_vset_remove_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidParseVSetOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidParseVSetOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -13902,13 +17690,20 @@ class bm_parse_vset_get_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, parse_vset_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        parse_vset_name=None,
+    ):
         self.cxt_id = cxt_id
         self.parse_vset_name = parse_vset_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -13923,7 +17718,11 @@ class bm_parse_vset_get_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.parse_vset_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.parse_vset_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -13933,16 +17732,22 @@ class bm_parse_vset_get_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_parse_vset_get_args')
+        oprot.writeStructBegin("bm_parse_vset_get_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.parse_vset_name is not None:
-            oprot.writeFieldBegin('parse_vset_name', TType.STRING, 2)
-            oprot.writeString(self.parse_vset_name.encode('utf-8') if sys.version_info[0] == 2 else self.parse_vset_name)
+            oprot.writeFieldBegin("parse_vset_name", TType.STRING, 2)
+            oprot.writeString(
+                self.parse_vset_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.parse_vset_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -13951,20 +17756,33 @@ class bm_parse_vset_get_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_parse_vset_get_args)
 bm_parse_vset_get_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'parse_vset_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "parse_vset_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -13976,13 +17794,20 @@ class bm_parse_vset_get_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14013,18 +17838,20 @@ class bm_parse_vset_get_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_parse_vset_get_result')
+        oprot.writeStructBegin("bm_parse_vset_get_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.LIST, 0)
+            oprot.writeFieldBegin("success", TType.LIST, 0)
             oprot.writeListBegin(TType.STRING, len(self.success))
             for iter176 in self.success:
                 oprot.writeBinary(iter176)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14034,19 +17861,32 @@ class bm_parse_vset_get_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_parse_vset_get_result)
 bm_parse_vset_get_result.thrift_spec = (
-    (0, TType.LIST, 'success', (TType.STRING, 'BINARY', False), None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidParseVSetOperation, None], None, ),  # 1
+    (
+        0,
+        TType.LIST,
+        "success",
+        (TType.STRING, "BINARY", False),
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidParseVSetOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -14058,13 +17898,20 @@ class bm_parse_vset_clear_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, parse_vset_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        parse_vset_name=None,
+    ):
         self.cxt_id = cxt_id
         self.parse_vset_name = parse_vset_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14079,7 +17926,11 @@ class bm_parse_vset_clear_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.parse_vset_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.parse_vset_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -14089,16 +17940,22 @@ class bm_parse_vset_clear_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_parse_vset_clear_args')
+        oprot.writeStructBegin("bm_parse_vset_clear_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.parse_vset_name is not None:
-            oprot.writeFieldBegin('parse_vset_name', TType.STRING, 2)
-            oprot.writeString(self.parse_vset_name.encode('utf-8') if sys.version_info[0] == 2 else self.parse_vset_name)
+            oprot.writeFieldBegin("parse_vset_name", TType.STRING, 2)
+            oprot.writeString(
+                self.parse_vset_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.parse_vset_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -14107,20 +17964,33 @@ class bm_parse_vset_clear_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_parse_vset_clear_args)
 bm_parse_vset_clear_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'parse_vset_name', 'UTF8', None, ),  # 2
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "parse_vset_name",
+        "UTF8",
+        None,
+    ),  # 2
 )
 
 
@@ -14131,12 +18001,18 @@ class bm_parse_vset_clear_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14157,11 +18033,13 @@ class bm_parse_vset_clear_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_parse_vset_clear_result')
+        oprot.writeStructBegin("bm_parse_vset_clear_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14171,19 +18049,26 @@ class bm_parse_vset_clear_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_parse_vset_clear_result)
 bm_parse_vset_clear_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidParseVSetOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidParseVSetOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -14196,14 +18081,22 @@ class bm_dev_mgr_add_port_args(object):
 
     """
 
-
-    def __init__(self, iface_name=None, port_num=None, pcap_path=None,):
+    def __init__(
+        self,
+        iface_name=None,
+        port_num=None,
+        pcap_path=None,
+    ):
         self.iface_name = iface_name
         self.port_num = port_num
         self.pcap_path = pcap_path
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14213,7 +18106,11 @@ class bm_dev_mgr_add_port_args(object):
                 break
             if fid == 1:
                 if ftype == TType.STRING:
-                    self.iface_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.iface_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 2:
@@ -14223,7 +18120,11 @@ class bm_dev_mgr_add_port_args(object):
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRING:
-                    self.pcap_path = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.pcap_path = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -14233,20 +18134,30 @@ class bm_dev_mgr_add_port_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_dev_mgr_add_port_args')
+        oprot.writeStructBegin("bm_dev_mgr_add_port_args")
         if self.iface_name is not None:
-            oprot.writeFieldBegin('iface_name', TType.STRING, 1)
-            oprot.writeString(self.iface_name.encode('utf-8') if sys.version_info[0] == 2 else self.iface_name)
+            oprot.writeFieldBegin("iface_name", TType.STRING, 1)
+            oprot.writeString(
+                self.iface_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.iface_name
+            )
             oprot.writeFieldEnd()
         if self.port_num is not None:
-            oprot.writeFieldBegin('port_num', TType.I32, 2)
+            oprot.writeFieldBegin("port_num", TType.I32, 2)
             oprot.writeI32(self.port_num)
             oprot.writeFieldEnd()
         if self.pcap_path is not None:
-            oprot.writeFieldBegin('pcap_path', TType.STRING, 3)
-            oprot.writeString(self.pcap_path.encode('utf-8') if sys.version_info[0] == 2 else self.pcap_path)
+            oprot.writeFieldBegin("pcap_path", TType.STRING, 3)
+            oprot.writeString(
+                self.pcap_path.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.pcap_path
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -14255,21 +18166,40 @@ class bm_dev_mgr_add_port_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_dev_mgr_add_port_args)
 bm_dev_mgr_add_port_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRING, 'iface_name', 'UTF8', None, ),  # 1
-    (2, TType.I32, 'port_num', None, None, ),  # 2
-    (3, TType.STRING, 'pcap_path', 'UTF8', None, ),  # 3
+    (
+        1,
+        TType.STRING,
+        "iface_name",
+        "UTF8",
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "port_num",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRING,
+        "pcap_path",
+        "UTF8",
+        None,
+    ),  # 3
 )
 
 
@@ -14280,12 +18210,18 @@ class bm_dev_mgr_add_port_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14306,11 +18242,13 @@ class bm_dev_mgr_add_port_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_dev_mgr_add_port_result')
+        oprot.writeStructBegin("bm_dev_mgr_add_port_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14320,19 +18258,26 @@ class bm_dev_mgr_add_port_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_dev_mgr_add_port_result)
 bm_dev_mgr_add_port_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidDevMgrOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidDevMgrOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -14343,12 +18288,18 @@ class bm_dev_mgr_remove_port_args(object):
 
     """
 
-
-    def __init__(self, port_num=None,):
+    def __init__(
+        self,
+        port_num=None,
+    ):
         self.port_num = port_num
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14368,11 +18319,13 @@ class bm_dev_mgr_remove_port_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_dev_mgr_remove_port_args')
+        oprot.writeStructBegin("bm_dev_mgr_remove_port_args")
         if self.port_num is not None:
-            oprot.writeFieldBegin('port_num', TType.I32, 1)
+            oprot.writeFieldBegin("port_num", TType.I32, 1)
             oprot.writeI32(self.port_num)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14382,19 +18335,26 @@ class bm_dev_mgr_remove_port_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_dev_mgr_remove_port_args)
 bm_dev_mgr_remove_port_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'port_num', None, None, ),  # 1
+    (
+        1,
+        TType.I32,
+        "port_num",
+        None,
+        None,
+    ),  # 1
 )
 
 
@@ -14405,12 +18365,18 @@ class bm_dev_mgr_remove_port_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14431,11 +18397,13 @@ class bm_dev_mgr_remove_port_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_dev_mgr_remove_port_result')
+        oprot.writeStructBegin("bm_dev_mgr_remove_port_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14445,27 +18413,36 @@ class bm_dev_mgr_remove_port_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_dev_mgr_remove_port_result)
 bm_dev_mgr_remove_port_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidDevMgrOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidDevMgrOperation, None],
+        None,
+    ),  # 1
 )
 
 
 class bm_dev_mgr_show_ports_args(object):
-
-
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14480,9 +18457,11 @@ class bm_dev_mgr_show_ports_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_dev_mgr_show_ports_args')
+        oprot.writeStructBegin("bm_dev_mgr_show_ports_args")
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -14490,18 +18469,18 @@ class bm_dev_mgr_show_ports_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_dev_mgr_show_ports_args)
-bm_dev_mgr_show_ports_args.thrift_spec = (
-)
+bm_dev_mgr_show_ports_args.thrift_spec = ()
 
 
 class bm_dev_mgr_show_ports_result(object):
@@ -14512,13 +18491,20 @@ class bm_dev_mgr_show_ports_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14550,18 +18536,20 @@ class bm_dev_mgr_show_ports_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_dev_mgr_show_ports_result')
+        oprot.writeStructBegin("bm_dev_mgr_show_ports_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.LIST, 0)
+            oprot.writeFieldBegin("success", TType.LIST, 0)
             oprot.writeListBegin(TType.STRUCT, len(self.success))
             for iter183 in self.success:
                 iter183.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14571,27 +18559,42 @@ class bm_dev_mgr_show_ports_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_dev_mgr_show_ports_result)
 bm_dev_mgr_show_ports_result.thrift_spec = (
-    (0, TType.LIST, 'success', (TType.STRUCT, [DevMgrPortInfo, None], False), None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidDevMgrOperation, None], None, ),  # 1
+    (
+        0,
+        TType.LIST,
+        "success",
+        (TType.STRUCT, [DevMgrPortInfo, None], False),
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidDevMgrOperation, None],
+        None,
+    ),  # 1
 )
 
 
 class bm_mgmt_get_info_args(object):
-
-
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14606,9 +18609,11 @@ class bm_mgmt_get_info_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mgmt_get_info_args')
+        oprot.writeStructBegin("bm_mgmt_get_info_args")
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -14616,18 +18621,18 @@ class bm_mgmt_get_info_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mgmt_get_info_args)
-bm_mgmt_get_info_args.thrift_spec = (
-)
+bm_mgmt_get_info_args.thrift_spec = ()
 
 
 class bm_mgmt_get_info_result(object):
@@ -14637,12 +18642,18 @@ class bm_mgmt_get_info_result(object):
 
     """
 
-
-    def __init__(self, success=None,):
+    def __init__(
+        self,
+        success=None,
+    ):
         self.success = success
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14663,11 +18674,13 @@ class bm_mgmt_get_info_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_mgmt_get_info_result')
+        oprot.writeStructBegin("bm_mgmt_get_info_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            oprot.writeFieldBegin("success", TType.STRUCT, 0)
             self.success.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14677,18 +18690,25 @@ class bm_mgmt_get_info_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_mgmt_get_info_result)
 bm_mgmt_get_info_result.thrift_spec = (
-    (0, TType.STRUCT, 'success', [BmConfig, None], None, ),  # 0
+    (
+        0,
+        TType.STRUCT,
+        "success",
+        [BmConfig, None],
+        None,
+    ),  # 0
 )
 
 
@@ -14701,14 +18721,22 @@ class bm_set_crc16_custom_parameters_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, calc_name=None, crc16_config=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        calc_name=None,
+        crc16_config=None,
+    ):
         self.cxt_id = cxt_id
         self.calc_name = calc_name
         self.crc16_config = crc16_config
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14723,7 +18751,11 @@ class bm_set_crc16_custom_parameters_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.calc_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.calc_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -14739,19 +18771,25 @@ class bm_set_crc16_custom_parameters_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_set_crc16_custom_parameters_args')
+        oprot.writeStructBegin("bm_set_crc16_custom_parameters_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.calc_name is not None:
-            oprot.writeFieldBegin('calc_name', TType.STRING, 2)
-            oprot.writeString(self.calc_name.encode('utf-8') if sys.version_info[0] == 2 else self.calc_name)
+            oprot.writeFieldBegin("calc_name", TType.STRING, 2)
+            oprot.writeString(
+                self.calc_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.calc_name
+            )
             oprot.writeFieldEnd()
         if self.crc16_config is not None:
-            oprot.writeFieldBegin('crc16_config', TType.STRUCT, 3)
+            oprot.writeFieldBegin("crc16_config", TType.STRUCT, 3)
             self.crc16_config.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14761,21 +18799,40 @@ class bm_set_crc16_custom_parameters_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_set_crc16_custom_parameters_args)
 bm_set_crc16_custom_parameters_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'calc_name', 'UTF8', None, ),  # 2
-    (3, TType.STRUCT, 'crc16_config', [BmCrc16Config, None], None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "calc_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRUCT,
+        "crc16_config",
+        [BmCrc16Config, None],
+        None,
+    ),  # 3
 )
 
 
@@ -14786,12 +18843,18 @@ class bm_set_crc16_custom_parameters_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14812,11 +18875,13 @@ class bm_set_crc16_custom_parameters_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_set_crc16_custom_parameters_result')
+        oprot.writeStructBegin("bm_set_crc16_custom_parameters_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14826,19 +18891,26 @@ class bm_set_crc16_custom_parameters_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_set_crc16_custom_parameters_result)
 bm_set_crc16_custom_parameters_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidCrcOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidCrcOperation, None],
+        None,
+    ),  # 1
 )
 
 
@@ -14851,14 +18923,22 @@ class bm_set_crc32_custom_parameters_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, calc_name=None, crc32_config=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        calc_name=None,
+        crc32_config=None,
+    ):
         self.cxt_id = cxt_id
         self.calc_name = calc_name
         self.crc32_config = crc32_config
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14873,7 +18953,11 @@ class bm_set_crc32_custom_parameters_args(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.calc_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.calc_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
@@ -14889,19 +18973,25 @@ class bm_set_crc32_custom_parameters_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_set_crc32_custom_parameters_args')
+        oprot.writeStructBegin("bm_set_crc32_custom_parameters_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.calc_name is not None:
-            oprot.writeFieldBegin('calc_name', TType.STRING, 2)
-            oprot.writeString(self.calc_name.encode('utf-8') if sys.version_info[0] == 2 else self.calc_name)
+            oprot.writeFieldBegin("calc_name", TType.STRING, 2)
+            oprot.writeString(
+                self.calc_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.calc_name
+            )
             oprot.writeFieldEnd()
         if self.crc32_config is not None:
-            oprot.writeFieldBegin('crc32_config', TType.STRUCT, 3)
+            oprot.writeFieldBegin("crc32_config", TType.STRUCT, 3)
             self.crc32_config.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14911,21 +19001,40 @@ class bm_set_crc32_custom_parameters_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_set_crc32_custom_parameters_args)
 bm_set_crc32_custom_parameters_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.STRING, 'calc_name', 'UTF8', None, ),  # 2
-    (3, TType.STRUCT, 'crc32_config', [BmCrc32Config, None], None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.STRING,
+        "calc_name",
+        "UTF8",
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRUCT,
+        "crc32_config",
+        [BmCrc32Config, None],
+        None,
+    ),  # 3
 )
 
 
@@ -14936,12 +19045,18 @@ class bm_set_crc32_custom_parameters_result(object):
 
     """
 
-
-    def __init__(self, ouch=None,):
+    def __init__(
+        self,
+        ouch=None,
+    ):
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -14962,11 +19077,13 @@ class bm_set_crc32_custom_parameters_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_set_crc32_custom_parameters_result')
+        oprot.writeStructBegin("bm_set_crc32_custom_parameters_result")
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -14976,27 +19093,36 @@ class bm_set_crc32_custom_parameters_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_set_crc32_custom_parameters_result)
 bm_set_crc32_custom_parameters_result.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidCrcOperation, None], None, ),  # 1
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidCrcOperation, None],
+        None,
+    ),  # 1
 )
 
 
 class bm_reset_state_args(object):
-
-
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -15011,9 +19137,11 @@ class bm_reset_state_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_reset_state_args')
+        oprot.writeStructBegin("bm_reset_state_args")
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -15021,25 +19149,27 @@ class bm_reset_state_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_reset_state_args)
-bm_reset_state_args.thrift_spec = (
-)
+bm_reset_state_args.thrift_spec = ()
 
 
 class bm_reset_state_result(object):
-
-
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -15054,9 +19184,11 @@ class bm_reset_state_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_reset_state_result')
+        oprot.writeStructBegin("bm_reset_state_result")
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -15064,25 +19196,27 @@ class bm_reset_state_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_reset_state_result)
-bm_reset_state_result.thrift_spec = (
-)
+bm_reset_state_result.thrift_spec = ()
 
 
 class bm_get_config_args(object):
-
-
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -15097,9 +19231,11 @@ class bm_get_config_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_get_config_args')
+        oprot.writeStructBegin("bm_get_config_args")
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -15107,18 +19243,18 @@ class bm_get_config_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_get_config_args)
-bm_get_config_args.thrift_spec = (
-)
+bm_get_config_args.thrift_spec = ()
 
 
 class bm_get_config_result(object):
@@ -15128,12 +19264,18 @@ class bm_get_config_result(object):
 
     """
 
-
-    def __init__(self, success=None,):
+    def __init__(
+        self,
+        success=None,
+    ):
         self.success = success
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -15143,7 +19285,11 @@ class bm_get_config_result(object):
                 break
             if fid == 0:
                 if ftype == TType.STRING:
-                    self.success = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.success = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -15153,12 +19299,18 @@ class bm_get_config_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_get_config_result')
+        oprot.writeStructBegin("bm_get_config_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRING, 0)
-            oprot.writeString(self.success.encode('utf-8') if sys.version_info[0] == 2 else self.success)
+            oprot.writeFieldBegin("success", TType.STRING, 0)
+            oprot.writeString(
+                self.success.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.success
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -15167,26 +19319,35 @@ class bm_get_config_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_get_config_result)
 bm_get_config_result.thrift_spec = (
-    (0, TType.STRING, 'success', 'UTF8', None, ),  # 0
+    (
+        0,
+        TType.STRING,
+        "success",
+        "UTF8",
+        None,
+    ),  # 0
 )
 
 
 class bm_get_config_md5_args(object):
-
-
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -15201,9 +19362,11 @@ class bm_get_config_md5_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_get_config_md5_args')
+        oprot.writeStructBegin("bm_get_config_md5_args")
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -15211,18 +19374,18 @@ class bm_get_config_md5_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_get_config_md5_args)
-bm_get_config_md5_args.thrift_spec = (
-)
+bm_get_config_md5_args.thrift_spec = ()
 
 
 class bm_get_config_md5_result(object):
@@ -15232,12 +19395,18 @@ class bm_get_config_md5_result(object):
 
     """
 
-
-    def __init__(self, success=None,):
+    def __init__(
+        self,
+        success=None,
+    ):
         self.success = success
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -15247,7 +19416,11 @@ class bm_get_config_md5_result(object):
                 break
             if fid == 0:
                 if ftype == TType.STRING:
-                    self.success = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.success = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -15257,12 +19430,18 @@ class bm_get_config_md5_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_get_config_md5_result')
+        oprot.writeStructBegin("bm_get_config_md5_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRING, 0)
-            oprot.writeString(self.success.encode('utf-8') if sys.version_info[0] == 2 else self.success)
+            oprot.writeFieldBegin("success", TType.STRING, 0)
+            oprot.writeString(
+                self.success.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.success
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -15271,18 +19450,25 @@ class bm_get_config_md5_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_get_config_md5_result)
 bm_get_config_md5_result.thrift_spec = (
-    (0, TType.STRING, 'success', 'UTF8', None, ),  # 0
+    (
+        0,
+        TType.STRING,
+        "success",
+        "UTF8",
+        None,
+    ),  # 0
 )
 
 
@@ -15295,14 +19481,22 @@ class bm_get_id_from_name_args(object):
 
     """
 
-
-    def __init__(self, cxt_id=None, resource_type=None, resource_name=None,):
+    def __init__(
+        self,
+        cxt_id=None,
+        resource_type=None,
+        resource_name=None,
+    ):
         self.cxt_id = cxt_id
         self.resource_type = resource_type
         self.resource_name = resource_name
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -15322,7 +19516,11 @@ class bm_get_id_from_name_args(object):
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRING:
-                    self.resource_name = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.resource_name = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -15332,20 +19530,26 @@ class bm_get_id_from_name_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_get_id_from_name_args')
+        oprot.writeStructBegin("bm_get_id_from_name_args")
         if self.cxt_id is not None:
-            oprot.writeFieldBegin('cxt_id', TType.I32, 1)
+            oprot.writeFieldBegin("cxt_id", TType.I32, 1)
             oprot.writeI32(self.cxt_id)
             oprot.writeFieldEnd()
         if self.resource_type is not None:
-            oprot.writeFieldBegin('resource_type', TType.I32, 2)
+            oprot.writeFieldBegin("resource_type", TType.I32, 2)
             oprot.writeI32(self.resource_type)
             oprot.writeFieldEnd()
         if self.resource_name is not None:
-            oprot.writeFieldBegin('resource_name', TType.STRING, 3)
-            oprot.writeString(self.resource_name.encode('utf-8') if sys.version_info[0] == 2 else self.resource_name)
+            oprot.writeFieldBegin("resource_name", TType.STRING, 3)
+            oprot.writeString(
+                self.resource_name.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.resource_name
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -15354,21 +19558,40 @@ class bm_get_id_from_name_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_get_id_from_name_args)
 bm_get_id_from_name_args.thrift_spec = (
     None,  # 0
-    (1, TType.I32, 'cxt_id', None, None, ),  # 1
-    (2, TType.I32, 'resource_type', None, None, ),  # 2
-    (3, TType.STRING, 'resource_name', 'UTF8', None, ),  # 3
+    (
+        1,
+        TType.I32,
+        "cxt_id",
+        None,
+        None,
+    ),  # 1
+    (
+        2,
+        TType.I32,
+        "resource_type",
+        None,
+        None,
+    ),  # 2
+    (
+        3,
+        TType.STRING,
+        "resource_name",
+        "UTF8",
+        None,
+    ),  # 3
 )
 
 
@@ -15380,13 +19603,20 @@ class bm_get_id_from_name_result(object):
 
     """
 
-
-    def __init__(self, success=None, ouch=None,):
+    def __init__(
+        self,
+        success=None,
+        ouch=None,
+    ):
         self.success = success
         self.ouch = ouch
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -15412,15 +19642,17 @@ class bm_get_id_from_name_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_get_id_from_name_result')
+        oprot.writeStructBegin("bm_get_id_from_name_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.I32, 0)
+            oprot.writeFieldBegin("success", TType.I32, 0)
             oprot.writeI32(self.success)
             oprot.writeFieldEnd()
         if self.ouch is not None:
-            oprot.writeFieldBegin('ouch', TType.STRUCT, 1)
+            oprot.writeFieldBegin("ouch", TType.STRUCT, 1)
             self.ouch.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -15430,27 +19662,42 @@ class bm_get_id_from_name_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_get_id_from_name_result)
 bm_get_id_from_name_result.thrift_spec = (
-    (0, TType.I32, 'success', None, None, ),  # 0
-    (1, TType.STRUCT, 'ouch', [InvalidIdLookup, None], None, ),  # 1
+    (
+        0,
+        TType.I32,
+        "success",
+        None,
+        None,
+    ),  # 0
+    (
+        1,
+        TType.STRUCT,
+        "ouch",
+        [InvalidIdLookup, None],
+        None,
+    ),  # 1
 )
 
 
 class bm_serialize_state_args(object):
-
-
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -15465,9 +19712,11 @@ class bm_serialize_state_args(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_serialize_state_args')
+        oprot.writeStructBegin("bm_serialize_state_args")
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -15475,18 +19724,18 @@ class bm_serialize_state_args(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_serialize_state_args)
-bm_serialize_state_args.thrift_spec = (
-)
+bm_serialize_state_args.thrift_spec = ()
 
 
 class bm_serialize_state_result(object):
@@ -15496,12 +19745,18 @@ class bm_serialize_state_result(object):
 
     """
 
-
-    def __init__(self, success=None,):
+    def __init__(
+        self,
+        success=None,
+    ):
         self.success = success
 
     def read(self, iprot):
-        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+        if (
+            iprot._fast_decode is not None
+            and isinstance(iprot.trans, TTransport.CReadableTransport)
+            and self.thrift_spec is not None
+        ):
             iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
             return
         iprot.readStructBegin()
@@ -15511,7 +19766,11 @@ class bm_serialize_state_result(object):
                 break
             if fid == 0:
                 if ftype == TType.STRING:
-                    self.success = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.success = (
+                        iprot.readString().decode("utf-8")
+                        if sys.version_info[0] == 2
+                        else iprot.readString()
+                    )
                 else:
                     iprot.skip(ftype)
             else:
@@ -15521,12 +19780,18 @@ class bm_serialize_state_result(object):
 
     def write(self, oprot):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
-            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            oprot.trans.write(
+                oprot._fast_encode(self, [self.__class__, self.thrift_spec])
+            )
             return
-        oprot.writeStructBegin('bm_serialize_state_result')
+        oprot.writeStructBegin("bm_serialize_state_result")
         if self.success is not None:
-            oprot.writeFieldBegin('success', TType.STRING, 0)
-            oprot.writeString(self.success.encode('utf-8') if sys.version_info[0] == 2 else self.success)
+            oprot.writeFieldBegin("success", TType.STRING, 0)
+            oprot.writeString(
+                self.success.encode("utf-8")
+                if sys.version_info[0] == 2
+                else self.success
+            )
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -15535,19 +19800,25 @@ class bm_serialize_state_result(object):
         return
 
     def __repr__(self):
-        L = ['%s=%r' % (key, value)
-             for key, value in self.__dict__.items()]
-        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+        L = ["%s=%r" % (key, value) for key, value in self.__dict__.items()]
+        return "%s(%s)" % (self.__class__.__name__, ", ".join(L))
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not (self == other)
+
+
 all_structs.append(bm_serialize_state_result)
 bm_serialize_state_result.thrift_spec = (
-    (0, TType.STRING, 'success', 'UTF8', None, ),  # 0
+    (
+        0,
+        TType.STRING,
+        "success",
+        "UTF8",
+        None,
+    ),  # 0
 )
 fix_spec(all_structs)
 del all_structs
-
