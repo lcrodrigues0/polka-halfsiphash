@@ -17,11 +17,62 @@ from time import sleep
 from mininet.log import setLogLevel, info
 
 from tests.test_detour import test_detour
-from tests.test_integrity import test_integrity
 from utils.check_digest import BASE_DIGESTS
 from utils.sniff import start_sniffing
 from linear_topology import Polka, PolkaProbe, linear_topology, set_seed_e1, set_seed_e10
 from utils.call_api import call_deploy_flow_contract, call_log_probe, call_set_ref_sig
+from tests.flow_test import flow_test
+
+
+def collect_hashes():
+    """
+    Collect the hashes from the network
+    """
+
+    info("*** Starting run for collecting hash and intermediaries\n")
+
+    net = linear_topology(start=False)    
+    try:
+        net = set_seed_e1(net, 0xABADCAFE)
+        net = set_seed_e10(net, 0xBADDC0DE)
+        # net = set_seed_e10(net, 0xABADCAFE)
+
+
+        net.start()
+        net.staticArp()
+
+        # sleep for a bit to let the network stabilize
+        sleep(3)
+        
+        sniff = start_sniffing(net)
+
+        flow_test(net, "0", "h1", "h10")
+
+        info("\n*** Stopping sniffing\n")
+        pkts = sniff.stop()
+        pkts.sort(key=lambda pkt: pkt.time)
+
+        i = 0
+        for pkt in pkts:
+            probe = pkt.getlayer(PolkaProbe)
+            polka = pkt.getlayer(Polka)
+
+            # print(f"{polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
+            print(f"{i} - {probe.l_hash:#0{10}x}")
+            i += 1
+
+        call_deploy_flow_contract(0)
+        call_set_ref_sig(0, pkts[0])
+        call_log_probe(0, pkts[-1])
+
+        info("\n*** Hashes collected ***\n")
+
+
+    finally:
+        net.stop()
+
+
+    info("*** ✅ Run finished.\n")
 
 def run_network_tests():
     """
@@ -40,56 +91,11 @@ def run_network_tests():
         raise e
     info("*** ✅ All tests passed.\n")
 
-def collect_siphash():
-    """
-    Collect the SIPHashes (all intermediary) from the network
-    """
-
-    info("*** Starting run for collecting hash and intermediaries\n")
-
-    net = linear_topology(start=False)    
-    try:
-        net = set_seed_e1(net, 0xABADCAFE)
-        net = set_seed_e10(net, 0xBADDC0DE)
-
-        net.start()
-        net.staticArp()
-
-        # sleep for a bit to let the network stabilize
-        sleep(3)
-        
-        sniff = start_sniffing(net)
-
-        test_integrity(net)
-
-        info("\n*** Stopping sniffing\n")
-        pkts = sniff.stop()
-        pkts.sort(key=lambda pkt: pkt.time)
-
-        # for pkt in pkts:
-        #     probe = pkt.getlayer(PolkaProbe)
-        #     polka = pkt.getlayer(Polka)
-
-        #     print(f"{polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
-
-        call_deploy_flow_contract(0)
-        call_set_ref_sig(pkts[0])
-        call_log_probe(pkts[-1])
-
-        info("\n*** Hashes collected ***\n")
-
-
-    finally:
-        net.stop()
-
-
-    info("*** ✅ Run finished.\n")
-
 if __name__ == "__main__":
     setLogLevel("info")
     # run_network_tests()
 
-    collect_siphash()
+    collect_hashes()
 
     # info("*** Running CLI\n")
     # net = linear_topology()

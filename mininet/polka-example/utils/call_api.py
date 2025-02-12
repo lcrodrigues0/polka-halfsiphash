@@ -4,6 +4,7 @@ import json
 from utils.check_digest import BASE_DIGESTS
 
 ENDPOINT_URL = "http://localhost:5000/"
+EDGE_NODE_ADDRESS = "0xF6ED5C4841E61D82F8b4F6225f16261a2330dC59"
 
 def call_deploy_flow_contract(flowId):
     print("\n*** Deploying the contract related to the flowId")
@@ -11,7 +12,7 @@ def call_deploy_flow_contract(flowId):
     data_dct = {
         "flowId": str(flowId),
         "routeId": "1",
-        "edgeAddr": "0xE77227b626394C7c215Ba750f04544E7F0fca68C"
+        "edgeAddr": EDGE_NODE_ADDRESS
     }
 
     req = urllib.request.Request(
@@ -25,14 +26,14 @@ def call_deploy_flow_contract(flowId):
         print("Successfully deployed:")
         print("Transaction hash: " + res.read().decode('utf-8').strip())
 
-def call_set_ref_sig(pkt):
-    print("\n*** Registering signature reference")
+def call_set_ref_sig(flowId, pkt):
+    print("\n*** Registering reference signature")
 
     polka_pkt = pkt.getlayer(Polka)
     probe_pkt = pkt.getlayer(PolkaProbe)
 
     data_dct = {
-        "flowId": "0",
+        "flowId": str(flowId),
         "routeId": str(polka_pkt.route_id),
         "timestamp": str(probe_pkt.timestamp),
         "lightMultSig": str(hex(BASE_DIGESTS["h1-h10"][probe_pkt.l_hash][10])),
@@ -47,16 +48,17 @@ def call_set_ref_sig(pkt):
 
     if res.status== 201:
         print("Successfully registered:")
+        print("Reference Signature: "  + data_dct["lightMultSig"])
         print("Transaction hash: " + res.read().decode('utf-8').strip())
 
-def call_log_probe(pkt):
+def call_log_probe(flowId, pkt):
     print("\n*** Logging probe signature")
 
     polka_pkt = pkt.getlayer(Polka)
     probe_pkt = pkt.getlayer(PolkaProbe)
 
     data_dct = {
-        "flowId": "0",
+        "flowId": str(flowId),
         "routeId": str(polka_pkt.route_id),
         "timestamp": str(probe_pkt.timestamp),
         "lightMultSig": str(hex(probe_pkt.l_hash)),   
@@ -71,4 +73,5 @@ def call_log_probe(pkt):
    
     if res.status== 201:
         print("Successfully logged:")
+        print("Probe Signature: " + data_dct["lightMultSig"])
         print("Transaction hash: " + res.read().decode('utf8').strip())
