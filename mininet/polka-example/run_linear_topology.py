@@ -16,17 +16,12 @@
 from time import sleep
 from mininet.log import setLogLevel, info
 
-import urllib.request
-import json
-
 from tests.test_detour import test_detour
 from tests.test_integrity import test_integrity
 from utils.check_digest import BASE_DIGESTS
 from utils.sniff import start_sniffing
 from linear_topology import Polka, PolkaProbe, linear_topology, set_seed_e1, set_seed_e10
-
-ENDPOINT_URL = "http://localhost:5000/"
-
+from utils.call_api import call_deploy_flow_contract, call_log_probe, call_set_ref_sig
 
 def run_network_tests():
     """
@@ -45,65 +40,6 @@ def run_network_tests():
         raise e
     info("*** ✅ All tests passed.\n")
 
-
-def call_deploy_flow_contract():
-    data_dct = {
-        "flowId": "0",
-        "routeId": "1",
-        "edgeAddr": "0x3BAA3CbF7AF166AE1D583395eE38b694005b9C04"
-    }
-
-    req = urllib.request.Request(
-        ENDPOINT_URL + "/deployFlowContract",
-        data = json.dumps(data_dct).encode('utf-8'),
-        headers={'Content-Type': 'application/json'}
-    )
-    res = urllib.request.urlopen(req)
-    print(res.read())
-
-def call_set_ref_sig(pkt):
-    polka_pkt = pkt.getlayer(Polka)
-    probe_pkt = pkt.getlayer(PolkaProbe)
-
-    data_dct = {
-        "flowId": "0",
-        "routeId": str(polka_pkt.route_id),
-        "timestamp": str(probe_pkt.timestamp),
-        "lightMultSig": str(hex(BASE_DIGESTS["h1-h10"][probe_pkt.l_hash][10])),
-    }
-
-    print(hex(probe_pkt.l_hash))
-    print(hex(BASE_DIGESTS["h1-h10"][probe_pkt.l_hash][10]))
-
-    req = urllib.request.Request(
-        ENDPOINT_URL + "setRefSig",
-        data = json.dumps(data_dct).encode('utf-8'),
-        headers={'Content-Type': 'application/json'}
-    )
-    res = urllib.request.urlopen(req)
-    print(res.read())
-
-def call_log_probe(pkt):
-    polka_pkt = pkt.getlayer(Polka)
-    probe_pkt = pkt.getlayer(PolkaProbe)
-
-    data_dct = {
-        "flowId": "0",
-        "routeId": str(polka_pkt.route_id),
-        "timestamp": str(probe_pkt.timestamp),
-        "lightMultSig": str(hex(probe_pkt.l_hash)),   
-    }
-
-    print(hex(probe_pkt.l_hash))
-
-    req = urllib.request.Request(
-        ENDPOINT_URL + "logProbe",
-        data = json.dumps(data_dct).encode('utf-8'),
-        headers={'Content-Type': 'application/json'}
-    )
-    res = urllib.request.urlopen(req)
-    print(res.read())
-
 def collect_siphash():
     """
     Collect the SIPHashes (all intermediary) from the network
@@ -111,7 +47,7 @@ def collect_siphash():
 
     info("*** Starting run for collecting hash and intermediaries\n")
 
-    net = linear_topology(start=False)
+    net = linear_topology(start=False)    
     try:
         net = set_seed_e1(net, 0xABADCAFE)
         net = set_seed_e10(net, 0xBADDC0DE)
@@ -126,24 +62,21 @@ def collect_siphash():
 
         test_integrity(net)
 
-        info("*** Stopping sniffing\n")
+        info("\n*** Stopping sniffing\n")
         pkts = sniff.stop()
         pkts.sort(key=lambda pkt: pkt.time)
 
-        for pkt in pkts:
-            probe = pkt.getlayer(PolkaProbe)
-            polka = pkt.getlayer(Polka)
+        # for pkt in pkts:
+        #     probe = pkt.getlayer(PolkaProbe)
+        #     polka = pkt.getlayer(Polka)
 
-            print(f"{polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
+        #     print(f"{polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
 
-
-        # Sending the seed can only be done after this, since pkts can arrive out of order
-        # So the pkt has already completed the request.
-        call_deploy_flow_contract()
+        call_deploy_flow_contract(0)
         call_set_ref_sig(pkts[0])
         call_log_probe(pkts[-1])
 
-        info("*** Hashes collected ***\n")
+        info("\n*** Hashes collected ***\n")
 
 
     finally:

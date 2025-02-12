@@ -6,7 +6,7 @@ from time import sleep
 from linear_topology import all_ifaces
 
 def start_sniffing(net: Mininet_wifi):
-    info(f"*** 👃 Sniffing on {all_ifaces(net)}\n")
+    info(f"*** 👃 Sniffing on {all_ifaces(net)}\n\n")
 
     sniffer = AsyncSniffer(
         # All ifaces

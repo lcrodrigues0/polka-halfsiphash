@@ -27,6 +27,7 @@ def test_integrity(net: Mininet_wifi):
         "    goes through all core switches.\n"
     )
 
+    info("\n* Ping Execution:\n")
     packet_loss_pct = net.ping(hosts=[first_host, last_host], timeout=1)
     # Comparing floats (bad), but it's fine because an exact 0.0% packet loss is expected
     assert packet_loss_pct == 0.0, f"Packet loss occurred: {packet_loss_pct}%"

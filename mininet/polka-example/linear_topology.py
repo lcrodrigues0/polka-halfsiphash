@@ -58,7 +58,7 @@ bind_layers(Ether, Polka, type=POLKA_PROTO)
 bind_layers(Polka, PolkaProbe, version=PROBE_VERSION)
 bind_layers(PolkaProbe, Ipv4)
 
-def linear_topology_add_hosts(net: Mininet_wifi):
+def linear_topology_add_hosts(net: Mininet_wifi):    
     hosts = []
     info("*** Adding hosts\n")
     for i in range(1, N_SWITCHES + 1):
