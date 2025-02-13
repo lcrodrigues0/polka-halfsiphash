@@ -4,7 +4,7 @@ import json
 from utils.check_digest import BASE_DIGESTS
 
 ENDPOINT_URL = "http://localhost:5000/"
-EDGE_NODE_ADDRESS = "0xF6ED5C4841E61D82F8b4F6225f16261a2330dC59"
+EDGE_NODE_ADDRESS = "0xb46C80edd0BC1b525538d25fF75D25f201b43b9d"
 
 def call_deploy_flow_contract(flowId):
     print("\n*** Deploying the contract related to the flowId")

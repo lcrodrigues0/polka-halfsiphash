@@ -21,8 +21,7 @@ from utils.check_digest import BASE_DIGESTS
 from utils.sniff import start_sniffing
 from linear_topology import Polka, PolkaProbe, linear_topology, set_seed_e1, set_seed_e10
 from utils.call_api import call_deploy_flow_contract, call_log_probe, call_set_ref_sig
-from tests.flow_test import flow_test
-
+from tests.flow_test import flow_test, process_pkts
 
 def collect_hashes():
     """
@@ -35,8 +34,6 @@ def collect_hashes():
     try:
         net = set_seed_e1(net, 0xABADCAFE)
         net = set_seed_e10(net, 0xBADDC0DE)
-        # net = set_seed_e10(net, 0xABADCAFE)
-
 
         net.start()
         net.staticArp()
@@ -46,24 +43,27 @@ def collect_hashes():
         
         sniff = start_sniffing(net)
 
-        flow_test(net, "0", "h1", "h10")
+        n_pkts = 3
+        flow_test(net, "0", "h1", "h10", n_pkts)
 
         info("\n*** Stopping sniffing\n")
         pkts = sniff.stop()
-        pkts.sort(key=lambda pkt: pkt.time)
+
+        (first, last) = process_pkts(pkts, n_pkts)
 
         i = 0
-        for pkt in pkts:
+        for pkt in last:
             probe = pkt.getlayer(PolkaProbe)
             polka = pkt.getlayer(Polka)
 
-            # print(f"{polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
-            print(f"{i} - {probe.l_hash:#0{10}x}")
+            print(f"{i} - {polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
             i += 1
-
-        call_deploy_flow_contract(0)
-        call_set_ref_sig(0, pkts[0])
-        call_log_probe(0, pkts[-1])
+         
+        flowId = 0
+        call_deploy_flow_contract(flowId)
+        for i in range(0, n_pkts):
+            call_set_ref_sig(flowId, first[i])
+            call_log_probe(flowId, last[i])
 
         info("\n*** Hashes collected ***\n")
 
