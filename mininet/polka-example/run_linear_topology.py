@@ -60,7 +60,7 @@ def collect_hashes():
             i += 1
          
         flowId = 0
-        call_deploy_flow_contract(flowId)
+        call_deploy_flow_contract(flowId, first[0])
         for i in range(0, n_pkts):
             call_set_ref_sig(flowId, first[i])
             call_log_probe(flowId, last[i])
