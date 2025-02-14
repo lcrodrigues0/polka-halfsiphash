@@ -1,4 +1,5 @@
 from os import path as Path
+from os import getcwd
 from mininet.log import info
 from mn_wifi.bmv2 import P4Switch
 from time import sleep
@@ -37,7 +38,10 @@ def test_detour():
         ), f"❌ Expected 1 link to be removed between {skipped.name} and {next_sw.name}"
 
         info("*** Adding attacker\n")
-        polka_json_dir = f"{Path.dirname(Path.abspath(__file__))}/polka/"
+        
+        # polka_json_dir = f"{Path.dirname(Path.abspath(__file__))}/polka/"
+        polka_json_dir = f"{getcwd()}/polka/"
+
         attacker = net.addSwitch(
             "s555",
             netcfg=True,
