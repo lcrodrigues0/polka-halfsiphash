@@ -28,7 +28,7 @@ def call_deploy_flow_contract(flowId, pkt):
         print("Successfully deployed!")
         print("Transaction hash: " + res.read().decode('utf-8').strip())
 
-def call_set_ref_sig(flowId, pkt):
+def call_set_ref_sig(flowId, pkt, path):
     print("* Registering reference signature")
 
     polka_pkt = pkt.getlayer(Polka)
@@ -38,7 +38,7 @@ def call_set_ref_sig(flowId, pkt):
         "flowId": str(flowId),
         "routeId": str(polka_pkt.route_id),
         "timestamp": str(probe_pkt.timestamp),
-        "lightMultSig": str(hex(BASE_DIGESTS["h1-h10"][probe_pkt.l_hash][10])),
+        "lightMultSig": str(hex(BASE_DIGESTS[f"{path[0]}-{path[1]}"][probe_pkt.l_hash][10])),
     }
 
     req = urllib.request.Request(

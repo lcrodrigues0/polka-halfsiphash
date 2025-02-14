@@ -40,33 +40,36 @@ def collect_hashes():
         # sleep for a bit to let the network stabilize
         sleep(3)
         
-        # Start Sniffing
-        sniff = start_sniffing(net)
+        paths = [["h1", "h10"], ["h10", "h1"]]
+        for i in range(0, 2):
+            print(f"\n-------- Starting test {i}\n")
+            # Start Sniffing
+            sniff = start_sniffing(net)
 
-        # Ping 
-        n_pkts = 3
-        flow_test(net, "h1", "h10", n_pkts)
+            # Ping 
+            n_pkts = 5
+            flow_test(net, paths[i][0], paths[i][1], n_pkts)
 
-        # Stop sniffing
-        info("\n*** Stopping sniffing\n")
-        pkts = sniff.stop()
+            # Stop sniffing
+            info("\n*** Stopping sniffing\n")
+            pkts = sniff.stop()
 
-        # Selecting packets 
-        (first, last) = process_pkts(pkts, n_pkts)
+            # Selecting packets 
+            (first, last) = process_pkts(pkts, n_pkts)
 
-        # Printing selected packets
-        # print_pkts(first)
-        # print_pkts(last)
-        
-        # Registering Flow
-        flowId = 0
-        call_deploy_flow_contract(flowId, first[0])
+            # Printing selected packets
+            # print_pkts(first)
+            # print_pkts(last)
+            
+            # Registering Flow
+            flowId = i
+            call_deploy_flow_contract(flowId, first[0])
 
-        # Registering probes
-        for i in range(0, n_pkts):
-            print(f"\n*** Probe {i}:")
-            call_set_ref_sig(flowId, first[i])
-            call_log_probe(flowId, last[i])
+            # Registering probes
+            for j in range(0, n_pkts):
+                print(f"\n*** Probe {j}:")
+                call_set_ref_sig(flowId, first[j], paths[i])
+                call_log_probe(flowId, last[j])
 
         info("\n*** Hashes collected ***\n")
 
