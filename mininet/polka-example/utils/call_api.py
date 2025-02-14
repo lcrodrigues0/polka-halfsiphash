@@ -4,7 +4,7 @@ import json
 from utils.check_digest import BASE_DIGESTS
 
 ENDPOINT_URL = "http://localhost:5000/"
-EDGE_NODE_ADDRESS = "0xC6e6D46b2139b942FD5fdAaa38B1976308E018a9"
+EDGE_NODE_ADDRESS = "0xFaB10EF4c7270c828cf2815FA1006f963C6682e3"
 
 def call_deploy_flow_contract(flowId, pkt):
     print("\n*** Deploying the contract related to the flowId")
@@ -25,11 +25,11 @@ def call_deploy_flow_contract(flowId, pkt):
     res = urllib.request.urlopen(req)
 
     if(res.status == 201):
-        print("Successfully deployed:")
+        print("Successfully deployed!")
         print("Transaction hash: " + res.read().decode('utf-8').strip())
 
 def call_set_ref_sig(flowId, pkt):
-    print("\n*** Registering reference signature")
+    print("* Registering reference signature")
 
     polka_pkt = pkt.getlayer(Polka)
     probe_pkt = pkt.getlayer(PolkaProbe)
@@ -49,12 +49,12 @@ def call_set_ref_sig(flowId, pkt):
     res = urllib.request.urlopen(req)
 
     if res.status== 201:
-        print("Successfully registered:")
+        print("Successfully registered!")
         print("Reference Signature: "  + data_dct["lightMultSig"])
         print("Transaction hash: " + res.read().decode('utf-8').strip())
 
 def call_log_probe(flowId, pkt):
-    print("\n*** Logging probe signature")
+    print("\n* Logging probe signature")
 
     polka_pkt = pkt.getlayer(Polka)
     probe_pkt = pkt.getlayer(PolkaProbe)
@@ -74,6 +74,6 @@ def call_log_probe(flowId, pkt):
     res = urllib.request.urlopen(req)
    
     if res.status== 201:
-        print("Successfully logged:")
+        print("Successfully logged!")
         print("Probe Signature: " + data_dct["lightMultSig"])
         print("Transaction hash: " + res.read().decode('utf8').strip())

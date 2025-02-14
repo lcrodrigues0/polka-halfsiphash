@@ -1,7 +1,8 @@
 from mn_wifi.net import Mininet_wifi
 from mininet.log import info
+from linear_topology import Polka, PolkaProbe
 
-def flow_test(net: Mininet_wifi, flowID: str, fst_host_name: str, lst_host_name: str, n_pkts: int):
+def flow_test(net: Mininet_wifi, fst_host_name: str, lst_host_name: str, n_pkts: int):
     def find_host_by_name(net: Mininet_wifi, name: str):
         for host in net.hosts:
             if host.name == name:
@@ -16,7 +17,7 @@ def flow_test(net: Mininet_wifi, flowID: str, fst_host_name: str, lst_host_name:
     assert last_host is not None, f"Host {lst_host_name} not found."
 
     info("*** Flow emulation: ")
-    info(f"Ping 10 packets from {fst_host_name} to {lst_host_name}\n\n")
+    info(f"Ping {n_pkts} packets from {fst_host_name} to {lst_host_name}\n\n")
 
     info("*** Ping Execution\n")
     # packet_loss_pct = net.ping(hosts=[first_host, last_host], timeout=1)
@@ -52,3 +53,14 @@ def split_vector(vector, n):
         start = end
     
     return parts
+
+def print_pkts(pkts):
+    i = 0
+    for pkt in pkts:
+        probe = pkt.getlayer(PolkaProbe)
+        polka = pkt.getlayer(Polka)
+
+        print(f"{i} - {polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
+        i += 1
+    
+    print()
