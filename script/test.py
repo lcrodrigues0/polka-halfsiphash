@@ -460,6 +460,69 @@ def detour():
         net.stop()
 
 
+def outoforder():
+    """
+    Test if the network is protected against an outoforder attack.
+
+    An outoforder attack is when the route is acessed using all defined router,
+     and no other routers, but their order differ.
+    """
+    info("*** OUTOFORDER TEST ***\n")
+    net = linear_topology(start=False)
+    try:
+        # Switch ports
+        # Generally, on core POV:
+        # eth0 = lo?
+        # eth1 = edge
+        # eth2 = previous
+        # eth3 = next
+        oor = net.switches[3:7]
+        info("*** Replacing links with compromised route\n")
+
+        for i in range(3):
+            links = net.delLinkBetween(oor[i], oor[i + 1], allLinks=True)
+            assert len(links) == 1, (
+                f"❌ Expected 1 link to be removed between {oor[i].name} and {oor[i + 1].name}"
+            )
+
+        info("*** Linking back\n")
+        # Taking the "default" port #3 which route from s4 -> s5 -> s6 should pass through on s5
+        link = net.addLink(oor[0], oor[2], port1=3, port2=2, bw=LINK_SPEED)
+        info(f"*** Created link {link}")
+        link = net.addLink(oor[2], oor[1], port1=3, port2=2, bw=LINK_SPEED)
+        info(f"*** Created link {link}")
+        link = net.addLink(oor[1], oor[4], port1=3, port2=2, bw=LINK_SPEED)
+        info(f"*** Created link {link}")
+
+        net = set_seed_e1(net, 0xABADCAFE)
+        net = set_seed_e10(net, 0xBADDC0DE)
+
+        net.start()
+        net.staticArp()
+
+        # sleep for a bit to let the network stabilize
+        sleep(3)
+
+        # CLI(net)
+
+        # assert len(all_ifaces(net)) == 50, f"❌ Expected 50 interfaces. Got {len(all_ifaces(net))}"
+
+        sniff = start_sniffing(net)
+
+        integrity(net)
+
+        info("*** Stopping sniffing\n")
+        pkts = sniff.stop()
+        pkts.sort(key=lambda pkt: pkt.time)
+
+        check_digest(pkts, 0xABADCAFE, 0xBADDC0DE)
+
+        info("*** OUT OF ORDER TEST DONE ***\n")
+
+    finally:
+        net.stop()
+
+
 def subtraction():
     """
     Test if the network is protected against a subtraction attack.
