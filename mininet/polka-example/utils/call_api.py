@@ -4,10 +4,10 @@ import json
 from utils.check_digest import BASE_DIGESTS
 
 ENDPOINT_URL = "http://localhost:5000/"
-EDGE_NODE_ADDRESS = "0xFaB10EF4c7270c828cf2815FA1006f963C6682e3"
+EDGE_NODE_ADDRESS = "0x4dee87c73bC8fc1FE6F32900599961F0767D0993"
 
 def call_deploy_flow_contract(flowId, pkt):
-    print("\n*** Deploying the contract related to the flowId")
+    print(f"\n*** Deploying the contract related to the flowId {flowId}")
 
     polka_pkt = pkt.getlayer(Polka)
 

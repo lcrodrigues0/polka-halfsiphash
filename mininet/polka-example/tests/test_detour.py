@@ -1,4 +1,3 @@
-from os import path as Path
 from os import getcwd
 from mininet.log import info
 from mn_wifi.bmv2 import P4Switch
