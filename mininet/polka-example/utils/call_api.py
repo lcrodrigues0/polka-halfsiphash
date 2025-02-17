@@ -71,9 +71,13 @@ def call_log_probe(flowId, pkt):
         data = json.dumps(data_dct).encode('utf-8'),
         headers={'Content-Type': 'application/json'}
     )
-    res = urllib.request.urlopen(req)
-   
-    if res.status== 201:
+
+    try:
+        res = urllib.request.urlopen(req)
         print("Successfully logged!")
         print("Probe Signature: " + data_dct["lightMultSig"])
         print("Transaction hash: " + res.read().decode('utf8').strip())
+    except urllib.error.HTTPError as e:
+        if e.code == 500:
+            print("Erro: " + e.read().decode('utf-8'))
+    

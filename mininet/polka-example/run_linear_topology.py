@@ -42,7 +42,7 @@ def collect_hashes():
         
         paths = [["h1", "h10"], ["h10", "h1"]]
         for i in range(0, 2):
-            print(f"\n-------- Starting test {i}\n")
+            print(f"\n-------- Starting test {i + 1}\n")
             # Start Sniffing
             sniff = start_sniffing(net)
 
