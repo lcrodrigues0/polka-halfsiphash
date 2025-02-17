@@ -2,29 +2,33 @@
 Network tests
 """
 
-from typing import TypeVar, Iterable
+import json
 import os.path as Path
+import urllib
 from time import sleep
-import urllib, json
+from typing import Iterable, TypeVar
 
 from mininet.log import info
-from mn_wifi.net import Mininet  # type: ignore assumes import exists, it's from p4-utils
-from mn_wifi.bmv2 import P4Switch  # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.bmv2 import (
+    P4Switch,  # type: ignore assumes import exists, it's from p4-utils
+)
+from mn_wifi.net import (
+    Mininet,  # type: ignore assumes import exists, it's from p4-utils
+)
 from scapy.all import Packet
 
+from .scapy import Polka, PolkaProbe, start_sniffing
+from .thrift import set_crc_parameters_common
 from .topo import (
-    linear_topology,
-    connect_to_core_switch,
-    set_seed_e1,
-    set_seed_e10,
-    all_ifaces,
     CORE_THRIFT_CORE_OFFSET,
     LINK_SPEED,
+    all_ifaces,
+    connect_to_core_switch,
+    linear_topology,
     polka_json_path,
+    set_seed_e1,
+    set_seed_e10,
 )
-from .thrift import set_crc_parameters_common
-from .scapy import start_sniffing, Polka, PolkaProbe
-
 
 # Collected known-good digests for CRC32 Hashing. first key is the route taken, second key is the seed used (first hash)
 BASE_DIGESTS = {
