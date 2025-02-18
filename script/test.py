@@ -491,7 +491,7 @@ def outoforder():
         info(f"*** Created link {link}")
         link = net.addLink(oor[2], oor[1], port1=3, port2=2, bw=LINK_SPEED)
         info(f"*** Created link {link}")
-        link = net.addLink(oor[1], oor[4], port1=3, port2=2, bw=LINK_SPEED)
+        link = net.addLink(oor[1], oor[3], port1=3, port2=2, bw=LINK_SPEED)
         info(f"*** Created link {link}")
 
         net = set_seed_e1(net, 0xABADCAFE)
