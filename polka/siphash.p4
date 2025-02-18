@@ -44,7 +44,7 @@ control HalfSipHash_2_4_32(
 
         bit<32> m;
 
-        m = data[31:0];
+        m = data[0:31];
         s.v3 = s.v3 ^ m;
         sipRound(s);
         sipRound(s);
