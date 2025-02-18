@@ -92,18 +92,9 @@ control MySignPacket(
         MySwitchId.apply(hdr, meta);
         hdr.polka_probe.setValid();
 
-        // At this point, `meta.port` should be written on already
-        hdr.polka_probe.l_hash = (bit<32>) meta.port ^ hdr.polka_probe.l_hash ^ (bit<32>) meta.switch_id;
-
-        bit<16> nbase = 0;
-        bit<32> min_bound = 0;
-        bit<32> max_bound = 0xFFFFFFFF;
-        hash(
-            hdr.polka_probe.l_hash,
-            HashAlgorithm.crc32,
-            min_bound,
-            {hdr.polka_probe.l_hash},
-            max_bound
+        HalfSipHash_2_4_32.apply(
+            meta.switch_id ++ meta.port ++ hdr.polka_probe.timestamp ++ 7w0,
+            hdr.polka_probe.l_hash
         );
     }
 }
