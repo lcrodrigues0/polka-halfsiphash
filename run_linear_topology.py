@@ -34,6 +34,7 @@ def run_network_tests():
         test.addition()
         test.skipping()
         test.detour()
+        test.outoforder()
     except Exception as e:
         info(f"*** Test failed: {e}\n")
         raise e
