@@ -634,8 +634,8 @@ def collect_hashes():
 
         # Sending the seed can only be done after this, since pkts can arrive out of order
         # So the pkt has already completed the request.
-        send_pkt(pkts[0])  # Viria do controlador
-        send_pkt(pkts[-1])  # Viria do switch
+        # send_pkt(pkts[0])  # Viria do controlador
+        # send_pkt(pkts[-1])  # Viria do switch
 
         for pkt in pkts:
             probe = pkt.getlayer(PolkaProbe)
