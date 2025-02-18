@@ -93,7 +93,8 @@ control MySignPacket(
         hdr.polka_probe.setValid();
 
         HalfSipHash_2_4_32.apply(
-            meta.switch_id ++ meta.port ++ hdr.polka_probe.timestamp ++ 7w0,
+            // meta.switch_id ++ meta.port ++ hdr.polka_probe.timestamp ++ 7w0,
+            0x0302010007060504,
             hdr.polka_probe.l_hash
         );
     }
