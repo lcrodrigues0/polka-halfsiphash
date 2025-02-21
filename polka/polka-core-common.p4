@@ -115,6 +115,7 @@ control MyIngress(
         bit<16> nresult;
         bit<64> ncount = 4294967296 * 2;
         bit<16> nbase = 0;
+        // https://github.com/p4lang/p4c/blob/f44f4459b71b78b752977cd952b266fcb1e77943/p4include/v1model.p4#L428-L444
         hash(
             nresult,
             HashAlgorithm.crc16_custom,
