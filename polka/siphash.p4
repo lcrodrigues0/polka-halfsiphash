@@ -66,7 +66,7 @@ control HalfSipHash_2_4_32(
 
         sipRound(s);
         sipRound(s);
-        s.v0= s.v0 ^ b; 
+        s.v0 = s.v0 ^ b; 
         s.v2 = s.v2 ^ 0x000000ff;
 
         sipRound(s);

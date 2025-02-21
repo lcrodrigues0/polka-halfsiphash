@@ -4,16 +4,16 @@ Network tests
 
 import json
 import os.path as Path
-import urllib
 from time import sleep
 from typing import Iterable, TypeVar
+import urllib.request as request
 
 from mininet.log import info
-from mn_wifi.bmv2 import (
-    P4Switch,  # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.bmv2 import (  # type: ignore assumes import exists, it's from p4-utils
+    P4Switch,
 )
-from mn_wifi.net import (
-    Mininet,  # type: ignore assumes import exists, it's from p4-utils
+from mn_wifi.net import (  # type: ignore
+    Mininet,
 )
 from scapy.all import Packet
 
@@ -171,7 +171,9 @@ def check_digest(pkts: Iterable[Packet], seed_src: int, seed_dst: int):
     routes: list[list[Packet]] = []
     marker_flag = False
     for pkt in pkts:
-        if pkt.getlayer(PolkaProbe).l_hash in (seed_src, seed_dst):
+        polka_layer = pkt.getlayer(PolkaProbe)
+        assert polka_layer is not None, "❌ PolkaProbe layer not found"
+        if polka_layer.l_hash in (seed_src, seed_dst):
             marker_flag = not marker_flag
         if marker_flag:
             routes.append([pkt])
@@ -188,7 +190,9 @@ def check_digest(pkts: Iterable[Packet], seed_src: int, seed_dst: int):
         info("*** 🔍 Tracing new route\n")
         for pkt, expected_digest in zip(route, expected_digests):
             polka = pkt.getlayer(Polka)
+            assert polka is not None, "❌ Polka layer not found"
             probe = pkt.getlayer(PolkaProbe)
+            assert probe is not None, "❌ Polka probe layer not found"
             l_hash = probe.l_hash
             info(
                 f"*** Comparing {l_hash:#0{10}x}, expects {expected_digest:#0{10}x} "
@@ -210,7 +214,9 @@ def check_digest(pkts: Iterable[Packet], seed_src: int, seed_dst: int):
                 info("*** ❌ Leftover packets:\n")
                 for pkt in route[len(expected_digests) :]:
                     polka = pkt.getlayer(Polka)
+                    assert polka is not None, "❌ Polka layer not found"
                     probe = pkt.getlayer(PolkaProbe)
+                    assert probe is not None, "❌ Polka probe layer not found"
                     info(
                         f"*** {probe.l_hash:#0{10}x} on node {polka.ttl:#0{6}x}:{pkt.sniffed_on}\n"
                     )
@@ -294,6 +300,7 @@ def self():
         info("*** Stopping sniffing\n")
         sleep(0.5)
         pkts = sniff.stop()
+        assert pkts, "❌ No packets captured"
         pkts.sort(key=lambda pkt: pkt.time)
 
         check_digest(pkts, 0x61E8D6E7, 0xDEADBEEF)
@@ -450,6 +457,7 @@ def detour():
 
         info("*** Stopping sniffing\n")
         pkts = sniff.stop()
+        assert pkts, "❌ No packets captured"
         pkts.sort(key=lambda pkt: pkt.time)
 
         check_digest(pkts, 0xBADDC0DE, 0xDEADBEEF)
@@ -513,6 +521,7 @@ def outoforder():
 
         info("*** Stopping sniffing\n")
         pkts = sniff.stop()
+        assert pkts, "❌ No packets captured"
         pkts.sort(key=lambda pkt: pkt.time)
 
         check_digest(pkts, 0xABADCAFE, 0xBADDC0DE)
@@ -625,11 +634,15 @@ def collect_hashes():
         def send_pkt(pkt):
             # Read headers
             polka_pkt = pkt.getlayer(Polka)
+            assert polka_pkt is not None, "❌ Polka layer not found"
             probe_pkt = pkt.getlayer(PolkaProbe)
-            req = urllib.request.Request(
-                ENDPOINT_URL, data=json.dumps(probe_pkt.to_dict()).encode("utf-8")
+            req = request.Request(
+                ENDPOINT_URL,
+                data=json.dumps(
+                    {"route_id": polka_pkt.route_id, probe: probe_pkt.to_dict()}
+                ).encode("utf-8"),
             )
-            res = urllib.request.urlopen(req)
+            res = request.urlopen(req)
             print(res.read().decode("utf-8"))
 
         # Sending the seed can only be done after this, since pkts can arrive out of order
@@ -638,8 +651,10 @@ def collect_hashes():
         # send_pkt(pkts[-1])  # Viria do switch
 
         for pkt in pkts:
-            probe = pkt.getlayer(PolkaProbe)
             polka = pkt.getlayer(Polka)
+            assert polka is not None, "❌ Polka layer not found"
+            probe = pkt.getlayer(PolkaProbe)
+            assert probe is not None, "❌ PolkaProbe layer not found"
 
             print(f"{polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
 

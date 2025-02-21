@@ -20,4 +20,7 @@ package = false
 build_polka = "uv_scripts:build"
 
 [dependency-groups]
-dev = ["ruff>=0.6.7"]
+dev = [
+    "pytest>=8.3.4",
+    "ruff>=0.6.7",
+]
