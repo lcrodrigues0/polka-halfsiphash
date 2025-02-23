@@ -1,6 +1,6 @@
 """Simulates PolKA behavior"""
 
-from weakref import ref
+from math import ceil
 
 from crc import Configuration, Calculator
 
@@ -25,7 +25,7 @@ def crc_for_node(node_id: int) -> Calculator:
 
 
 class Node:
-    def __init__(self, name: str, node_id: int, ports: list[ref | None] = []):
+    def __init__(self, name: str, node_id: int, ports: list = []):
         """Initializes a node with a name and node_id.
         `ports` is a list with index equal to source port number, and value equal to a weak reference to the node it is connected to (destination port not needed)."""
 
@@ -44,7 +44,9 @@ class Node:
         # Max value allowed. Only used in p4 code
         # ncount = (4294967296 * 2) & bitmask(64)
 
-        nresult = self.crc.checksum(ndata.to_bytes(length=(160 / 8).__ceil__()))
+        nresult = self.crc.checksum(
+            ndata.to_bytes(length=ceil(160 / 8), byteorder="big")
+        )
         return (nresult ^ dif) & bitmask(9)
 
     def __repr__(self):

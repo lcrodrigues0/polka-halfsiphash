@@ -15,7 +15,7 @@ from mn_wifi.bmv2 import (  # type: ignore assumes import exists, it's from p4-u
 from mn_wifi.net import (  # type: ignore
     Mininet,
 )
-from scapy.all import Packet
+from scapy.all import Packet, PacketList
 
 from .scapy import Polka, PolkaProbe, start_sniffing
 from .thrift import set_crc_parameters_common
@@ -35,7 +35,7 @@ from .calc_digests import calc_digests
 T = TypeVar("T")
 
 
-def check_digest(pkts: list[Packet], seed_src: int, seed_dst: int):
+def check_digest(pkts: PacketList, seed_src: int, seed_dst: int):
     """
     Check if the packets have the expected digests
     """
@@ -43,7 +43,9 @@ def check_digest(pkts: list[Packet], seed_src: int, seed_dst: int):
     #     print(f"{pkt.getlayer(PolkaProbe).l_hash:#0{10}x}, {pkt.getlayer(PolkaProbe).timestamp:#0{10}x}")
 
     src_routeid = pkts[0].getlayer(Polka).route_id
-    dst_routeid = pkts[-1].getlayer(Polka).route_id
+    print(f"src_routeid: {src_routeid:#08x}")
+    dst_routeid = pkts[len(pkts)//2].getlayer(Polka).route_id
+    print(f"dst_routeid (reply): {dst_routeid:#08x}")
 
     going = calc_digests(src_routeid, "s1", seed_src)
     reply = calc_digests(dst_routeid, "s10", seed_dst)
@@ -84,10 +86,10 @@ def check_digest(pkts: list[Packet], seed_src: int, seed_dst: int):
             assert probe is not None, "❌ Polka probe layer not found"
             l_hash = probe.l_hash
             info(
-                f"*** Comparing {l_hash:#0{10}x}, expects {expected_digest:#0{10}x} "
-                f"on node {polka.ttl:#0{6}x}:{pkt.sniffed_on} "
+                f"*** Comparing {l_hash:#08x}, expects 0x{expected_digest.hex()} "
+                f"on node {polka.ttl:#04x}:{pkt.sniffed_on} "
             )
-            if l_hash == expected_digest:
+            if l_hash == int.from_bytes(expected_digest, byteorder="big"):
                 info("✅ ok\n")
             else:
                 info("❌ Digest does not match\n")
@@ -98,7 +100,7 @@ def check_digest(pkts: list[Packet], seed_src: int, seed_dst: int):
             )
             if len(route) < len(expected_digests):
                 for digest in expected_digests[len(route) :]:
-                    info(f"*** Missing digest {digest:#0{10}x}\n")
+                    info(f"*** Missing digest 0x{digest.hex()}\n")
             else:
                 info("*** ❌ Leftover packets:\n")
                 for pkt in route[len(expected_digests) :]:
@@ -107,7 +109,7 @@ def check_digest(pkts: list[Packet], seed_src: int, seed_dst: int):
                     probe = pkt.getlayer(PolkaProbe)
                     assert probe is not None, "❌ Polka probe layer not found"
                     info(
-                        f"*** {probe.l_hash:#0{10}x} on node {polka.ttl:#0{6}x}:{pkt.sniffed_on}\n"
+                        f"*** {probe.l_hash:#08x} on node {polka.ttl:#04x}:{pkt.sniffed_on}\n"
                     )
 
 
@@ -237,9 +239,9 @@ def addition():
         info("*** Linking attacker\n")
         # Taking the "default" port #3 which route from s4 -> s5 -> s6 should pass through on s5
         link = net.addLink(compromised, attacker, port1=3, port2=0, bw=LINK_SPEED)
-        info(f"*** Created link {link}")
+        info(f"*** Created link {link}\n")
         link = net.addLink(attacker, next_sw, port1=1, port2=4, bw=LINK_SPEED)
-        info(f"*** Created link {link}")
+        info(f"*** Created link {link}\n")
         # net.addLink(compromised, attacker, bw=LINK_SPEED)
         # net.addLink(attacker, next_sw, bw=LINK_SPEED)
 
@@ -247,7 +249,7 @@ def addition():
         # The attacker will take the port #3 instead.
         # This is still used in traffic in the s6 -> s5 -> s4 direction
         new_link = net.addLink(compromised, next_sw, port1=4, port2=2, bw=LINK_SPEED)
-        info(f"### Created link {new_link}\n")
+        info(f"*** Created link {new_link}\n")
 
         net = set_seed_e1(net, 0xABADCAFE)
         net = set_seed_e10(net, 0xBADDC0DE)
@@ -319,12 +321,12 @@ def detour():
         info("*** Linking attacker\n")
         # Taking the "default" port #3 which route from s4 -> s5 -> s6 should pass through on s5
         link = net.addLink(prev_sw, attacker, port1=3, port2=0, bw=LINK_SPEED)
-        info(f"*** Created link {link}")
+        info(f"*** Created link {link}\n")
         link = net.addLink(attacker, next_sw, port1=1, port2=2, bw=LINK_SPEED)
-        info(f"*** Created link {link}")
+        info(f"*** Created link {link}\n")
         # relink skipped sw
         link = net.addLink(prev_sw, skipped, port1=4, port2=2, bw=LINK_SPEED)
-        info(f"*** Created link {link}")
+        info(f"*** Created link {link}\n")
         link = net.addLink(skipped, next_sw, port1=3, port2=4, bw=LINK_SPEED)
 
         net = set_seed_e1(net, 0xBADDC0DE)
@@ -385,11 +387,11 @@ def outoforder():
         info("*** Linking back\n")
         # Taking the "default" port #3 which route from s4 -> s5 -> s6 should pass through on s5
         link = net.addLink(oor[0], oor[2], port1=3, port2=2, bw=LINK_SPEED)
-        info(f"*** Created link {link}")
+        info(f"*** Created link {link}\n")
         link = net.addLink(oor[2], oor[1], port1=3, port2=2, bw=LINK_SPEED)
-        info(f"*** Created link {link}")
+        info(f"*** Created link {link}\n")
         link = net.addLink(oor[1], oor[3], port1=3, port2=2, bw=LINK_SPEED)
-        info(f"*** Created link {link}")
+        info(f"*** Created link {link}\n")
 
         net = set_seed_e1(net, 0xABADCAFE)
         net = set_seed_e10(net, 0xBADDC0DE)
@@ -459,7 +461,7 @@ def skipping():
         )
 
         new_link = net.addLink(prev_sw, next_sw, port1=3, port2=2, bw=LINK_SPEED)
-        info(f"### Created link {new_link}\n")
+        info(f"*** Created link {new_link}\n")
 
         net = set_seed_e1(net, 0x61E8D6E7)
         net = set_seed_e10(net, 0xABADCAFE)
