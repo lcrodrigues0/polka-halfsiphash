@@ -68,12 +68,13 @@ NODES = [
     ]
 ]
 
-for i, node in enumerate(NODES[2:-1], start=1):  # Middle nodes
+# Setting up node links
+for i, node in enumerate(NODES[2:-1], start=2):  # Middle nodes
     node.ports = [
         None,  # Local (?)
         None,  # Edge
         NODES[i - 1],  # Node n-1 (previous)
         NODES[i + 1],  # Node n+1 (next)
     ]
-NODES[1].ports = [None, None, NODES[1], None]  # Edge node 1. Next is on port 2
+NODES[1].ports = [None, None, NODES[2], None]  # Edge node 1. Next is on port 2
 NODES[-1].ports = [None, None, NODES[-2], None]  # Edge node 10. Previous is on port 1

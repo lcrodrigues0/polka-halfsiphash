@@ -34,12 +34,12 @@ class State:
         self.v1 = self.rotl(self.v1, 13)
         self.v1 = self.v1 ^ self.v2
         self.v2 = self.rotl(self.v2, 16)
-        print(
-            self.v0.bit_length(),
-            self.v1.bit_length(),
-            self.v2.bit_length(),
-            self.v3.bit_length(),
-        )
+        # print(
+        #     self.v0.bit_length(),
+        #     self.v1.bit_length(),
+        #     self.v2.bit_length(),
+        #     self.v3.bit_length(),
+        # )
 
 
 def siphash(key: _64Bit, data: _32Bit) -> _32Bit:
@@ -66,6 +66,6 @@ def siphash(key: _64Bit, data: _32Bit) -> _32Bit:
     
     r = (s.v1 ^ s.v3).to_bytes(4, byteorder="little")
 
-    print(f"r: 0x{r.hex()}")
+    # print(f"r: 0x{r.hex()}")
 
     return r
