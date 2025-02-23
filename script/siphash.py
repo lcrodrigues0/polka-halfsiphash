@@ -1,11 +1,12 @@
-from typing import Annotated
+# from typing import Annotated
 
-_64Bit = Annotated[bytes, "64-bit"]
-_32Bit = Annotated[bytes, "32-bit"]
+# _64Bit = Annotated[bytes, "64-bit"]
+# _32Bit = Annotated[bytes, "32-bit"]
 
 
 class State:
-    def __init__(self, key: _64Bit) -> None:
+    def __init__(self, key: bytes) -> None:
+    # def __init__(self, key: _64Bit) -> None:
         k0 = int.from_bytes(key[:4], byteorder="big")
         k1 = int.from_bytes(key[4:], byteorder="big")
         self.v0 = k0 ^ 0x0000_0000
@@ -42,7 +43,8 @@ class State:
         # )
 
 
-def siphash(key: _64Bit, data: _32Bit) -> _32Bit:
+def siphash(key: bytes, data: bytes) -> bytes:
+# def siphash(key: _64Bit, data: _32Bit) -> _32Bit:
     """Hashes a single datum using especified key. Does not keep state. (so it is single-use|stateless)"""
     s = State(key)
     b = 0x0400_0000
