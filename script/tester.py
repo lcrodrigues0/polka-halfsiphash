@@ -44,7 +44,7 @@ def check_digest(pkts: PacketList, seed_src: int, seed_dst: int):
 
     src_routeid = pkts[0].getlayer(Polka).route_id
     print(f"src_routeid: {src_routeid:#08x}")
-    dst_routeid = pkts[len(pkts)//2].getlayer(Polka).route_id
+    dst_routeid = pkts[len(pkts) // 2].getlayer(Polka).route_id
     print(f"dst_routeid (reply): {dst_routeid:#08x}")
 
     going = calc_digests(src_routeid, "s1", seed_src)
@@ -493,61 +493,67 @@ def skipping():
         net.stop()
 
 
+def send_pkt(pkt):
+    ENDPOINT_URL = "http://localhost:8283/"
+    # Read headers
+    polka_pkt = pkt.getlayer(Polka)
+    assert polka_pkt is not None, "❌ Polka layer not found"
+    probe_pkt = pkt.getlayer(PolkaProbe)
+    req = request.Request(
+        ENDPOINT_URL,
+        data=json.dumps(
+            {"route_id": polka_pkt.route_id, "probe": probe_pkt.to_dict()}
+        ).encode("utf-8"),
+    )
+    res = request.urlopen(req)
+    print(res.read().decode("utf-8"))
+
+
 def collect_hashes():
     """
     Collect the hashes (all intermediary) from the network
     """
 
-    ENDPOINT_URL = "http://localhost:8283/"
-
     info("*** Starting run for collecting hash and intermediaries\n")
 
     net = linear_topology(start=False)
     try:
-        net = set_seed_e1(net, 0xABADCAFE)
-        net = set_seed_e10(net, 0xBADDC0DE)
-
         net.start()
         net.staticArp()
 
         # sleep for a bit to let the network stabilize
         sleep(3)
 
-        sniff = start_sniffing(net)
+        def ifaces_fn(net: Mininet):
+            import re
+            iname = re.compile(r"e\d+-eth2")
+            return [
+                iface
+                for switch in net.switches
+                for iface in switch.intfNames()
+                if iname.match(iface)
+            ]
 
-        integrity(net)
-
-        info("*** Stopping sniffing\n")
-        pkts = sniff.stop()
-        assert pkts, "❌ No packets captured"
-        pkts.sort(key=lambda pkt: pkt.time)
-
-        def send_pkt(pkt):
-            # Read headers
-            polka_pkt = pkt.getlayer(Polka)
-            assert polka_pkt is not None, "❌ Polka layer not found"
-            probe_pkt = pkt.getlayer(PolkaProbe)
-            req = request.Request(
-                ENDPOINT_URL,
-                data=json.dumps(
-                    {"route_id": polka_pkt.route_id, probe: probe_pkt.to_dict()}
-                ).encode("utf-8"),
+        def sniff_cb(pkt: Packet):
+            assert pkt.sniffed_on is not None, (
+                "❌ Packet not sniffed on any interface. WTF."
             )
-            res = request.urlopen(req)
-            print(res.read().decode("utf-8"))
-
-        # Sending the seed can only be done after this, since pkts can arrive out of order
-        # So the pkt has already completed the request.
-        # send_pkt(pkts[0])  # Viria do controlador
-        # send_pkt(pkts[-1])  # Viria do switch
-
-        for pkt in pkts:
             polka = pkt.getlayer(Polka)
             assert polka is not None, "❌ Polka layer not found"
             probe = pkt.getlayer(PolkaProbe)
             assert probe is not None, "❌ PolkaProbe layer not found"
+            eth = pkt.getlayer("Ether")
+            assert eth is not None, "❌ Ether layer not found"
 
-            print(f"{polka.ttl:#0{6}x} -> {probe.l_hash:#0{10}x}")
+            send_pkt(pkt)
+            return f"{pkt.sniffed_on} - {eth.src} -> {eth.dst} : => {probe.l_hash:#0{10}x}"
+
+        sniff = start_sniffing(net, ifaces_fn=ifaces_fn, cb=sniff_cb)
+
+        integrity(net)
+
+        info("*** Stopping sniffing\n")
+        sniff.stop()
 
         info("*** Hashes collected ***\n")
 

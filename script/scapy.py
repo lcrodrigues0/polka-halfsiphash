@@ -2,6 +2,8 @@
 For scapy setup and utilities
 """
 
+from typing import Callable, Optional
+
 from time import sleep
 
 # https://scapy.readthedocs.io/en/stable/usage.html#sniffing
@@ -44,17 +46,16 @@ bind_layers(Polka, PolkaProbe, version=PROBE_VERSION)
 bind_layers(PolkaProbe, IP)
 
 
-# TODO: Always send timestamp when edge detected
-def start_sniffing(net: Mininet):
+def start_sniffing(net: Mininet, ifaces_fn = all_ifaces, cb: Optional[Callable[[Packet], Optional[str]]] = None):
     info(f"*** 👃 Sniffing on {all_ifaces(net)}\n")
 
     sniffer = AsyncSniffer(
         # All ifaces
-        iface=all_ifaces(net),
+        iface=ifaces_fn(net),
         # filter=f"ether proto {POLKA_PROTO:#x}",
         filter="ether proto 0x1234",
         store=True,
-        # cb = lambda x: primeiro ou último
+        prn=cb,
     )
     sniffer.start()
     # Waits for the minimum amount for the sniffer to be setup and run
