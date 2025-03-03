@@ -3,7 +3,7 @@ from time import sleep
 from scapy.all import Packet
 
 from script.tester import linear_topology, Polka, PolkaProbe, integrity, start_sniffing
-from script.call_api import call_deploy_flow_contract, call_set_ref_sig, hash_flow_id
+from script.call_api import call_deploy_flow_contract, call_set_ref_sig, hash_flow_id, call_log_probe
 
 def send_pkt(pkt):
     # Read headers
@@ -13,8 +13,7 @@ def send_pkt(pkt):
     if(probe_pkt.timestamp == probe_pkt.l_hash):
         call_set_ref_sig(pkt)
     else:
-        print("DIFERENTE")
-
+        call_log_probe(pkt)
 
 
 def collect_hashes():
@@ -57,14 +56,20 @@ def collect_hashes():
             eth = pkt.getlayer("Ether")
             assert eth is not None, "❌ Ether layer not found"
 
-            send_pkt(pkt)
-            # return f"{pkt.sniffed_on} - {eth.src} -> {eth.dst} : => {probe.l_hash:#0{10}x}"
+            if(probe.timestamp == probe.l_hash):
+                call_set_ref_sig(pkt)
+            else:
+                call_log_probe(pkt)
+
+            # send_pkt(pkt)
+            return f"{pkt.sniffed_on} - {eth.src} -> {eth.dst} : => {probe.l_hash:#0{10}x}"
 
         sniff = start_sniffing(net, ifaces_fn=ifaces_fn, cb=sniff_cb)
 
         integrity(net)
 
         info("*** Stopping sniffing\n")
+        sleep(2)
         sniff.stop()
 
         info("*** Hashes collected ***\n")
