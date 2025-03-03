@@ -19,6 +19,7 @@ from mininet.log import setLogLevel, info, debug
 from mn_wifi.cli import CLI  # type: ignore assumes import exists, it's from p4-utils
 
 import script.tester as tester
+import script.connect_api as connect_api
 from script.topo import linear_topology
 
 
@@ -44,7 +45,8 @@ def run_network_tests():
 if __name__ == "__main__":
     setLogLevel("info")
     # run_network_tests()
-    tester.collect_hashes()
+    # tester.collect_hashes()
+    connect_api.collect_hashes()
 
     # info("*** Running CLI\n")
     # net = linear_topology()

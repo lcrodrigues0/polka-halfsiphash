@@ -32,7 +32,7 @@ def calc_digests(route_id: int, node_id: str, seed: int) -> list:
 
         if exit_port < 2:
             # This means the packet has reached the edge
-            print(f"EXIT PORT {exit_port} on {node.name}")
+            # print(f"EXIT PORT {exit_port} on {node.name}")
             break
         next_node = node.ports[exit_port]
         assert isinstance(next_node, Node), f"Invalid next node: {next_node}"

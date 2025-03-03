@@ -126,7 +126,7 @@ def integrity(net: Mininet):
     assert last_host is not None, "Host h10 not found"
 
     info(
-        "*** Testing network integrity\n"
+        "\n*** Testing network integrity\n"
         f"    a ping from {first_host.name} to {last_host.name},\n"
         "    goes through all core switches.\n"
     )
@@ -495,10 +495,13 @@ def skipping():
 
 def send_pkt(pkt):
     ENDPOINT_URL = "http://localhost:8283/"
+
     # Read headers
     polka_pkt = pkt.getlayer(Polka)
     assert polka_pkt is not None, "❌ Polka layer not found"
+
     probe_pkt = pkt.getlayer(PolkaProbe)
+
     req = request.Request(
         ENDPOINT_URL,
         data=json.dumps(
@@ -527,6 +530,7 @@ def collect_hashes():
         def ifaces_fn(net: Mininet):
             import re
             iname = re.compile(r"e\d+-eth2")
+            
             return [
                 iface
                 for switch in net.switches
