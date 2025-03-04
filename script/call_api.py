@@ -44,7 +44,7 @@ def call_set_ref_sig(pkt):
     data_dct = {
         "flowId": str(flow_id),
         "routeId": str(route_id),
-        "timestamp": str(timestamp),
+        "timestamp": str(hex(timestamp)),
         "lightMultSig": str(light_mult_sig),
     }
 
@@ -79,7 +79,7 @@ def call_log_probe(pkt):
     data_dct = {
         "flowId": str(flow_id),
         "routeId": str(route_id),
-        "timestamp": str(timestamp),
+        "timestamp": str(hex(timestamp)),
         "lightMultSig": str(light_mult_sig),   
     }
 
