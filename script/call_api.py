@@ -6,7 +6,7 @@ from script.tester import Polka, PolkaProbe
 from script.calc_digests import calc_digests
 
 ENDPOINT_URL = "http://localhost:5000/"
-EDGE_NODE_ADDRESS = "0x0cA14F8f0CEB8CD6dbD97d8bA47D572a20ce6004"
+EDGE_NODE_ADDRESS = "0xF00013280116dCCa58FbFDb97a58B0Db7Fe51a98"
 
 polka_route_ids = {
     "h1": {

@@ -5,15 +5,28 @@ from scapy.all import Packet
 from script.tester import linear_topology, Polka, PolkaProbe, integrity, start_sniffing
 from script.call_api import call_deploy_flow_contract, call_set_ref_sig, hash_flow_id, call_log_probe
 
-def send_pkt(pkt):
-    # Read headers
-    probe_pkt = pkt.getlayer(PolkaProbe)
-    assert probe_pkt is not None, "❌ Probe layer not found"
+    
 
-    if(probe_pkt.timestamp == probe_pkt.l_hash):
-        call_set_ref_sig(pkt)
-    else:
-        call_log_probe(pkt)
+def integrity(net: Mininet):
+    """
+    Test the integrity of the network, this is to be used in a suite of tests
+    """
+
+    first_host = net.get("h1")
+    assert first_host is not None, "Host h1 not found"
+    last_host = net.get(
+        "h10"
+    )  # h11 is right beside h1, so wouldn't traverse all switches
+    assert last_host is not None, "Host h10 not found"
+
+    info(
+        "\n*** Testing network integrity\n"
+        f"    a ping from {first_host.name} to {last_host.name},\n"
+        "    goes through all core switches.\n"
+    )
+    
+    first_host.cmd('ping -c 1', last_host.IP())
+
 
 
 def collect_hashes():
@@ -61,7 +74,6 @@ def collect_hashes():
             else:
                 call_log_probe(pkt)
 
-            # send_pkt(pkt)
             return f"{pkt.sniffed_on} - {eth.src} -> {eth.dst} : => {probe.l_hash:#0{10}x}"
 
         sniff = start_sniffing(net, ifaces_fn=ifaces_fn, cb=sniff_cb)
