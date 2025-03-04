@@ -94,13 +94,16 @@ def call_set_ref_sig(pkt):
         data = json.dumps(data_dct).encode('utf-8'),
         headers={'Content-Type': 'application/json'}
     )
-    res = request.urlopen(req)
 
-    if res.status== 201:
+    try:
+        res = request.urlopen(req)
         print("\n*** Registering reference signature in flow " + flow_id)
         print("Reference Signature: "  + data_dct["lightMultSig"])
         print("Transaction hash: " + res.read().decode('utf-8').strip(), end="\n\n")
-
+    except error.HTTPError as e:
+        if e.code == 500:
+            print("\n*** Registering reference signature in flow " + flow_id)
+            print("Erro: " + e.read().decode('utf-8'))        
     
 
 def call_log_probe(pkt):

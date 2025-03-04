@@ -28,7 +28,6 @@ def integrity(net: Mininet):
     first_host.cmd('ping -c 1', last_host.IP())
 
 
-
 def collect_hashes():
     """
     Collect the hashes (all intermediary) from the network
