@@ -141,8 +141,9 @@ def get_hashes_hops():
 
         integrity(net)
 
-        info("*** Stopping sniffing\n")
         sleep(2)
+
+        info("*** Stopping sniffing\n")
         sniff.stop()
 
         info("*** Hashes collected ***\n")
