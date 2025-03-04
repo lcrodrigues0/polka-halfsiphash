@@ -41,9 +41,6 @@ def connect_api():
         # sleep for a bit to let the network stabilize
         sleep(3)
 
-        flow_id = hash_flow_id("10.0.1.1", "0", "10.0.10.10", "0")
-        call_deploy_flow_contract(flow_id)
-
         def ifaces_fn(net: Mininet):
             import re
             iname = re.compile(r"e\d+-eth2")
@@ -72,6 +69,11 @@ def connect_api():
                 call_log_probe(pkt)
 
             print(f"{pkt.time} : {pkt.sniffed_on} - {eth.src} -> {eth.dst} => {probe.l_hash:#0{10}x}")
+
+        
+        call_deploy_flow_contract(hash_flow_id("10.0.1.1", "0", "10.0.10.10", "0"))
+        call_deploy_flow_contract(hash_flow_id("10.0.10.10", "0", "10.0.1.1", "0"))
+
         sniff = start_sniffing(net, ifaces_fn=ifaces_fn, cb=sniff_cb)
 
         integrity(net)
@@ -79,7 +81,7 @@ def connect_api():
         # Time to finish printing the logs
         sleep(2)  
 
-        info("*** Stopping sniffing\n")
+        info("\n*** Stopping sniffing\n")
         sniff.stop()
 
         info("*** Hashes collected ***\n")
