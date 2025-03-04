@@ -105,15 +105,7 @@ def get_hashes_hops():
         sleep(3)
 
         def ifaces_fn(net: Mininet):
-            import re
-            iname = re.compile(r"\S\d+-eth2")
-            
-            return [
-                iface
-                for switch in net.switches
-                for iface in switch.intfNames()
-                if iname.match(iface)
-            ]
+            return ["e1-eth2", "s1-eth2", "s2-eth3", "s3-eth3", "s4-eth3", "s5-eth3", "s6-eth3", "s7-eth3", "s8-eth3", "s9-eth3", "s10-eth1", "e10-eth2"]
 
         def sniff_cb(pkt: Packet):
             assert pkt.sniffed_on is not None, (
@@ -135,7 +127,7 @@ def get_hashes_hops():
                 if match:
                     print(f"Reference Signature: 0x{calc_digests(polka.route_id, match.group(), probe.timestamp)[-1].hex()}")
                 
-            print(f"{pkt.sniffed_on} - {eth.src} -> {eth.dst} : => {probe.l_hash:#0{10}x}")
+            print(f"{hex(probe.timestamp)} : {pkt.sniffed_on} - {eth.src} -> {eth.dst} : => {probe.l_hash:#0{10}x}")
 
         sniff = start_sniffing(net, ifaces_fn=ifaces_fn, cb=sniff_cb)
 

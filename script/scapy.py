@@ -47,7 +47,7 @@ bind_layers(PolkaProbe, IP)
 
 
 def start_sniffing(net: Mininet, ifaces_fn = all_ifaces, cb: Optional[Callable[[Packet], Optional[str]]] = None):
-    info(f"*** 👃 Sniffing on {all_ifaces(net)}\n")
+    info(f"*** 👃 Sniffing on {ifaces_fn(net)}\n")
 
     sniffer = AsyncSniffer(
         # All ifaces
