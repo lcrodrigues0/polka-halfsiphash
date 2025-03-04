@@ -116,8 +116,8 @@ def collect_hashes():
             else:
                 call_log_probe(pkt)
 
-            return f"{pkt.sniffed_on} - {eth.src} -> {eth.dst} : => {probe.l_hash:#0{10}x}"
-
+            print(f"{pkt.sniffed_on} - {eth.src} -> {eth.dst} : => {probe.l_hash:#0{10}x}"
+)
         sniff = start_sniffing(net, ifaces_fn=ifaces_fn, cb=sniff_cb)
 
         integrity(net)
@@ -132,7 +132,6 @@ def collect_hashes():
         net.stop()
 
     info("*** ✅ Run finished.\n")
-
 
 def get_hashes_hops():
     """
