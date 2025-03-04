@@ -1,27 +1,11 @@
 from urllib import request, error
 import json
-from hashlib import sha256
 
 from script.tester import Polka, PolkaProbe
-from script.calc_digests import calc_digests
+from script.utils import calc_digests, polka_route_ids, get_ingress_edge, calc_flow_id, hash_flow_id
 
 ENDPOINT_URL = "http://localhost:5000/"
 EDGE_NODE_ADDRESS = "0xF00013280116dCCa58FbFDb97a58B0Db7Fe51a98"
-
-polka_route_ids = {
-    "h1": {
-        "h1": 0,
-        "h2": 2147713608,
-        "h3": 103941321831683,
-        "h4": 11476003314842104240,
-        "h5": 51603676627500816006703,
-        "h6": 53859119087051048274660866727,
-        "h7": 2786758700157712044095728923460252,
-        "h8": 152639893319959825741646821899524043963,
-        "h9": 18161241477108940830924939053933556023686562,
-        "h10": 40134688781405407356790831164801586774996990884,
-    }
-}
 
 def call_deploy_flow_contract(flowId, first_host="h1", last_host="h10"):
     print(f"\n*** Deploying the contract related to the flowId {flowId}")
@@ -45,38 +29,13 @@ def call_deploy_flow_contract(flowId, first_host="h1", last_host="h10"):
 
     print("\n")
 
-
-def hash_flow_id(ip_src, port_src, ip_dst, port_dst):
-    concat = ip_src + port_src + ip_dst + port_dst
-    hash_object = sha256(concat.encode())
-    hash_hex = hash_object.hexdigest()
-    
-    return hash_hex
-
-def calc_flow_id(pkt):
-    ip_pkt = pkt.getlayer("IP")
-    assert ip_pkt is not None, "❌ IP layer not found"
-
-    tcp_pkt = pkt.getlayer("TCP")
-    if tcp_pkt is None:
-        port_src = "0"
-        port_dst = "0"
-    else:
-        port_src = tcp_pkt.sport
-        port_dst = tcp_pkt.dport
-
-    ip_src = ip_pkt.src
-    ip_dst = ip_pkt.dst
-
-    return hash_flow_id(ip_src, port_src, ip_dst, port_dst)
-
 def call_set_ref_sig(pkt):
     polka_pkt = pkt.getlayer(Polka)
     assert polka_pkt is not None, "❌ Polka layer not found"
     probe_pkt = pkt.getlayer(PolkaProbe)
     assert probe_pkt is not None, "❌ Probe layer not found"
-    
-    ingress_edge="s1"
+
+    ingress_edge = get_ingress_edge(pkt)
     flow_id = calc_flow_id(pkt)
     route_id = polka_pkt.route_id
     timestamp = probe_pkt.timestamp
