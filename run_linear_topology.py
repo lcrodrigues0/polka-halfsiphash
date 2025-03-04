@@ -47,7 +47,7 @@ if __name__ == "__main__":
     # run_network_tests()
     # tester.collect_hashes()
 
-    connect_api.collect_hashes()
+    connect_api.connect_api()
     # connect_api.get_hashes_hops()
 
     # info("*** Running CLI\n")

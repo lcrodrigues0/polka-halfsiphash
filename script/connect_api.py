@@ -71,7 +71,7 @@ def integrity(net: Mininet):
     
     first_host.cmd('ping -c 1', last_host.IP())
 
-def collect_hashes():
+def connect_api():
     """
     Collect the hashes (all intermediary) from the network
     """
@@ -116,14 +116,14 @@ def collect_hashes():
             else:
                 call_log_probe(pkt)
 
-            print(f"{pkt.sniffed_on} - {eth.src} -> {eth.dst} : => {probe.l_hash:#0{10}x}"
-)
+            print(f"{pkt.time} : {pkt.sniffed_on} - {eth.src} -> {eth.dst} => {probe.l_hash:#0{10}x}")
         sniff = start_sniffing(net, ifaces_fn=ifaces_fn, cb=sniff_cb)
 
         integrity(net)
 
         info("*** Stopping sniffing\n")
-        sleep(2)
+        sleep(2)            # Time to finish printing the logs
+
         sniff.stop()
 
         info("*** Hashes collected ***\n")
